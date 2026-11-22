@@ -37,10 +37,12 @@ The originals in `exercises/` stay untouched.
 | `tlings -n 3` | Check exercise 3 only (progress is not updated) |
 | `tlings -s 3` | Check in order starting from exercise 3 |
 | `tlings -restore 3` | Restore exercise 3 to its original state (your file is kept as `.bak`) |
+| `tlings -hint` | Show a hint for the current exercise (`-hint -n 3`: for exercise 3) |
 | `tlings -v` | Also show TLC's output when a check passes |
 | `tlings -reset` | Clear progress |
 
-On failure, tlings shows TLC's output **unaltered**, followed by the result, the expected result and a hint.
+On failure, tlings shows TLC's output **unaltered**, followed by the result and the expected result.
+Hints stay hidden until you ask for one with `tlings -hint`.
 When a check passes, it shows TLC's output only with `-v` or if your file uses `Print` or `PrintT`.
 Learning to read TLC's output is part of the tutorial.
 

@@ -6,6 +6,7 @@
 //	tlings -s 3         check in order starting from exercise 3
 //	tlings -watch       check again whenever a file in work/ changes
 //	tlings -restore 3   restore exercise 3 to its original state (the old file is kept as .bak)
+//	tlings -hint        show the hint for the current exercise (-hint -n 3: for exercise 3)
 //	tlings -v           also show TLC's output when a check passes
 //	tlings -reset       clear progress
 //	tlings -verify      (authors) check every original, translation and solution
@@ -30,6 +31,7 @@ func main() {
 	s := flag.Int("s", 0, "check in order starting from exercise `N`")
 	watch := flag.Bool("watch", false, "check again whenever a file in work/ changes")
 	restore := flag.Int("restore", 0, "restore exercise `N` to its original state (your file is kept as .bak)")
+	hint := flag.Bool("hint", false, "show the hint for the current exercise, or for exercise N with -n")
 	reset := flag.Bool("reset", false, "clear progress and start again from 001")
 	verbose := flag.Bool("v", false, "show TLC's output even when a check passes (automatic if the file uses Print or PrintT)")
 	verify := flag.Bool("verify", false, "(authors) check every original, translation and solution")
@@ -74,6 +76,17 @@ func main() {
 	t := &tutor{w: w, verbose: *verbose}
 
 	switch {
+	case *hint:
+		i := w.nextIndex()
+		if *n > 0 {
+			i = *n - 1
+		}
+		if i >= len(exercises) {
+			fmt.Println(m.AllDone)
+			return
+		}
+		fmt.Printf(m.HintFor+"\n%s\n", exercises[i].Name, exercises[i].Hint.in(w.state.Lang))
+		return
 	case *reset:
 		w.state.Done = ""
 		check(w.save())
@@ -224,7 +237,11 @@ func (t *tutor) checkOne(ctx context.Context, i int) bool {
 	cont := func(s string) string { return strings.ReplaceAll(s, "\n", "\n"+m.Cont) }
 	fmt.Printf("  %s%s\n", m.Result, cont(why))
 	fmt.Printf("  %s%s\n", m.Expected, ex.Expect)
-	fmt.Printf("  %s%s\n", m.Hint, cont(ex.Hint.in(t.w.state.Lang)))
+	hintCmd := "tlings -hint"
+	if i != t.w.nextIndex() {
+		hintCmd = fmt.Sprintf("tlings -hint -n %d", i+1)
+	}
+	fmt.Printf("  %s"+m.HintHow+"\n", m.Hint, hintCmd)
 	fmt.Printf("  %s%s\n", m.File, t.rel(work))
 	return false
 }
