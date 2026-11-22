@@ -22,6 +22,7 @@ type messages struct {
 	ExitOK, ExitAssume, ExitDeadlock    string
 	ExitSafety, ExitLiveness, ExitParse string
 	ExitConfig, ExitOther               string
+	ExitError, ExitTimeout              string
 	WrongStates, WrongInvariant         string
 	WrongTraceLen, MissingAssume        string
 	ExpectNoError, ExpectStates         string
@@ -63,6 +64,8 @@ var en = messages{
 	ExitParse:    "SANY could not read the spec (syntax or name error)",
 	ExitConfig:   "the .cfg file has an error",
 	ExitOther:    "TLC error (exit %d)",
+	ExitError:    "TLC stopped with an error while evaluating the spec (see the Error lines above)",
+	ExitTimeout:  "TLC did not finish within %s. The state space may be infinite: does some value grow without bound?",
 
 	WrongStates: "TLC finished with no errors, but found %d distinct states (expected %d).\n" +
 		"The spec explores a different state space than intended. Check whether Init or Next is too narrow or too wide.",
@@ -115,6 +118,8 @@ var ko = messages{
 	ExitParse:    "SANY 가 스펙을 읽지 못했습니다 (문법/이름 오류)",
 	ExitConfig:   ".cfg 파일에 오류가 있습니다",
 	ExitOther:    "TLC 에러입니다 (exit %d)",
+	ExitError:    "TLC 가 스펙을 계산하다가 에러로 멈췄습니다 (위의 Error 줄을 보세요)",
+	ExitTimeout:  "TLC 가 %s 안에 끝나지 않았습니다. 상태 공간이 무한할 수 있습니다. 끝없이 커지는 값이 있나요?",
 
 	WrongStates: "TLC 는 에러 없이 끝났지만 distinct state 가 %d 개입니다 (기대: %d).\n" +
 		"스펙이 의도와 다른 상태 공간을 탐색하고 있습니다. Init 이나 Next 가 너무 좁거나 넓지 않은지 보세요.",

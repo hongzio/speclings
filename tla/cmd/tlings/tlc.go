@@ -9,18 +9,26 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"time"
 )
 
-// TLC exit codes (tlc2.output.EC.ExitStatus). 0, 10, 11, 12 and 150 were confirmed with TLC 1.8.0.
+// TLC exit codes (tlc2.output.EC.ExitStatus). All but 13 were confirmed with TLC 1.8.0.
 const (
 	exitOK       = 0
 	exitAssume   = 10
 	exitDeadlock = 11
 	exitSafety   = 12
 	exitLiveness = 13
+	exitError    = 75 // e.g. an expression TLC cannot evaluate
 	exitParse    = 150
 	exitConfig   = 151
+
+	exitTimeout = -1 // not from TLC: tlings stopped it after tlcTimeout
 )
+
+// tlcTimeout bounds each TLC run. Exercises finish in about a second, so a run
+// that takes longer most likely explores an infinite state space.
+const tlcTimeout = 30 * time.Second
 
 // Result is the result of one TLC run.
 type Result struct {
@@ -56,6 +64,14 @@ func parseResult(exit int, out string) Result {
 // It uses BFS with a single worker so results (state counts, shortest counterexamples) are reproducible,
 // and keeps states/ and *_TTrace_* files out of dir.
 func runTLC(ctx context.Context, dir, name string) (Result, error) {
+	return runTLCWithin(ctx, dir, name, tlcTimeout)
+}
+
+// runTLCWithin is runTLC with a custom timeout. A run that times out is not an
+// error: it returns a Result with Exit exitTimeout and the output so far.
+func runTLCWithin(ctx context.Context, dir, name string, timeout time.Duration) (Result, error) {
+	ctx, cancel := context.WithTimeout(ctx, timeout)
+	defer cancel()
 	meta, err := os.MkdirTemp("", "tlings-")
 	if err != nil {
 		return Result{}, err
@@ -64,7 +80,11 @@ func runTLC(ctx context.Context, dir, name string) (Result, error) {
 
 	cmd := exec.CommandContext(ctx, "tlc", "-workers", "1", "-metadir", meta, "-noGenerateSpecTE", name+".tla")
 	cmd.Dir = dir
+	cmd.WaitDelay = time.Second
 	out, err := cmd.CombinedOutput()
+	if errors.Is(ctx.Err(), context.DeadlineExceeded) {
+		return parseResult(exitTimeout, string(out)), nil
+	}
 	exit := 0
 	if err != nil {
 		var ee *exec.ExitError
@@ -93,6 +113,10 @@ func describe(r Result) string {
 		return m.ExitParse
 	case exitConfig:
 		return m.ExitConfig
+	case exitError:
+		return m.ExitError
+	case exitTimeout:
+		return fmt.Sprintf(m.ExitTimeout, tlcTimeout)
 	default:
 		return fmt.Sprintf(m.ExitOther, r.Exit)
 	}

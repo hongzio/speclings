@@ -10,6 +10,7 @@ import (
 	"slices"
 	"strings"
 	"sync"
+	"time"
 )
 
 // runVerify checks the following for every exercise. It never looks at the learner's work/.
@@ -119,7 +120,11 @@ func verifyOriginal(ctx context.Context, root string, ex Exercise, lang string) 
 	if ex.Broken.At != "" && lineOf(string(src), ex.Broken.At) == 0 {
 		return "✗", fmt.Sprintf(m.VerifyNoSnippet, ex.Broken.At)
 	}
-	r, err := runTLC(ctx, dir, ex.Name)
+	timeout := tlcTimeout
+	if ex.Broken.Exit == exitTimeout {
+		timeout = verifyTimeout
+	}
+	r, err := runTLCWithin(ctx, dir, ex.Name, timeout)
 	if err != nil {
 		return "✗", err.Error()
 	}
@@ -128,6 +133,9 @@ func verifyOriginal(ctx context.Context, root string, ex Exercise, lang string) 
 	}
 	return "✓", ""
 }
+
+// verifyTimeout is how long -verify lets an original run that is expected to time out.
+const verifyTimeout = 10 * time.Second
 
 // verifySolution copies solutions/<Name>.tla to a temporary directory and checks it.
 // It uses solutions/<Name>.cfg if present, otherwise the en original's .cfg.

@@ -1,10 +1,13 @@
 package main
 
 import (
+	"context"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
+	"time"
 )
 
 // testdata/*.out is real TLC 1.8.0 output (local paths replaced).
@@ -109,5 +112,31 @@ func TestManifestNames(t *testing.T) {
 		if ex.Hint[baseLang] == "" || ex.Broken.Contains == "" {
 			t.Errorf("%s: Hint[%s] and Broken.Contains must not be empty", ex.Name, baseLang)
 		}
+	}
+}
+
+// TestRunTLCTimeout runs real TLC on an infinite state space and checks that it is stopped.
+func TestRunTLCTimeout(t *testing.T) {
+	if _, err := exec.LookPath("tlc"); err != nil {
+		t.Skip("tlc not on PATH (run inside mise)")
+	}
+	dir := t.TempDir()
+	spec := "---- MODULE Inf ----\nEXTENDS Naturals\nVARIABLE n\nInit == n = 0\nNext == n' = n + 1\n====\n"
+	if err := os.WriteFile(filepath.Join(dir, "Inf.tla"), []byte(spec), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(dir, "Inf.cfg"), []byte("INIT Init\nNEXT Next\n"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	start := time.Now()
+	r, err := runTLCWithin(context.Background(), dir, "Inf", 3*time.Second)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if r.Exit != exitTimeout || !strings.Contains(r.Output, "Computing initial states") {
+		t.Errorf("exit = %d, output:\n%s", r.Exit, r.Output)
+	}
+	if d := time.Since(start); d > 6*time.Second {
+		t.Errorf("took %s; TLC was not stopped promptly", d)
 	}
 }

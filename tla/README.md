@@ -56,6 +56,8 @@ Learning to read TLC's output is part of the tutorial.
 Why count states: if you "fix" a spec by deleting it (for example `Next == FALSE`), every invariant holds.
 With BFS and a single worker, the state count and the counterexample length are always the same, so they make reliable expectations.
 
+Each TLC run is stopped after 30 seconds. Exercises finish in about a second, so a spec that runs longer most likely has an infinite state space.
+
 ## Layout
 
 ```
