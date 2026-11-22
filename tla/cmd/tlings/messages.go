@@ -21,13 +21,14 @@ type messages struct {
 	LangSet, LangKeep, UnknownLang      string
 	OutOfRange, NoTLC                   string
 	ExitOK, ExitAssume, ExitDeadlock    string
-	ExitSafety, ExitLiveness, ExitParse string
+	ExitSafety, ExitProperty, ExitParse string
 	ExitConfig, ExitOther               string
 	ExitError, ExitTimeout              string
 	WrongStates, WrongInvariant         string
 	WrongTraceLen, MissingAssume        string
 	ExpectNoError, ExpectStates         string
 	ExpectViolation, ExpectDeadlock     string
+	ExpectProperty                      string
 
 	// -verify
 	VerifyWrongFailure, VerifyNoSnippet string
@@ -63,7 +64,7 @@ var en = messages{
 	ExitAssume:   "an ASSUME is false",
 	ExitDeadlock: "deadlock (counterexample length %d)",
 	ExitSafety:   "invariant %s is violated (counterexample length %d)",
-	ExitLiveness: "a temporal property (PROPERTY) is violated",
+	ExitProperty: "property %s is violated",
 	ExitParse:    "SANY could not read the spec (syntax or name error)",
 	ExitConfig:   "the .cfg file has an error",
 	ExitOther:    "TLC error (exit %d)",
@@ -72,7 +73,7 @@ var en = messages{
 
 	WrongStates: "TLC finished with no errors, but found %d distinct states (expected %d).\n" +
 		"The spec explores a different state space than intended. Check whether Init or Next is too narrow or too wide.",
-	WrongInvariant: "the violated invariant is %s, but the one that should be violated is %s.",
+	WrongInvariant: "%s is violated, but the one that should be violated is %s.",
 	WrongTraceLen:  "%s, but the counterexample length is %d (expected %d).",
 	MissingAssume: "TLC passed, but an ASSUME from the original is missing or changed.\n" +
 		"Keep every original ASSUME (only ??? may be replaced); adding your own is fine:\n%s",
@@ -81,6 +82,7 @@ var en = messages{
 	ExpectStates:    "no errors, %d distinct states",
 	ExpectViolation: "invariant %s violated (counterexample length %d)",
 	ExpectDeadlock:  "deadlock (counterexample length %d)",
+	ExpectProperty:  "property %s violated",
 
 	VerifyWrongFailure: "fails for another reason: %s",
 	VerifyNoSnippet:    "snippet not found: %q",
@@ -119,7 +121,7 @@ var ko = messages{
 	ExitAssume:   "ASSUME 이 거짓입니다",
 	ExitDeadlock: "deadlock 입니다 (반례 길이 %d)",
 	ExitSafety:   "불변식이 깨졌습니다: %s (반례 길이 %d)",
-	ExitLiveness: "시간 속성(PROPERTY)이 깨졌습니다",
+	ExitProperty: "속성이 깨졌습니다: %s",
 	ExitParse:    "SANY 가 스펙을 읽지 못했습니다 (문법/이름 오류)",
 	ExitConfig:   ".cfg 파일에 오류가 있습니다",
 	ExitOther:    "TLC 에러입니다 (exit %d)",
@@ -128,7 +130,7 @@ var ko = messages{
 
 	WrongStates: "TLC 는 에러 없이 끝났지만 distinct state 가 %d 개입니다 (기대: %d).\n" +
 		"스펙이 의도와 다른 상태 공간을 탐색하고 있습니다. Init 이나 Next 가 너무 좁거나 넓지 않은지 보세요.",
-	WrongInvariant: "깨진 불변식: %s, 깨져야 하는 불변식: %s",
+	WrongInvariant: "깨진 것: %s, 깨져야 하는 것: %s",
 	WrongTraceLen:  "%s. 반례 길이가 %d 입니다 (기대: %d).",
 	MissingAssume: "TLC 는 통과했지만 원본의 ASSUME 이 없어졌거나 바뀌었습니다.\n" +
 		"원본 ASSUME 은 모두 남겨 두세요 (??? 자리만 바꿀 수 있고, 새 ASSUME 을 더하는 건 괜찮습니다):\n%s",
@@ -137,6 +139,7 @@ var ko = messages{
 	ExpectStates:    "에러 없음, distinct state %d 개",
 	ExpectViolation: "불변식 위반: %s (반례 길이 %d)",
 	ExpectDeadlock:  "deadlock (반례 길이 %d)",
+	ExpectProperty:  "속성 위반: %s",
 
 	VerifyWrongFailure: "다른 이유로 실패: %s",
 	VerifyNoSnippet:    "코드 조각을 찾을 수 없음: %q",

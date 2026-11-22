@@ -54,6 +54,7 @@ Learning to read TLC's output is part of the tutorial.
 | no errors, N distinct states | the above, and TLC explores exactly N distinct states |
 | invariant X violated (counterexample length N) | TLC finds a violation of X with a counterexample of N states |
 | deadlock (counterexample length N) | TLC finds a deadlock with a counterexample of N states |
+| property X violated | TLC finds a violation of the property X. The counterexample length is not checked: for liveness, TLC's counterexamples are not the shortest and can differ between runs |
 
 Why count states: if you "fix" a spec by deleting it (for example `Next == FALSE`), every invariant holds.
 With BFS and a single worker, the state count and the counterexample length are always the same, so they make reliable expectations.

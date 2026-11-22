@@ -33,6 +33,8 @@ func TestParseResult(t *testing.T) {
 		{"deadlock", exitDeadlock, 4, "", 4},
 		{"assume", exitAssume, -1, "", 0},
 		{"parse", exitParse, -1, "", 0},
+		{"temporal", exitProperty, 5, "EventuallyDone", 5},
+		{"action", exitProperty, 3, "NeverBackwards", 3},
 	}
 	for _, tt := range tests {
 		r := load(t, tt.file, tt.exit)
@@ -63,6 +65,11 @@ func TestJudge(t *testing.T) {
 		{"vacuous", holds(9999), "holds", exitOK, false, "found 10000 distinct states"},
 		{"violates", violates("Small", 6), "violates", exitSafety, true, ""},
 		{"wrong invariant", violates("TypeOK", 6), "violates", exitSafety, false, "should be violated is TypeOK"},
+		{"property", violatesProperty("EventuallyDone"), "temporal", exitProperty, true, ""},
+		{"action property", violatesProperty("NeverBackwards"), "action", exitProperty, true, ""},
+		{"wrong property", violatesProperty("Other"), "temporal", exitProperty, false, "should be violated is Other"},
+		{"property expected, invariant violated", violatesProperty("Small"), "violates", exitSafety, false, "invariant Small"},
+		{"unexpected property violation", holds(5), "temporal", exitProperty, false, "property EventuallyDone is violated"},
 		{"wrong trace", violates("Small", 5), "violates", exitSafety, false, "counterexample length is 6"},
 		{"expected violation, got none", violates("Small", 6), "holds", exitOK, false, "no errors"},
 		{"deadlocks", deadlocks(4), "deadlock", exitDeadlock, true, ""},

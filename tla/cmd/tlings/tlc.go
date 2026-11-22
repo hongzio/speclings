@@ -12,13 +12,13 @@ import (
 	"time"
 )
 
-// TLC exit codes (tlc2.output.EC.ExitStatus). All but 13 were confirmed with TLC 1.8.0.
+// TLC exit codes (tlc2.output.EC.ExitStatus), confirmed with TLC 1.8.0.
 const (
 	exitOK       = 0
 	exitAssume   = 10
 	exitDeadlock = 11
 	exitSafety   = 12
-	exitLiveness = 13
+	exitProperty = 13 // a PROPERTY (temporal or action property) is violated
 	exitError    = 75 // e.g. an expression TLC cannot evaluate
 	exitParse    = 150
 	exitConfig   = 151
@@ -35,13 +35,13 @@ type Result struct {
 	Exit     int
 	Output   string
 	Distinct int    // number of distinct states; -1 if not in the output
-	Violated string // name of the violated invariant
+	Violated string // name of the violated invariant or property
 	TraceLen int    // number of states in the counterexample; 0 if none
 }
 
 var (
 	reDistinct = regexp.MustCompile(`([\d,]+) distinct states found`)
-	reViolated = regexp.MustCompile(`(?m)^Error: Invariant (\S+) is violated\.`)
+	reViolated = regexp.MustCompile(`(?m)^Error: (?:Invariant|Action property|Temporal property) (\S+) (?:is|was) violated\.`)
 	reState    = regexp.MustCompile(`(?m)^State (\d+): `)
 )
 
@@ -107,8 +107,8 @@ func describe(r Result) string {
 		return fmt.Sprintf(m.ExitDeadlock, r.TraceLen)
 	case exitSafety:
 		return fmt.Sprintf(m.ExitSafety, r.Violated, r.TraceLen)
-	case exitLiveness:
-		return m.ExitLiveness
+	case exitProperty:
+		return fmt.Sprintf(m.ExitProperty, r.Violated)
 	case exitParse:
 		return m.ExitParse
 	case exitConfig:

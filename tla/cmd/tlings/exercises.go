@@ -447,34 +447,41 @@ func lineOf(src, snippet string) int {
 type Kind int
 
 const (
-	Holds     Kind = iota // no errors, and exactly States distinct states
-	Violates              // Invariant is violated, with a counterexample of TraceLen states
-	Deadlocks             // deadlock, with a counterexample of TraceLen states
+	Holds            Kind = iota // no errors, and exactly States distinct states
+	Violates                     // invariant Name is violated, with a counterexample of TraceLen states
+	Deadlocks                    // deadlock, with a counterexample of TraceLen states
+	ViolatesProperty             // PROPERTY Name is violated; the counterexample length is not checked
 )
 
 // Expect is what TLC should report for a fixed spec.
 //
 // Holds also checks the number of states: setting Init or Next to FALSE makes
 // every invariant "hold", and the exit code alone cannot tell fixing a spec from deleting it.
+//
+// For ViolatesProperty the counterexample length is not checked: TLC's liveness
+// counterexamples are neither shortest nor the same from run to run.
 type Expect struct {
-	Kind      Kind
-	States    int
-	Invariant string
-	TraceLen  int
+	Kind     Kind
+	States   int
+	Name     string // the invariant or property that should be violated
+	TraceLen int
 }
 
 // constant is the expectation for a module without variables (only ASSUMEs are evaluated).
 func constant() Expect        { return Expect{Kind: Holds, States: 0} }
 func holds(states int) Expect { return Expect{Kind: Holds, States: states} }
 func violates(inv string, traceLen int) Expect {
-	return Expect{Kind: Violates, Invariant: inv, TraceLen: traceLen}
+	return Expect{Kind: Violates, Name: inv, TraceLen: traceLen}
 }
-func deadlocks(traceLen int) Expect { return Expect{Kind: Deadlocks, TraceLen: traceLen} }
+func violatesProperty(prop string) Expect { return Expect{Kind: ViolatesProperty, Name: prop} }
+func deadlocks(traceLen int) Expect       { return Expect{Kind: Deadlocks, TraceLen: traceLen} }
 
 func (e Expect) String() string {
 	switch e.Kind {
 	case Violates:
-		return fmt.Sprintf(m.ExpectViolation, e.Invariant, e.TraceLen)
+		return fmt.Sprintf(m.ExpectViolation, e.Name, e.TraceLen)
+	case ViolatesProperty:
+		return fmt.Sprintf(m.ExpectProperty, e.Name)
 	case Deadlocks:
 		return fmt.Sprintf(m.ExpectDeadlock, e.TraceLen)
 	default:
@@ -487,16 +494,16 @@ func (e Expect) String() string {
 
 // judge reports whether r meets e. If not, it also returns the reason to show the learner.
 func judge(e Expect, r Result) (ok bool, why string) {
-	want := map[Kind]int{Holds: exitOK, Violates: exitSafety, Deadlocks: exitDeadlock}[e.Kind]
+	want := map[Kind]int{Holds: exitOK, Violates: exitSafety, Deadlocks: exitDeadlock, ViolatesProperty: exitProperty}[e.Kind]
 	if r.Exit != want {
 		return false, describe(r)
 	}
 	switch {
 	case e.Kind == Holds && r.Distinct != e.States:
 		return false, fmt.Sprintf(m.WrongStates, r.Distinct, e.States)
-	case e.Kind == Violates && r.Violated != e.Invariant:
-		return false, fmt.Sprintf(m.WrongInvariant, r.Violated, e.Invariant)
-	case e.Kind != Holds && r.TraceLen != e.TraceLen:
+	case (e.Kind == Violates || e.Kind == ViolatesProperty) && r.Violated != e.Name:
+		return false, fmt.Sprintf(m.WrongInvariant, r.Violated, e.Name)
+	case (e.Kind == Violates || e.Kind == Deadlocks) && r.TraceLen != e.TraceLen:
 		return false, fmt.Sprintf(m.WrongTraceLen, describe(r), r.TraceLen, e.TraceLen)
 	}
 	return true, ""
