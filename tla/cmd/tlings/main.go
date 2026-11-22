@@ -6,6 +6,7 @@
 //	tlings -s 3         check in order starting from exercise 3
 //	tlings -watch       check again whenever a file in work/ changes
 //	tlings -restore 3   restore exercise 3 to its original state (the old file is kept as .bak)
+//	tlings -v           also show TLC's output when a check passes
 //	tlings -reset       clear progress
 //	tlings -verify      (authors) check every original, translation and solution
 package main
@@ -18,6 +19,7 @@ import (
 	"os"
 	"os/signal"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"time"
 )
@@ -29,6 +31,7 @@ func main() {
 	watch := flag.Bool("watch", false, "check again whenever a file in work/ changes")
 	restore := flag.Int("restore", 0, "restore exercise `N` to its original state (your file is kept as .bak)")
 	reset := flag.Bool("reset", false, "clear progress and start again from 001")
+	verbose := flag.Bool("v", false, "show TLC's output even when a check passes (automatic if the file uses Print or PrintT)")
 	verify := flag.Bool("verify", false, "(authors) check every original, translation and solution")
 	flag.Parse()
 
@@ -68,7 +71,7 @@ func main() {
 			fmt.Println(m.LangKeep)
 		}
 	}
-	t := &tutor{w: w}
+	t := &tutor{w: w, verbose: *verbose}
 
 	switch {
 	case *reset:
@@ -164,7 +167,10 @@ func checkManifest(root string) error {
 	return nil
 }
 
-type tutor struct{ w *workspace }
+type tutor struct {
+	w       *workspace
+	verbose bool // show TLC's output even when a check passes
+}
 
 // checkFrom checks exercises in order from index i and saves progress after each pass.
 func (t *tutor) checkFrom(ctx context.Context, i int) bool {
@@ -195,8 +201,19 @@ func (t *tutor) checkOne(ctx context.Context, i int) bool {
 		return false
 	}
 	ok, why := judge(ex.Expect, r)
+	work := filepath.Join(t.w.dir(), ex.Name+".tla")
+	if ok {
+		if missing := missingAssumes(t.w.root, ex, work); len(missing) > 0 {
+			ok, why = false, fmt.Sprintf(m.MissingAssume, strings.Join(missing, "\n"))
+		}
+	}
 	if ok {
 		fmt.Printf("%s %s\n", green("✓"), dim(time.Since(start).Round(100*time.Millisecond).String()))
+		if t.verbose || usesPrint(work) {
+			fmt.Println()
+			fmt.Print(r.Output)
+			fmt.Println(dim(strings.Repeat("─", 72)))
+		}
 		return true
 	}
 	fmt.Println(red("✗"))
@@ -208,9 +225,21 @@ func (t *tutor) checkOne(ctx context.Context, i int) bool {
 	fmt.Printf("  %s%s\n", m.Result, cont(why))
 	fmt.Printf("  %s%s\n", m.Expected, ex.Expect)
 	fmt.Printf("  %s%s\n", m.Hint, cont(ex.Hint.in(t.w.state.Lang)))
-	fmt.Printf("  %s%s\n", m.File, t.rel(filepath.Join(t.w.dir(), ex.Name+".tla")))
+	fmt.Printf("  %s%s\n", m.File, t.rel(work))
 	return false
 }
+
+// usesPrint reports whether the code of file (comments excluded) calls Print or PrintT.
+// Learners use them to look at values, so their output is shown even when the check passes.
+func usesPrint(file string) bool {
+	b, err := os.ReadFile(file)
+	if err != nil {
+		return false
+	}
+	return rePrint.MatchString(strings.Join(codeLines(string(b)), "\n"))
+}
+
+var rePrint = regexp.MustCompile(`\bPrintT?\(`)
 
 func (t *tutor) rel(p string) string {
 	if wd, err := os.Getwd(); err == nil {

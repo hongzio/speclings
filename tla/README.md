@@ -37,16 +37,18 @@ The originals in `exercises/` stay untouched.
 | `tlings -n 3` | Check exercise 3 only (progress is not updated) |
 | `tlings -s 3` | Check in order starting from exercise 3 |
 | `tlings -restore 3` | Restore exercise 3 to its original state (your file is kept as `.bak`) |
+| `tlings -v` | Also show TLC's output when a check passes |
 | `tlings -reset` | Clear progress |
 
 On failure, tlings shows TLC's output **unaltered**, followed by the result, the expected result and a hint.
+When a check passes, it shows TLC's output only with `-v` or if your file uses `Print` or `PrintT`.
 Learning to read TLC's output is part of the tutorial.
 
 ## How an exercise passes
 
 | Expected | Passes when |
 |---|---|
-| no errors | TLC finishes with no errors (for modules without variables: every `ASSUME` is true) |
+| no errors | TLC finishes with no errors. Every `ASSUME` of the original must still be in your file (fill in `???`, but do not remove or comment out lines); you may add your own |
 | no errors, N distinct states | the above, and TLC explores exactly N distinct states |
 | invariant X violated (counterexample length N) | TLC finds a violation of X with a counterexample of N states |
 | deadlock (counterexample length N) | TLC finds a deadlock with a counterexample of N states |
@@ -86,6 +88,10 @@ To add an exercise:
 3. Translate it (`exercises/ko/`) and add the hint for each language.
 
 Never use line numbers in explanations or hints, for the same reason.
+
+Every `ASSUME` of the original must stay in the learner's file, or deleting it would "pass" the check.
+tlings compares lines ignoring whitespace, with `???` matching anything; learners may add their own.
+The `ASSUME` line containing `Broken.At` only has to keep that snippet, so an exercise can ask learners to correct a value there.
 
 To add a language, add a `messages` value in `cmd/tlings/messages.go` and an `exercises/<lang>/` directory.
 

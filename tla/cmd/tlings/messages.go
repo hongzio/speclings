@@ -23,7 +23,7 @@ type messages struct {
 	ExitSafety, ExitLiveness, ExitParse string
 	ExitConfig, ExitOther               string
 	WrongStates, WrongInvariant         string
-	WrongTraceLen                       string
+	WrongTraceLen, MissingAssume        string
 	ExpectNoError, ExpectStates         string
 	ExpectViolation, ExpectDeadlock     string
 
@@ -68,6 +68,8 @@ var en = messages{
 		"The spec explores a different state space than intended. Check whether Init or Next is too narrow or too wide.",
 	WrongInvariant: "the violated invariant is %s, but the one that should be violated is %s.",
 	WrongTraceLen:  "%s, but the counterexample length is %d (expected %d).",
+	MissingAssume: "TLC passed, but an ASSUME from the original is missing or changed.\n" +
+		"Keep every original ASSUME (only ??? may be replaced); adding your own is fine:\n%s",
 
 	ExpectNoError:   "no errors",
 	ExpectStates:    "no errors, %d distinct states",
@@ -118,6 +120,8 @@ var ko = messages{
 		"스펙이 의도와 다른 상태 공간을 탐색하고 있습니다. Init 이나 Next 가 너무 좁거나 넓지 않은지 보세요.",
 	WrongInvariant: "깨진 불변식: %s, 깨져야 하는 불변식: %s",
 	WrongTraceLen:  "%s. 반례 길이가 %d 입니다 (기대: %d).",
+	MissingAssume: "TLC 는 통과했지만 원본의 ASSUME 이 없어졌거나 바뀌었습니다.\n" +
+		"원본 ASSUME 은 모두 남겨 두세요 (??? 자리만 바꿀 수 있고, 새 ASSUME 을 더하는 건 괜찮습니다):\n%s",
 
 	ExpectNoError:   "에러 없음",
 	ExpectStates:    "에러 없음, distinct state %d 개",
