@@ -5,7 +5,7 @@
 작게 "고장 난" TLA+ 스펙을 하나씩 고치면서 TLA+ 와 TLC 를 배우는 튜토리얼입니다.
 [ziglings](https://codeberg.org/ziglings/exercises/) 방식을 따릅니다.
 
-> **작업 중:** 지금은 48문제(Part 0: 도구, Part 1: 값, Part 2: 상태 기계, Part 3: 동시성, Part 4: 시간 속성)가 있고, 계속 추가하고 있습니다.
+> **작업 중:** 지금은 53문제(Part 0: 도구, Part 1: 값, Part 2: 상태 기계, Part 3: 동시성, Part 4: 시간 속성, Part 5: 심화)가 있고, 계속 추가하고 있습니다.
 
 ## 시작하기
 
@@ -14,7 +14,7 @@ macOS 나 Linux 에 [mise](https://mise.jdx.dev/) 만 있으면 됩니다. 나�
 ```sh
 git clone https://github.com/hongzio/tlings.git && cd tlings
 mise trust         # 이 디렉터리의 mise.toml 을 허용
-mise install       # Java, Go, tla2tools, CommunityModules, Apalache
+mise install       # Java, Go, tla2tools, CommunityModules
 tlings -lang ko    # 한국어로 시작. 언어는 저장되므로 다음부터는 tlings 만
 ```
 
@@ -66,7 +66,7 @@ TLC 는 실행마다 30 초가 지나면 멈춥니다. 문제는 1 초 안팎이
 exercises/en/     원본 문제(고장 난 상태), 영어. 기준 언어
 exercises/ko/     한국어 번역. 주석만 다르고 코드는 en 과 같아야 한다
 solutions/        정답 (영어). 막혔을 때만 보세요
-go/               Part 3 에 딸린 Go 프로그램. 문제에 적힌 대로 실행 (예: go run -race ./go/034_lost_update)
+go/               Part 3, 5 에 딸린 Go 프로그램. 문제에 적힌 대로 실행 (예: go run -race ./go/034_lost_update)
 work/             내 작업 공간. tlings 가 만든다
 cmd/tlings/       러너. 문제 순서와 기대 결과는 cmd/tlings/exercises.go
 ```
@@ -74,6 +74,13 @@ cmd/tlings/       러너. 문제 순서와 기대 결과는 cmd/tlings/exercises
 ## 문제 작성자용
 
 작성자용 절차(검사 항목, 문제 추가, 언어 추가)는 [README.md 의 For authors](README.md#for-authors) 를 보세요.
+
+## 더 나아가기
+
+- **ALIAS**: `.cfg` 에 `ALIAS View` 를 쓰면 TLC 가 반례의 각 상태를 변수 대신 레코드 `View` 로 출력합니다 (051 의 팁).
+- **시뮬레이션**: `tlc -simulate num=1000 -depth 100 Spec.tla` 는 모든 behavior 대신 최대 100 step 의 무작위 behavior 1000 개를 검사합니다. 다 탐색하기엔 너무 큰 상태 공간에 씁니다. `num` 이 없으면 멈출 때까지 계속 돕니다.
+- **[Apalache](https://github.com/apalache-mc/apalache)**: SMT solver 와 타입 주석을 쓰는 TLA+ 기호적(symbolic) 모델 검사기입니다. TLC 가 나열할 수 없는 크거나 무한한 데이터를 가진 스펙도 검사할 수 있습니다.
+- **더 읽을거리**: Leslie Lamport 의 [Specifying Systems](https://lamport.azurewebsites.net/tla/book.html), Hillel Wayne 의 [Learn TLA+](https://learntla.com).
 
 ## 라이선스
 

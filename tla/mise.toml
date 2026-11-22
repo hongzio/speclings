@@ -9,9 +9,6 @@ java = "temurin-21"
 # CommunityModules (SequencesExt, FiniteSetsExt, ...), jar with dependencies
 "http:tla-community-modules" = { version = "202611191749", url = "https://github.com/tlaplus/CommunityModules/releases/download/{{version}}/CommunityModules-deps-{{version}}.jar" }
 
-# Apalache: SMT-based symbolic model checker
-"github:apalache-mc/apalache" = { version = "0.63.0", asset_pattern = "apalache-{{version}}.tgz" }
-
 [env]
 GOPATH = "{{config_root}}/.mise/go"
 GOBIN = "{{config_root}}/.mise/go/bin"

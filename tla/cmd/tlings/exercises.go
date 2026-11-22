@@ -455,6 +455,53 @@ var exercises = []Exercise{
 			"ko": `Termination == <>(\A w \in Workers : pc[w] = "done") 이고, .cfg 에 PROPERTY 로 추가합니다. 그다음 모든 goroutine 의 First 를 "a", Second 를 "b" 로 하세요.`,
 		},
 	},
+	// Part 5: beyond the basics.
+	{
+		Name:   "049_community_modules",
+		Expect: holds(320),
+		Broken: blank("Money(bal) == ???"),
+		Hint: L{
+			"en": `Money(bal) == SumFunction(bal). InFlight sums a function over DOMAIN p: [w \in DOMAIN p |-> IF p[w] = "deposit" THEN a[w].amt ELSE 0].`,
+			"ko": `Money(bal) == SumFunction(bal) 입니다. InFlight 는 DOMAIN p 위의 함수를 더합니다: [w \in DOMAIN p |-> IF p[w] = "deposit" THEN a[w].amt ELSE 0].`,
+		},
+	},
+	{
+		Name:    "050_refinement",
+		Expect:  holds(17),
+		Broken:  blank("AtomicPc == ???"),
+		Modules: []string{"050_AtomicCounter"},
+		Hint: L{
+			"en": `counter changes in Write, which moves pc to "unlock". So w is "done" in the atomic counter once pc[w] is "unlock" or "done", and "incr" before that.`,
+			"ko": `counter 는 Write 에서 바뀌고, Write 는 pc 를 "unlock" 으로 옮깁니다. 그러니 원자적 카운터에서 w 는 pc[w] 가 "unlock" 이나 "done" 이면 "done", 그 전에는 "incr" 입니다.`,
+		},
+	},
+	{
+		Name:   "051_lossy_network",
+		Expect: holds(5),
+		Broken: Broken{Exit: exitProperty, Contains: "Temporal property EventuallyDone was violated"},
+		Hint: L{
+			"en": `Spec == Init /\ [][Next]_vars /\ WF_vars(Next) /\ SF_vars(Serve) /\ SF_vars(Recv)`,
+			"ko": `Spec == Init /\ [][Next]_vars /\ WF_vars(Next) /\ SF_vars(Serve) /\ SF_vars(Recv)`,
+		},
+	},
+	{
+		Name:   "052_idempotency",
+		Expect: holds(7),
+		Broken: Broken{Exit: exitSafety, Contains: "Invariant ChargedOnce is violated"},
+		Hint: L{
+			"en": "In Serve: charged' = IF applied THEN charged ELSE charged + 1, and applied' = TRUE (so applied is no longer UNCHANGED there).",
+			"ko": "Serve 에서: charged' = IF applied THEN charged ELSE charged + 1, 그리고 applied' = TRUE (그러니 거기서는 applied 가 더 이상 UNCHANGED 가 아닙니다).",
+		},
+	},
+	{
+		Name:   "053_quiz6",
+		Expect: holds(62),
+		Broken: blank("Consistent == ???"),
+		Hint: L{
+			"en": `Consistent == \A r1, r2 \in RMs : ~(rmState[r1] = "aborted" /\ rmState[r2] = "committed"), added as an INVARIANT. TMCommit needs every RM prepared: \A instead of \E.`,
+			"ko": `Consistent == \A r1, r2 \in RMs : ~(rmState[r1] = "aborted" /\ rmState[r2] = "committed") 이고 INVARIANT 로 추가합니다. TMCommit 은 모든 RM 이 준비돼야 하므로 \E 대신 \A 입니다.`,
+		},
+	},
 }
 
 // blank is the Broken for an exercise whose first problem is a ??? on the line containing at.

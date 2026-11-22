@@ -5,7 +5,7 @@
 Learn TLA+ and TLC by fixing small, broken TLA+ specs one at a time.
 Modeled after [ziglings](https://codeberg.org/ziglings/exercises/).
 
-> **Work in progress:** there are 48 exercises so far (Part 0: tools, Part 1: values, Part 2: state machines, Part 3: concurrency, Part 4: temporal properties), and more are being added.
+> **Work in progress:** there are 53 exercises so far (Part 0: tools, Part 1: values, Part 2: state machines, Part 3: concurrency, Part 4: temporal properties, Part 5: beyond the basics), and more are being added.
 
 ## Getting started
 
@@ -14,7 +14,7 @@ You need [mise](https://mise.jdx.dev/) on macOS or Linux. It installs everything
 ```sh
 git clone https://github.com/hongzio/tlings.git && cd tlings
 mise trust         # allow this directory's mise.toml
-mise install       # Java, Go, tla2tools, CommunityModules, Apalache
+mise install       # Java, Go, tla2tools, CommunityModules
 tlings             # start from the first exercise (English)
 tlings -lang ko    # or pick a language first; it is remembered
 ```
@@ -67,7 +67,7 @@ Each TLC run is stopped after 30 seconds. Exercises finish in about a second, so
 exercises/en/     original exercises (broken), English. The reference language
 exercises/ko/     Korean translations. Only comments differ; code must match en
 solutions/        solutions (English). Only look when you are stuck
-go/               Go programs that go with Part 3. Run them as the exercises say, e.g. go run -race ./go/034_lost_update
+go/               Go programs that go with Parts 3 and 5. Run them as the exercises say, e.g. go run -race ./go/034_lost_update
 work/             your workspace, created by tlings
 cmd/tlings/       the runner. Exercise order and expectations are in cmd/tlings/exercises.go
 ```
@@ -102,6 +102,13 @@ The `ASSUME` line containing `Broken.At` only has to keep that snippet, so an ex
 To add a language, add a `messages` value in `cmd/tlings/messages.go` and an `exercises/<lang>/` directory.
 
 An exercise that INSTANCEs or EXTENDs a helper module lists it in `Modules`. tlings copies helper modules to `work/` with the exercise, and `-verify` checks that their code matches across languages too. Prefix their names with the exercise number (`050_AtomicCounter`), because `work/` is shared.
+
+## Beyond tlings
+
+- **ALIAS**: in the `.cfg`, `ALIAS View` makes TLC print the record `View` in each state of a counterexample instead of the raw variables (tip in 051).
+- **Simulation**: `tlc -simulate num=1000 -depth 100 Spec.tla` checks 1000 random behaviors of up to 100 steps instead of all of them, for state spaces too large to explore. Without `num`, it runs until you stop it.
+- **[Apalache](https://github.com/apalache-mc/apalache)**: a symbolic model checker for TLA+ that uses an SMT solver and type annotations. It can check specs with large or unbounded data that TLC cannot enumerate.
+- **Further reading**: Leslie Lamport's [Specifying Systems](https://lamport.azurewebsites.net/tla/book.html) and Hillel Wayne's [Learn TLA+](https://learntla.com).
 
 ## License
 
