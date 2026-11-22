@@ -33,7 +33,7 @@ func main() {
 	restore := flag.Int("restore", 0, "restore exercise `N` to its original state (your file is kept as .bak)")
 	hint := flag.Bool("hint", false, "show the hint for the current exercise, or for exercise N with -n")
 	reset := flag.Bool("reset", false, "clear progress and start again from 001")
-	verbose := flag.Bool("v", false, "show TLC's output even when a check passes (automatic if the file uses Print or PrintT)")
+	verbose := flag.Bool("v", false, "show TLC's output even when a check passes (automatic if the file uses Print or PrintT, or the goal is a counterexample)")
 	verify := flag.Bool("verify", false, "(authors) check every original, translation and solution")
 	flag.Parse()
 
@@ -222,7 +222,9 @@ func (t *tutor) checkOne(ctx context.Context, i int) bool {
 	}
 	if ok {
 		fmt.Printf("%s %s\n", green("✓"), dim(time.Since(start).Round(100*time.Millisecond).String()))
-		if t.verbose || usesPrint(work) {
+		// Show TLC's output when asked, when the learner prints values, and when the
+		// goal was a counterexample: reading it is part of the exercise.
+		if t.verbose || usesPrint(work) || ex.Expect.Kind != Holds {
 			fmt.Println()
 			fmt.Print(r.Output)
 			fmt.Println(dim(strings.Repeat("─", 72)))

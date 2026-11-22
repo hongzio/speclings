@@ -43,7 +43,7 @@ The originals in `exercises/` stay untouched.
 
 On failure, tlings shows TLC's output **unaltered**, followed by the result and the expected result.
 Hints stay hidden until you ask for one with `tlings -hint`.
-When a check passes, it shows TLC's output only with `-v` or if your file uses `Print` or `PrintT`.
+When a check passes, it shows TLC's output only with `-v`, if your file uses `Print` or `PrintT`, or if the goal was a counterexample (a violation or a deadlock), so that you can read it.
 Learning to read TLC's output is part of the tutorial.
 
 ## How an exercise passes
