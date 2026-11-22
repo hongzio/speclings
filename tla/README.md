@@ -5,7 +5,7 @@
 Learn TLA+ and TLC by fixing small, broken TLA+ specs one at a time.
 Modeled after [ziglings](https://codeberg.org/ziglings/exercises/).
 
-> **Work in progress:** there are 3 exercises so far (Part 0: tools), and more are being added.
+> **Work in progress:** there are 20 exercises so far (Part 0: tools, Part 1: values), and more are being added.
 
 ## Getting started
 

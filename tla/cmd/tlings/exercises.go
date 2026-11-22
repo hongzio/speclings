@@ -42,6 +42,166 @@ var exercises = []Exercise{
 			"ko": `에러 메시지의 "line N, col M" 이 거짓인 ASSUME 의 위치입니다.`,
 		},
 	},
+
+	// Part 1: values. Modules without variables; every ASSUME must hold.
+	{
+		Name:   "004_integers",
+		Expect: constant(),
+		Broken: blank(`ASSUME 7 \div 2 = ???`),
+		Hint: L{
+			"en": "Replace every ??? with a value. Division rounds down, toward minus infinity, and a % b is never negative.",
+			"ko": "??? 를 모두 값으로 바꾸세요. 나눗셈은 음의 무한대 쪽으로 내림하고, a % b 는 음수가 되지 않습니다.",
+		},
+	},
+	{
+		Name:   "005_booleans",
+		Expect: constant(),
+		Broken: blank(`ASSUME (TRUE /\ FALSE) = ???`),
+		Hint: L{
+			"en": "A => B is FALSE only when A is TRUE and B is FALSE.",
+			"ko": "A => B 는 A 가 TRUE 이고 B 가 FALSE 일 때만 FALSE 입니다.",
+		},
+	},
+	{
+		Name:   "006_bullets",
+		Expect: constant(),
+		Broken: Broken{Exit: exitAssume, Contains: "Assumption line", At: "ASSUME ~SmallOrEven(-4)"},
+		Hint: L{
+			"en": `The two \/ bullets must be in the same column, to the right of the /\ bullet they belong to.`,
+			"ko": `두 \/ 는 같은 열에, 그리고 자신이 속한 /\ 보다 오른쪽에 있어야 합니다.`,
+		},
+	},
+	{
+		Name:   "007_definitions",
+		Expect: constant(),
+		Broken: blank("Sq(n) == ???"),
+		Hint: L{
+			"en": `Replace ??? with an expression using n. If TLC then reports "Unknown operator", a name is used above its definition: move that definition down.`,
+			"ko": `??? 를 n 을 쓰는 식으로 바꾸세요. 그다음 TLC 가 "Unknown operator" 를 보고하면 이름이 정의보다 위에서 쓰인 것이니, 그 정의를 아래로 옮기세요.`,
+		},
+	},
+	{
+		Name:   "008_conditionals",
+		Expect: constant(),
+		Broken: Broken{Exit: exitParse, Contains: "IF THEN ELSE starting at line", At: "Abs(x) == IF"},
+		Hint: L{
+			"en": "IF needs an ELSE. A CASE whose conditions can all be false needs an OTHER. d is the difference between a and b.",
+			"ko": "IF 에는 ELSE 가 필요합니다. 조건이 모두 거짓일 수 있는 CASE 에는 OTHER 가 필요합니다. d 는 a 와 b 의 차입니다.",
+		},
+	},
+	{
+		Name:   "009_sets",
+		Expect: constant(),
+		Broken: blank("ASSUME {3, 1, 2} = {1, 2, ???}"),
+		Hint: L{
+			"en": "Order and repetition do not matter in a set. The empty set is a subset of every set.",
+			"ko": "집합에서는 순서와 중복이 상관없습니다. 공집합은 모든 집합의 부분집합입니다.",
+		},
+	},
+	{
+		Name:   "010_quantifiers",
+		Expect: constant(),
+		Broken: blank("AllPositive(S) == ???"),
+		Hint: L{
+			"en": `AllPositive is a \A formula over S, and SomeAbove is a \E formula over S.`,
+			"ko": `AllPositive 는 S 에 대한 \A 식이고, SomeAbove 는 S 에 대한 \E 식입니다.`,
+		},
+	},
+	{
+		Name:   "011_set_builders",
+		Expect: constant(),
+		Broken: blank("MultiplesOf3(S) == ???"),
+		Hint: L{
+			"en": `MultiplesOf3 filters S: {x \in S : ...}. Inc maps S: {... : x \in S}.`,
+			"ko": `MultiplesOf3 는 S 를 거릅니다: {x \in S : ...}. Inc 는 S 를 변환합니다: {... : x \in S}.`,
+		},
+	},
+	{
+		Name:   "012_subset_union",
+		Expect: constant(),
+		Broken: blank("ASSUME Cardinality({4, 5, 6}) = ???"),
+		Hint: L{
+			"en": "A set of n elements has 2^n subsets. The empty set has exactly one subset: itself.",
+			"ko": "원소가 n 개인 집합의 부분집합은 2^n 개입니다. 공집합의 부분집합은 자기 자신 하나뿐입니다.",
+		},
+	},
+	{
+		Name:   "013_choose",
+		Expect: constant(),
+		Broken: blank(`Max(S) == CHOOSE x \in S : ???`),
+		Hint: L{
+			"en": "x is the largest element of S when every y in S is at most x.",
+			"ko": "S 의 모든 y 가 x 이하이면 x 가 가장 큰 원소입니다.",
+		},
+	},
+	{
+		Name:   "014_functions",
+		Expect: constant(),
+		Broken: blank("balance == ???"),
+		Hint: L{
+			"en": `balance maps each of "alice" and "bob" to 10: [a \in ... |-> ...].`,
+			"ko": `balance 는 "alice" 와 "bob" 각각을 10 으로 보냅니다: [a \in ... |-> ...].`,
+		},
+	},
+	{
+		Name:   "015_function_sets",
+		Expect: constant(),
+		Broken: blank("ASSUME Cardinality(Flags) = ???"),
+		Hint: L{
+			"en": "[S -> T] has |T|^|S| elements, and the domain of each one is exactly S.",
+			"ko": "[S -> T] 의 원소는 |T|^|S| 개이고, 각 원소의 정의역은 정확히 S 입니다.",
+		},
+	},
+	{
+		Name:   "016_except",
+		Expect: constant(),
+		Broken: blank("Move(b, from, to, amt) == ???"),
+		Hint: L{
+			"en": "Change two keys in one EXCEPT: subtract at from, add at to. @ is the old value.",
+			"ko": "EXCEPT 하나로 키 두 개를 바꾸세요: from 에서 빼고 to 에 더합니다. @ 는 원래 값입니다.",
+		},
+	},
+	{
+		Name:   "017_records",
+		Expect: constant(),
+		Broken: blank("ASSUME r.to = ???"),
+		Hint: L{
+			"en": "A record is a function from field names to values, so its DOMAIN is a set of strings.",
+			"ko": "레코드는 필드 이름에서 값으로 가는 함수이므로, DOMAIN 은 문자열의 집합입니다.",
+		},
+	},
+	{
+		Name:   "018_sequences",
+		Expect: constant(),
+		Broken: blank("Send(queue, m) == ???"),
+		Hint: L{
+			"en": "Send uses Append. Receive keeps everything after the first message.",
+			"ko": "Send 는 Append 를 씁니다. Receive 는 첫 메시지 뒤의 나머지를 남깁니다.",
+		},
+	},
+	{
+		Name:   "019_recursion",
+		Expect: constant(),
+		Broken: blank("Product(S) == ???"),
+		Hint: L{
+			"en": "Product mirrors Sum, with 1 for the empty set. Then declare both above their definitions: RECURSIVE Sum(_), Product(_).",
+			"ko": "Product 는 Sum 과 같은 모양이고, 공집합이면 1 입니다. 그다음 두 정의 위에 둘 다 선언하세요: RECURSIVE Sum(_), Product(_).",
+		},
+	},
+	{
+		Name:   "020_quiz1",
+		Expect: constant(),
+		Broken: blank("Requests == ???"),
+		Hint: L{
+			"en": "Requests filters a set of records (017, 011). Assignments is a set of functions (015). To count requests: ordered pairs of different accounts, times the amounts.",
+			"ko": "Requests 는 레코드 집합을 거른 것입니다 (017, 011). Assignments 는 함수의 집합입니다 (015). 요청 수: 서로 다른 계좌의 순서쌍 수 곱하기 금액 수.",
+		},
+	},
+}
+
+// blank is the Broken for an exercise whose first problem is a ??? on the line containing at.
+func blank(at string) Broken {
+	return Broken{Exit: exitParse, Contains: "Lexical error", At: at}
 }
 
 // Exercise is a single exercise.
