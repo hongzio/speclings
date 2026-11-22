@@ -1,0 +1,10 @@
+TLC2 Version 2026.11.19.180144 (rev: bc1b506)
+Running breadth-first search Model-Checking with fp 130 and seed -6764655710717154281 with 1 worker on 8 cores with 3641MB heap and 64MB offheap memory [pid: 1] (Mac OS X 27.0.1 aarch64, Eclipse Adoptium 21.0.13.1 64bit, MSBDiskFPSet, DiskStateQueue).
+Parsing file /tmp/x/Asm.tla
+Parsing file /tmp/tlc-1/Naturals.tla (jar:file:/opt/tla2tools.jar!/tla2sany/StandardModules/Naturals.tla)
+Semantic processing of module Naturals
+Semantic processing of module Asm
+Linting of module Asm
+Starting... (2026-11-22 15:31:31)
+Error: Assumption line 5, col 8 to line 5, col 26 of module Asm is false.
+Finished in 00s at (2026-11-22 15:31:31)

@@ -1,0 +1,39 @@
+TLC2 Version 2026.11.19.180144 (rev: bc1b506)
+Running breadth-first search Model-Checking with fp 110 and seed 3055332812115200401 with 1 worker on 8 cores with 3641MB heap and 64MB offheap memory [pid: 1] (Mac OS X 27.0.1 aarch64, Eclipse Adoptium 21.0.13.1 64bit, MSBDiskFPSet, DiskStateQueue).
+Parsing file /tmp/x/Grid.tla
+Parsing file /tmp/tlc-1/Naturals.tla (jar:file:/opt/tla2tools.jar!/tla2sany/StandardModules/Naturals.tla)
+Semantic processing of module Naturals
+Semantic processing of module Grid
+Linting of module Grid
+Starting... (2026-11-22 15:31:30)
+Computing initial states...
+Finished computing initial states: 1 distinct state generated at 2026-11-22 15:31:30.
+Error: Invariant Small is violated.
+Error: The behavior up to this point is:
+State 1: <Initial predicate>
+/\ x = 0
+/\ y = 0
+
+State 2: <Next line 5, col 12 to line 5, col 46 of module Grid>
+/\ x = 1
+/\ y = 0
+
+State 3: <Next line 5, col 12 to line 5, col 46 of module Grid>
+/\ x = 2
+/\ y = 0
+
+State 4: <Next line 5, col 12 to line 5, col 46 of module Grid>
+/\ x = 3
+/\ y = 0
+
+State 5: <Next line 5, col 12 to line 5, col 46 of module Grid>
+/\ x = 4
+/\ y = 0
+
+State 6: <Next line 5, col 12 to line 5, col 46 of module Grid>
+/\ x = 5
+/\ y = 0
+
+22 states generated, 16 distinct states found, 4 states left on queue.
+The depth of the complete state graph search is 6.
+Finished in 00s at (2026-11-22 15:31:30)

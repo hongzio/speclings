@@ -1,0 +1,19 @@
+[tools]
+go = "1.27.3"
+java = "temurin-21"
+
+# A single jar containing TLC, SANY, PlusCal and the REPL
+# 1.8.0 (pre-release): CommunityModules needs the 1.8 API (KSubsetValue etc.) and does not work with 1.7.4
+"http:tla2tools" = { version = "1.8.0", url = "https://github.com/tlaplus/tlaplus/releases/download/v{{version}}/tla2tools.jar" }
+
+# CommunityModules (SequencesExt, FiniteSetsExt, ...), jar with dependencies
+"http:tla-community-modules" = { version = "202611191749", url = "https://github.com/tlaplus/CommunityModules/releases/download/{{version}}/CommunityModules-deps-{{version}}.jar" }
+
+# Apalache: SMT-based symbolic model checker
+"github:apalache-mc/apalache" = { version = "0.63.0", asset_pattern = "apalache-{{version}}.tgz" }
+
+[env]
+GOPATH = "{{config_root}}/.mise/go"
+GOBIN = "{{config_root}}/.mise/go/bin"
+# bin/: the tlc wrapper (bin/_common.sh builds the classpath from the jars above) and the tlings runner
+_.path = ["{{config_root}}/bin", "{{config_root}}/.mise/go/bin"]
