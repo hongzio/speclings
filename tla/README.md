@@ -5,7 +5,7 @@
 Learn TLA+ and TLC by fixing small, broken TLA+ specs one at a time.
 Modeled after [ziglings](https://codeberg.org/ziglings/exercises/).
 
-> **Work in progress:** there are 32 exercises so far (Part 0: tools, Part 1: values, Part 2: state machines), and more are being added.
+> **Work in progress:** there are 42 exercises so far (Part 0: tools, Part 1: values, Part 2: state machines, Part 3: concurrency), and more are being added.
 
 ## Getting started
 
@@ -66,6 +66,7 @@ Each TLC run is stopped after 30 seconds. Exercises finish in about a second, so
 exercises/en/     original exercises (broken), English. The reference language
 exercises/ko/     Korean translations. Only comments differ; code must match en
 solutions/        solutions (English). Only look when you are stuck
+go/               Go programs that go with Part 3. Run them as the exercises say, e.g. go run -race ./go/034_lost_update
 work/             your workspace, created by tlings
 cmd/tlings/       the runner. Exercise order and expectations are in cmd/tlings/exercises.go
 ```

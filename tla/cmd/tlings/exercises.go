@@ -307,6 +307,98 @@ var exercises = []Exercise{
 			"ko": "작은 통을 큰 통에 부으면 Min(small, 5 - big) 갤런이 옮겨집니다. LET 으로 그 양에 이름을 붙이세요. NotFour 는 big # 4 입니다. .cfg 에 NotFour 를 추가하는 것도 잊지 마세요.",
 		},
 	},
+
+	// Part 3: concurrency, with Go programs in go/ to run alongside.
+	{
+		Name:   "033_pc",
+		Expect: holds(3),
+		Broken: blank("Write == ???"),
+		Hint: L{
+			"en": `Write has the same shape as Read: guard pc = "write", set counter' to tmp + 1, move pc to "done", and leave tmp unchanged.`,
+			"ko": `Write 는 Read 와 같은 모양입니다: guard 는 pc = "write", counter' 는 tmp + 1, pc 는 "done" 으로, tmp 는 그대로.`,
+		},
+	},
+	{
+		Name:   "034_lost_update",
+		Expect: violates("Correct", 5),
+		Broken: blank("Write(w) == ???"),
+		Hint: L{
+			"en": `Like Write in 033, but per goroutine: guard pc[w] = "write", counter' = tmp[w] + 1, and pc' = [pc EXCEPT ![w] = "done"]. Writing counter' = counter + 1 instead would hide the race.`,
+			"ko": `033 의 Write 와 같지만 goroutine 별입니다: guard 는 pc[w] = "write", counter' = tmp[w] + 1, pc' = [pc EXCEPT ![w] = "done"]. counter' = counter + 1 로 쓰면 race 가 가려집니다.`,
+		},
+	},
+	{
+		Name:   "035_mutex",
+		Expect: holds(17),
+		Broken: blank("Lock(w) == ???"),
+		Hint: L{
+			"en": `Lock(w): pc[w] = "lock" and lock = NoOne; then lock' = w and pc moves to "read". Unlock(w): lock' = NoOne and pc moves to "done".`,
+			"ko": `Lock(w): pc[w] = "lock" 이고 lock = NoOne 일 때, lock' = w 로 하고 pc 를 "read" 로. Unlock(w): lock' = NoOne 으로 하고 pc 를 "done" 으로.`,
+		},
+	},
+	{
+		Name:   "036_atomic",
+		Expect: holds(4),
+		Broken: blank("Incr(w) == ???"),
+		Hint: L{
+			"en": `One action does it all: guard pc[w] = "incr", counter' = counter + 1, pc moves to "done".`,
+			"ko": `action 하나가 전부 합니다: guard 는 pc[w] = "incr", counter' = counter + 1, pc 는 "done" 으로.`,
+		},
+	},
+	{
+		Name:   "037_quiz3",
+		Expect: holds(320),
+		Broken: Broken{Exit: exitSafety, Contains: "Invariant NoOverdraft is violated"},
+		Hint: L{
+			"en": `In the trace, both goroutines pass Check before either withdraws. CheckAndWithdraw(w) does Check's test and, if the balance suffices, Withdraw's update in the same step (IF ... THEN ... ELSE), moving pc straight to "deposit" or "done".`,
+			"ko": `trace 를 보면 두 goroutine 이 모두 Check 를 통과한 뒤에 출금합니다. CheckAndWithdraw(w) 는 Check 의 검사와, 잔고가 충분하면 Withdraw 의 갱신을 한 step 에서 합니다 (IF ... THEN ... ELSE). pc 는 곧바로 "deposit" 이나 "done" 으로.`,
+		},
+	},
+	{
+		Name:   "038_buffered",
+		Expect: holds(9),
+		Broken: blank("Send == ???"),
+		Hint: L{
+			"en": "Send: guards sent < N and Len(ch) < Cap; Append sent + 1 and increase sent. Recv: guards Len(got) < N and ch # <<>>; move Head(ch) to got and keep Tail(ch).",
+			"ko": "Send: guard 는 sent < N 과 Len(ch) < Cap. sent + 1 을 Append 하고 sent 를 늘립니다. Recv: guard 는 Len(got) < N 과 ch # <<>>. Head(ch) 를 got 으로 옮기고 Tail(ch) 를 남깁니다.",
+		},
+	},
+	{
+		Name:   "039_deadlock",
+		Expect: deadlocks(3),
+		Broken: blank("SyncA == ???"),
+		Hint: L{
+			"en": `SyncA: mainPc = "sendA" and workerPc = "recvA"; then main is done and the worker moves to "sendB". SyncB: workerPc = "sendB" and mainPc = "recvB"; then the worker is done and main moves to "sendA".`,
+			"ko": `SyncA: mainPc = "sendA" 이고 workerPc = "recvA" 일 때, main 은 "done" 으로, worker 는 "sendB" 로. SyncB: workerPc = "sendB" 이고 mainPc = "recvB" 일 때, worker 는 "done" 으로, main 은 "sendA" 로.`,
+		},
+	},
+	{
+		Name:   "040_waitgroup",
+		Expect: holds(7),
+		Broken: Broken{Exit: exitSafety, Contains: "Invariant AllWorkDone is violated"},
+		Hint: L{
+			"en": `MainAdd == mainPc = "add" /\ wg' = Cardinality(Workers) /\ mainPc' = "spawn" /\ UNCHANGED pc. Put MainAdd in Next, and drop Add(w) from both its definition and Next.`,
+			"ko": `MainAdd == mainPc = "add" /\ wg' = Cardinality(Workers) /\ mainPc' = "spawn" /\ UNCHANGED pc. MainAdd 를 Next 에 넣고, Add(w) 는 정의와 Next 에서 모두 빼세요.`,
+		},
+	},
+	{
+		Name:   "041_symmetry",
+		Expect: holds(13),
+		Broken: blank("Symm == ???"),
+		Hint: L{
+			"en": "Symm == Permutations(Workers). Then add the line SYMMETRY Symm to the .cfg.",
+			"ko": "Symm == Permutations(Workers) 입니다. 그다음 .cfg 에 SYMMETRY Symm 줄을 추가하세요.",
+		},
+	},
+	{
+		Name:   "042_quiz4",
+		Expect: holds(12),
+		Broken: blank("NoPanic == ???"),
+		Hint: L{
+			"en": `NoPanic == \A p \in Producers : pc[p] # "panic", listed under INVARIANTS in the .cfg. Close then needs the guard \A p \in Producers : pc[p] = "done".`,
+			"ko": `NoPanic == \A p \in Producers : pc[p] # "panic" 이고, .cfg 의 INVARIANTS 에 추가합니다. 그다음 Close 에 guard \A p \in Producers : pc[p] = "done" 이 필요합니다.`,
+		},
+	},
 }
 
 // blank is the Broken for an exercise whose first problem is a ??? on the line containing at.

@@ -5,7 +5,7 @@
 작게 "고장 난" TLA+ 스펙을 하나씩 고치면서 TLA+ 와 TLC 를 배우는 튜토리얼입니다.
 [ziglings](https://codeberg.org/ziglings/exercises/) 방식을 따릅니다.
 
-> **작업 중:** 지금은 32문제(Part 0: 도구, Part 1: 값, Part 2: 상태 기계)가 있고, 계속 추가하고 있습니다.
+> **작업 중:** 지금은 42문제(Part 0: 도구, Part 1: 값, Part 2: 상태 기계, Part 3: 동시성)가 있고, 계속 추가하고 있습니다.
 
 ## 시작하기
 
@@ -65,6 +65,7 @@ TLC 는 실행마다 30 초가 지나면 멈춥니다. 문제는 1 초 안팎이
 exercises/en/     원본 문제(고장 난 상태), 영어. 기준 언어
 exercises/ko/     한국어 번역. 주석만 다르고 코드는 en 과 같아야 한다
 solutions/        정답 (영어). 막혔을 때만 보세요
+go/               Part 3 에 딸린 Go 프로그램. 문제에 적힌 대로 실행 (예: go run -race ./go/034_lost_update)
 work/             내 작업 공간. tlings 가 만든다
 cmd/tlings/       러너. 문제 순서와 기대 결과는 cmd/tlings/exercises.go
 ```
