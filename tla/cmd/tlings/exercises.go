@@ -197,6 +197,116 @@ var exercises = []Exercise{
 			"ko": "Requests 는 레코드 집합을 거른 것입니다 (017, 011). Assignments 는 함수의 집합입니다 (015). 요청 수: 서로 다른 계좌의 순서쌍 수 곱하기 금액 수.",
 		},
 	},
+
+	// Part 2: state machines. TLC explores states, so expectations include state counts.
+	{
+		Name:   "021_variables",
+		Expect: holds(12),
+		Broken: blank("Next == ???"),
+		Hint: L{
+			"en": "hour' is the hour in the next state. After 11 comes 0: use % 12.",
+			"ko": "hour' 는 다음 상태의 시각입니다. 11 다음은 0 이니 % 12 를 쓰세요.",
+		},
+	},
+	{
+		Name:   "022_unchanged",
+		Expect: holds(24),
+		Broken: Broken{Exit: exitError, Contains: "not completely specified"},
+		Hint: L{
+			"en": "Next must also say what alarm is in the next state. Add a conjunct with UNCHANGED.",
+			"ko": "Next 는 다음 상태의 alarm 도 정해야 합니다. UNCHANGED 로 된 연언을 추가하세요.",
+		},
+	},
+	{
+		Name:   "023_actions",
+		Expect: holds(3),
+		Broken: blank("Lock   == ???"),
+		Hint: L{
+			"en": `Lock has the guards of Open (door = "closed" and ~locked), sets locked' to TRUE and leaves door unchanged. Then add \/ Lock to Next.`,
+			"ko": `Lock 은 Open 과 같은 guard(door = "closed", ~locked)를 갖고, locked' 를 TRUE 로 하고, door 는 그대로 둡니다. 그다음 Next 에 \/ Lock 을 더하세요.`,
+		},
+	},
+	{
+		Name:   "024_exists",
+		Expect: holds(8),
+		Broken: blank("Next == ???"),
+		Hint: L{
+			"en": `"Some worker finishes" is \E w \in Workers : Finish(w). Combine it with Restart using \/.`,
+			"ko": `"어떤 worker 가 끝낸다" 는 \E w \in Workers : Finish(w) 입니다. Restart 와 \/ 로 합치세요.`,
+		},
+	},
+	{
+		Name:   "025_evaluation",
+		Expect: holds(9),
+		Broken: Broken{Exit: exitError, Contains: "either undefined or not an operator", At: `Init == /\ x % 2 = 0`},
+		Hint: L{
+			"en": `In Init and in Next, swap the two conjuncts so that x \in 0..8 and x' \in 0..8 come first.`,
+			"ko": `Init 과 Next 에서 두 연언의 순서를 바꿔 x \in 0..8 과 x' \in 0..8 이 먼저 오게 하세요.`,
+		},
+	},
+	{
+		Name:   "026_invariants",
+		Expect: violates("TypeOK", 5),
+		Broken: blank("TypeOK == ???"),
+		Hint: L{
+			"en": `TypeOK == cars \in 0..Capacity. Then add the line INVARIANT TypeOK to the .cfg.`,
+			"ko": `TypeOK == cars \in 0..Capacity 입니다. 그다음 .cfg 에 INVARIANT TypeOK 줄을 추가하세요.`,
+		},
+	},
+	{
+		Name:   "027_counterexample",
+		Expect: holds(5),
+		Broken: Broken{Exit: exitSafety, Contains: "Invariant Safe is violated"},
+		Hint: L{
+			"en": "Look at the last step of the trace: ew turned green while ns was not red. Compare the guard of EwTurn with the guard of NsTurn.",
+			"ko": "trace 의 마지막 step 을 보세요. ns 가 빨간불이 아닌데 ew 가 초록불이 됐습니다. EwTurn 의 guard 를 NsTurn 의 guard 와 비교해 보세요.",
+		},
+	},
+	{
+		Name:   "028_deadlock",
+		Expect: holds(5),
+		Broken: Broken{Exit: exitDeadlock, Contains: "Deadlock reached"},
+		Hint: L{
+			"en": `The work is done when status = "done". Terminating then leaves vars unchanged. Add it to Next with \/.`,
+			"ko": `status = "done" 이면 일이 끝난 것입니다. Terminating 은 그때 vars 를 그대로 둡니다. Next 에 \/ 로 더하세요.`,
+		},
+	},
+	{
+		Name:   "029_constants",
+		Expect: holds(7),
+		Broken: Broken{Exit: exitConfig, Contains: "is not assigned a value by the configuration file"},
+		Hint: L{
+			"en": "In the .cfg, write CONSTANTS, then Capacity = 2 and Cars = {c1, c2, c3} on lines of their own.",
+			"ko": ".cfg 에 CONSTANTS 를 쓰고, 그 아래 줄에 각각 Capacity = 2 와 Cars = {c1, c2, c3} 를 쓰세요.",
+		},
+	},
+	{
+		Name:   "030_constraint",
+		Expect: holds(6),
+		Broken: Broken{Exit: exitTimeout, Contains: "Computing initial states"},
+		Hint: L{
+			"en": "SentBound == sent <= 5. Then add the line CONSTRAINT SentBound to the .cfg.",
+			"ko": "SentBound == sent <= 5 입니다. 그다음 .cfg 에 CONSTRAINT SentBound 줄을 추가하세요.",
+		},
+	},
+	{
+		Name:   "031_spec",
+		Expect: holds(24),
+		Broken: blank("vars == ???"),
+		Hint: L{
+			"en": "vars is the tuple of all variables, <<...>>. Spec combines Init and Next exactly as the comment shows.",
+			"ko": "vars 는 모든 변수의 튜플 <<...>> 입니다. Spec 은 주석에 나온 그대로 Init 과 Next 를 합칩니다.",
+		},
+	},
+	{
+		Name:   "032_quiz2",
+		Expect: violates("NotFour", 7),
+		Broken: blank("SmallToBig == ???"),
+		Hint: L{
+			"en": "Pouring small into big moves Min(small, 5 - big) gallons; use LET to name that amount. NotFour is big # 4. Remember to add NotFour to the .cfg.",
+			"ko": "작은 통을 큰 통에 부으면 Min(small, 5 - big) 갤런이 옮겨집니다. LET 으로 그 양에 이름을 붙이세요. NotFour 는 big # 4 입니다. .cfg 에 NotFour 를 추가하는 것도 잊지 마세요.",
+		},
+	},
 }
 
 // blank is the Broken for an exercise whose first problem is a ??? on the line containing at.
