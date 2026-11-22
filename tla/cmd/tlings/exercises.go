@@ -399,6 +399,62 @@ var exercises = []Exercise{
 			"ko": `NoPanic == \A p \in Producers : pc[p] # "panic" 이고, .cfg 의 INVARIANTS 에 추가합니다. 그다음 Close 에 guard \A p \in Producers : pc[p] = "done" 이 필요합니다.`,
 		},
 	},
+
+	// Part 4: temporal properties and fairness.
+	{
+		Name:   "043_properties",
+		Expect: violatesProperty("NeverBackwards"),
+		Broken: blank("NeverBackwards == ???"),
+		Hint: L{
+			"en": `NeverBackwards == [][version' >= version]_version. Then add the line PROPERTY NeverBackwards to the .cfg.`,
+			"ko": `NeverBackwards == [][version' >= version]_version 입니다. 그다음 .cfg 에 PROPERTY NeverBackwards 줄을 추가하세요.`,
+		},
+	},
+	{
+		Name:   "044_eventually",
+		Expect: holds(5),
+		Broken: Broken{Exit: exitProperty, Contains: "Temporal property EventuallyDone was violated"},
+		Hint: L{
+			"en": `Spec == Init /\ [][Next]_vars /\ WF_vars(Next)`,
+			"ko": `Spec == Init /\ [][Next]_vars /\ WF_vars(Next)`,
+		},
+	},
+	{
+		Name:   "045_leads_to",
+		Expect: violatesProperty("Answered"),
+		Broken: blank("Answered == ???"),
+		Hint: L{
+			"en": `Answered == \A c \in Clients : (state[c] = "waiting") ~> (state[c] = "answered"), and PROPERTY Answered in the .cfg.`,
+			"ko": `Answered == \A c \in Clients : (state[c] = "waiting") ~> (state[c] = "answered") 이고, .cfg 에 PROPERTY Answered 를 추가합니다.`,
+		},
+	},
+	{
+		Name:   "046_fair_goroutines",
+		Expect: holds(9),
+		Broken: Broken{Exit: exitProperty, Contains: "Temporal property Progress was violated"},
+		Hint: L{
+			"en": `Spec == Init /\ [][Next]_vars /\ \A w \in Workers : WF_vars(Tick(w))`,
+			"ko": `Spec == Init /\ [][Next]_vars /\ \A w \in Workers : WF_vars(Tick(w))`,
+		},
+	},
+	{
+		Name:   "047_strong_fairness",
+		Expect: holds(3),
+		Broken: Broken{Exit: exitProperty, Contains: "Temporal property NoStarvation was violated"},
+		Hint: L{
+			"en": "Change WF_vars(Lock(w)) to SF_vars(Lock(w)). Unlock can keep weak fairness: once a goroutine holds the lock, Unlock stays enabled.",
+			"ko": "WF_vars(Lock(w)) 를 SF_vars(Lock(w)) 로 바꾸세요. Unlock 은 약한 공정성으로 충분합니다. lock 을 쥔 뒤에는 Unlock 이 계속 가능하기 때문입니다.",
+		},
+	},
+	{
+		Name:   "048_quiz5",
+		Expect: holds(12),
+		Broken: blank("Termination == ???"),
+		Hint: L{
+			"en": `Termination == <>(\A w \in Workers : pc[w] = "done"), added to the .cfg as a PROPERTY. Then make First "a" and Second "b" for every goroutine.`,
+			"ko": `Termination == <>(\A w \in Workers : pc[w] = "done") 이고, .cfg 에 PROPERTY 로 추가합니다. 그다음 모든 goroutine 의 First 를 "a", Second 를 "b" 로 하세요.`,
+		},
+	},
 }
 
 // blank is the Broken for an exercise whose first problem is a ??? on the line containing at.

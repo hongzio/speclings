@@ -5,7 +5,7 @@
 작게 "고장 난" TLA+ 스펙을 하나씩 고치면서 TLA+ 와 TLC 를 배우는 튜토리얼입니다.
 [ziglings](https://codeberg.org/ziglings/exercises/) 방식을 따릅니다.
 
-> **작업 중:** 지금은 42문제(Part 0: 도구, Part 1: 값, Part 2: 상태 기계, Part 3: 동시성)가 있고, 계속 추가하고 있습니다.
+> **작업 중:** 지금은 48문제(Part 0: 도구, Part 1: 값, Part 2: 상태 기계, Part 3: 동시성, Part 4: 시간 속성)가 있고, 계속 추가하고 있습니다.
 
 ## 시작하기
 

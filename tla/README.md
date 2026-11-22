@@ -5,7 +5,7 @@
 Learn TLA+ and TLC by fixing small, broken TLA+ specs one at a time.
 Modeled after [ziglings](https://codeberg.org/ziglings/exercises/).
 
-> **Work in progress:** there are 42 exercises so far (Part 0: tools, Part 1: values, Part 2: state machines, Part 3: concurrency), and more are being added.
+> **Work in progress:** there are 48 exercises so far (Part 0: tools, Part 1: values, Part 2: state machines, Part 3: concurrency, Part 4: temporal properties), and more are being added.
 
 ## Getting started
 
