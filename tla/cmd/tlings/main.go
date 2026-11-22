@@ -171,8 +171,8 @@ func checkManifest(root string) error {
 		if prefix := fmt.Sprintf("%03d_", i+1); !strings.HasPrefix(ex.Name, prefix) {
 			return fmt.Errorf("exercise #%d is named %q; it must start with %q", i+1, ex.Name, prefix)
 		}
-		for _, ext := range []string{".tla", ".cfg"} {
-			if p := filepath.Join(root, "exercises", baseLang, ex.Name+ext); !isFile(p) {
+		for _, f := range ex.files() {
+			if p := filepath.Join(root, "exercises", baseLang, f); !isFile(p) {
 				return fmt.Errorf("missing %s", p)
 			}
 		}

@@ -78,30 +78,30 @@ func source(root, lang, file string) (path string, fallback bool) {
 	return filepath.Join(root, "exercises", baseLang, file), lang != baseLang
 }
 
-// ensure copies ex's .tla and .cfg into work/ unless they are already there.
-// It returns fallback = true if the .tla fell back to the English version.
+// ensure copies ex's files (.tla, .cfg and helper modules) into work/ unless they
+// are already there. It returns fallback = true if the .tla fell back to English.
 func (w *workspace) ensure(ex Exercise) (fallback bool, err error) {
 	if err := os.MkdirAll(w.dir(), 0o755); err != nil {
 		return false, err
 	}
-	for _, ext := range []string{".tla", ".cfg"} {
-		dst := filepath.Join(w.dir(), ex.Name+ext)
+	for _, f := range ex.files() {
+		dst := filepath.Join(w.dir(), f)
 		if isFile(dst) {
 			continue
 		}
-		src, fb := source(w.root, w.state.Lang, ex.Name+ext)
+		src, fb := source(w.root, w.state.Lang, f)
 		if err := copyFile(src, dst); err != nil {
 			return false, err
 		}
-		fallback = fallback || (fb && ext == ".tla")
+		fallback = fallback || (fb && f == ex.Name+".tla")
 	}
 	return fallback, nil
 }
 
 // restore resets ex to the original, keeping the learner's files as .bak.
 func (w *workspace) restore(ex Exercise) (backups []string, err error) {
-	for _, ext := range []string{".tla", ".cfg"} {
-		p := filepath.Join(w.dir(), ex.Name+ext)
+	for _, f := range ex.files() {
+		p := filepath.Join(w.dir(), f)
 		if !isFile(p) {
 			continue
 		}

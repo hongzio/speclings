@@ -45,6 +45,14 @@ func TestParseResult(t *testing.T) {
 	}
 }
 
+func TestParseRefinementViolation(t *testing.T) {
+	out := "Error: Action property line 10, col 17 to line 10, col 29 of module 050_AtomicCounter is violated.\n"
+	want := "line 10, col 17 to line 10, col 29 of module 050_AtomicCounter"
+	if r := parseResult(exitProperty, out); r.Violated != want {
+		t.Errorf("Violated = %q, want %q", r.Violated, want)
+	}
+}
+
 func TestParseDistinctWithCommas(t *testing.T) {
 	r := parseResult(0, "1,234 states generated, 1,000 distinct states found, 0 states left on queue.")
 	if r.Distinct != 1000 {

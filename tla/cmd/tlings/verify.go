@@ -107,10 +107,15 @@ func verifyOriginal(ctx context.Context, root string, ex Exercise, lang string) 
 		return "–", m.VerifyMissing
 	}
 	if lang != baseLang {
-		for _, ext := range []string{".tla", ".cfg"} {
-			if diff := codeDiff(filepath.Join(root, "exercises", baseLang, ex.Name+ext), filepath.Join(dir, ex.Name+ext)); diff != "" {
-				return "✗", fmt.Sprintf(m.VerifyCodeDiffers, ex.Name+ext+" "+diff)
+		for _, f := range ex.files() {
+			if diff := codeDiff(filepath.Join(root, "exercises", baseLang, f), filepath.Join(dir, f)); diff != "" {
+				return "✗", fmt.Sprintf(m.VerifyCodeDiffers, f+" "+diff)
 			}
+		}
+	}
+	for _, mod := range ex.Modules {
+		if !isFile(filepath.Join(dir, mod+".tla")) {
+			return "✗", fmt.Sprintf(m.VerifyCodeDiffers, mod+".tla: missing")
 		}
 	}
 	src, err := os.ReadFile(filepath.Join(dir, ex.Name+".tla"))
@@ -138,7 +143,8 @@ func verifyOriginal(ctx context.Context, root string, ex Exercise, lang string) 
 const verifyTimeout = 10 * time.Second
 
 // verifySolution copies solutions/<Name>.tla to a temporary directory and checks it.
-// It uses solutions/<Name>.cfg if present, otherwise the en original's .cfg.
+// It uses solutions/<Name>.cfg if present, otherwise the en original's .cfg, and the
+// en originals of the helper modules.
 func verifySolution(ctx context.Context, root string, ex Exercise) (mark, detail string) {
 	tmp, err := os.MkdirTemp("", "tlings-sol-")
 	if err != nil {
@@ -150,10 +156,14 @@ func verifySolution(ctx context.Context, root string, ex Exercise) (mark, detail
 	if !isFile(cfg) {
 		cfg = filepath.Join(root, "exercises", baseLang, ex.Name+".cfg")
 	}
-	for src, dst := range map[string]string{
+	copies := map[string]string{
 		filepath.Join(root, "solutions", ex.Name+".tla"): ex.Name + ".tla",
 		cfg: ex.Name + ".cfg",
-	} {
+	}
+	for _, mod := range ex.Modules {
+		copies[filepath.Join(root, "exercises", baseLang, mod+".tla")] = mod + ".tla"
+	}
+	for src, dst := range copies {
 		if err := copyFile(src, filepath.Join(tmp, dst)); err != nil {
 			return "✗", err.Error()
 		}

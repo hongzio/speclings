@@ -41,7 +41,8 @@ type Result struct {
 
 var (
 	reDistinct = regexp.MustCompile(`([\d,]+) distinct states found`)
-	reViolated = regexp.MustCompile(`(?m)^Error: (?:Invariant|Action property|Temporal property) (\S+) (?:is|was) violated\.`)
+	// A refinement failure names a location instead: "Action property line 10, col 17 to ... of module M is violated."
+	reViolated = regexp.MustCompile(`(?m)^Error: (?:Invariant|Action property|Temporal property) (.+?) (?:is|was) violated\.$`)
 	reState    = regexp.MustCompile(`(?m)^State (\d+): `)
 )
 

@@ -468,6 +468,19 @@ type Exercise struct {
 	Expect Expect // what TLC should report once the exercise is fixed
 	Broken Broken // how the original (unfixed) exercise should fail; used by -verify only
 	Hint   L
+	// Modules are helper modules (file names without .tla) that the exercise
+	// INSTANCEs or EXTENDs. They are copied to work/ with it. Name them after the
+	// exercise, e.g. 050_AtomicCounter, because work/ is shared by all exercises.
+	Modules []string
+}
+
+// files lists the exercise's files: the .tla and .cfg, then its helper modules.
+func (ex Exercise) files() []string {
+	fs := []string{ex.Name + ".tla", ex.Name + ".cfg"}
+	for _, m := range ex.Modules {
+		fs = append(fs, m+".tla")
+	}
+	return fs
 }
 
 // Broken describes how an original exercise must fail: "in the intended way".

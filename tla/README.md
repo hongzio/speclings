@@ -101,6 +101,8 @@ The `ASSUME` line containing `Broken.At` only has to keep that snippet, so an ex
 
 To add a language, add a `messages` value in `cmd/tlings/messages.go` and an `exercises/<lang>/` directory.
 
+An exercise that INSTANCEs or EXTENDs a helper module lists it in `Modules`. tlings copies helper modules to `work/` with the exercise, and `-verify` checks that their code matches across languages too. Prefix their names with the exercise number (`050_AtomicCounter`), because `work/` is shared.
+
 ## License
 
 [MIT](LICENSE)
