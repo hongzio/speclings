@@ -18,7 +18,9 @@ EXTENDS Integers
 \* This parking lot has room for Capacity cars. Write TypeOK, "cars is a
 \* number from 0 to Capacity", and add it to the .cfg as an invariant.
 \* The spec has a bug, so this time the goal is a violation: tlings passes
-\* when TLC reports TypeOK violated. You fix the bug in the next exercise.
+\* when TLC reports TypeOK violated, and shows you the counterexample. You
+\* do not need to fix the bug: the next exercise is about reading
+\* counterexamples like this one and fixing what they show.
 
 Capacity == 3
 

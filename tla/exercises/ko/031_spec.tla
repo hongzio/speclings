@@ -15,7 +15,8 @@ EXTENDS Integers
 \* 할 수 있는 스펙은 무슨 일이든 결국 일어난다고 약속하지 않습니다.
 \*
 \* .cfg 에서는 SPECIFICATION Spec 이 INIT 과 NEXT 를 대신합니다. 이 .cfg
-\* 는 이미 그것을 쓰고, 이후 문제들도 그렇습니다. vars 와 Spec 을 쓰세요.
+\* 는 이미 그것을 쓰고, Part 3 부터의 문제들도 그렇습니다. vars 와 Spec 을
+\* 쓰세요.
 
 VARIABLES hour, alarm
 

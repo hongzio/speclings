@@ -15,7 +15,7 @@ EXTENDS Integers
 \* promise that anything ever happens.
 \*
 \* In the .cfg, SPECIFICATION Spec replaces INIT and NEXT. This .cfg
-\* already uses it, and so do the exercises after this one. Write vars and
+\* already uses it, and so do the exercises from Part 3 on. Write vars and
 \* Spec.
 
 VARIABLES hour, alarm
