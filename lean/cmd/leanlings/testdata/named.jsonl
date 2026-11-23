@@ -1,0 +1,3 @@
+{"caption":"","data":"Unknown identifier `foo`","endPos":{"column":12,"line":1},"fileName":"Exercise.lean","isSilent":false,"keepFullRange":false,"kind":"lean.unknownIdentifier._namedError","pos":{"column":9,"line":1},"severity":"error"}
+{"caption":"","data":"(1, \"a\")","endPos":{"column":5,"line":2},"fileName":"Exercise.lean","isSilent":false,"keepFullRange":false,"kind":"[anonymous]","pos":{"column":0,"line":2},"severity":"information"}
+{"caption":"","data":"Nat.succ (n : Nat) : Nat","endPos":{"column":6,"line":3},"fileName":"Exercise.lean","isSilent":false,"keepFullRange":false,"kind":"[anonymous]","pos":{"column":0,"line":3},"severity":"information"}

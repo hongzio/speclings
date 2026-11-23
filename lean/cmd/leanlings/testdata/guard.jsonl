@@ -1,0 +1,1 @@
+{"caption":"","data":"Expression\n  decide (sum [1, 2, 3] = 6)\ndid not evaluate to `true`","endPos":{"column":24,"line":5},"fileName":"Exercise.lean","isSilent":false,"keepFullRange":false,"kind":"[anonymous]","pos":{"column":0,"line":5},"severity":"error"}

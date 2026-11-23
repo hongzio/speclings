@@ -1,0 +1,3 @@
+Exercise.lean:5:0: error: Expression
+  decide (sum [1, 2, 3] = 6)
+did not evaluate to `true`

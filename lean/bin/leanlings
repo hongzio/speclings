@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# leanlings runner. The Go runner and the Lean checker (checker/) are rebuilt on every
+# run; both builds are cached, so new exercises never require a reinstall.
+set -euo pipefail
+root="$(cd "$(dirname "$0")/.." && pwd)"
+go -C "$root" build -o "$root/.mise/leanlings" ./cmd/leanlings
+lake -d "$root/checker" build -q
+LEANLINGS_ROOT="$root" exec "$root/.mise/leanlings" "$@"

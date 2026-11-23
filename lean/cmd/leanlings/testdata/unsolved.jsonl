@@ -1,0 +1,1 @@
+{"caption":"","data":"unsolved goals\ncase right\np q : Prop\nhp : p\nhq : q\n⊢ q","endPos":{"column":10,"line":3},"fileName":"Exercise.lean","isSilent":false,"keepFullRange":false,"kind":"Tactic.unsolvedGoals","pos":{"column":52,"line":1},"severity":"error"}

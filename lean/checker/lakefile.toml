@@ -1,0 +1,8 @@
+# The checker that compares a learner's exercise with the reference (see Main.lean).
+# bin/leanlings builds it; the build is cached.
+name = "leanlings-check"
+defaultTargets = ["leanlings-check"]
+
+[[lean_exe]]
+name = "leanlings-check"
+root = "Main"
