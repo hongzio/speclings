@@ -1,4 +1,5 @@
 ---------------------------- MODULE 039_deadlock ----------------------------
+EXTENDS Integers, Sequences
 \* tlings 039: 버퍼 없는 채널과 deadlock
 \*
 \* 버퍼 없는 채널에는 자리가 전혀 없습니다. 보내기와 받기는 두 goroutine 이
@@ -6,42 +7,45 @@
 \* goroutine 을 한꺼번에 움직이는 action 하나입니다.
 \*
 \*   a, b := make(chan int), make(chan int)
-\*   go func() {        // worker: start
-\*       <-a            // recvA
-\*       b <- 1         // sendB
-\*   }()                // done
-\*                      // main: start
-\*   <-b                // recvB
-\*   a <- 1             // sendA
-\*                      // done
+\*   go func() {      // worker
+\*       <-a          // 1: recvA
+\*       b <- 1       // 2: sendB
+\*       <-a          // 3: recvA
+\*       b <- 2       // 4: sendB
+\*   }()
+\*   a <- 1           // main 1: sendA
+\*   <-b              // main 2: recvB
+\*   <-b              // main 3: recvB (a 로 먼저 보내야 함)
+\*   a <- 2           // main 4: sendA
 \*
-\* main 은 a 로 보내기 전에 b 를 기다리고, worker 는 b 로 보내기 전에 a 를
-\* 기다립니다. Go 는 이 프로그램을 이렇게 멈춥니다.
+\* 첫 번째 주고받기는 잘 됩니다. 그다음 main 은 b 를, worker 는 a 를
+\* 기다리고, Go 는 이 프로그램을 이렇게 멈춥니다.
 \*
 \*   fatal error: all goroutines are asleep - deadlock!
 \*
 \* 이것은 정확히 TLA+ 의 deadlock, 즉 가능한 action 이 없는 상태입니다.
 \*
-\* 두 랑데부 SyncA 와 SyncB 를 쓰세요. 각각 한 goroutine 이 막 보내려 하고
-\* 다른 goroutine 이 막 받으려 할 때만 일어나며, 둘 다 다음으로 옮깁니다.
-\* 그러면 TLC 가 deadlock 을 보고해야 하고, 보고하면 tlings 가 통과시킵니다.
+\* 여기서는 각 goroutine 의 코드를 채널 연산의 시퀀스로 두고, pc 는 다음
+\* 연산의 위치입니다. 두 랑데부 SyncA 와 SyncB 를 쓰세요. 각각 한
+\* goroutine 의 다음 연산이 보내기이고 다른 쪽의 다음 연산이 짝이 맞는
+\* 받기일 때만 일어나며, 두 goroutine 을 모두 다음 연산으로 옮깁니다. 그러면
+\* TLC 가 첫 주고받기 뒤의 deadlock 을 보고해야 하고, 보고하면 tlings 가
+\* 통과시킵니다.
 \*
 \*   go run ./go/039_deadlock
 \*   go run ./go/039_deadlock -fix
 
-VARIABLES mainPc, workerPc
+MainCode == <<"sendA", "recvB", "recvB", "sendA">>
+WorkerCode == <<"recvA", "sendB", "recvA", "sendB">>
+
+VARIABLES mainPc, workerPc    \* 코드에서 다음 연산의 위치
 
 vars == <<mainPc, workerPc>>
 
-Init == mainPc = "start" /\ workerPc = "start"
+\* 위치 pc 의 연산. 코드 끝을 지나면 "done"
+Op(code, pc) == IF pc <= Len(code) THEN code[pc] ELSE "done"
 
-MainStart == /\ mainPc = "start"
-             /\ mainPc' = "recvB"
-             /\ UNCHANGED workerPc
-
-WorkerStart == /\ workerPc = "start"
-               /\ workerPc' = "recvA"
-               /\ UNCHANGED mainPc
+Init == mainPc = 1 /\ workerPc = 1
 
 \* main 이 a 로 보내고, worker 가 받는다
 SyncA == ???
@@ -49,11 +53,11 @@ SyncA == ???
 \* worker 가 b 로 보내고, main 이 받는다
 SyncB == ???
 
-Terminating == /\ mainPc = "done"
-               /\ workerPc = "done"
+Terminating == /\ Op(MainCode, mainPc) = "done"
+               /\ Op(WorkerCode, workerPc) = "done"
                /\ UNCHANGED vars
 
-Next == MainStart \/ WorkerStart \/ SyncA \/ SyncB \/ Terminating
+Next == SyncA \/ SyncB \/ Terminating
 
 Spec == Init /\ [][Next]_vars
 

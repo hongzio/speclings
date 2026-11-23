@@ -368,8 +368,8 @@ var exercises = []Exercise{
 		Expect: deadlocks(3),
 		Broken: blank("SyncA == ???"),
 		Hint: L{
-			"en": `SyncA: mainPc = "sendA" and workerPc = "recvA"; then main is done and the worker moves to "sendB". SyncB: workerPc = "sendB" and mainPc = "recvB"; then the worker is done and main moves to "sendA".`,
-			"ko": `SyncA: mainPc = "sendA" 이고 workerPc = "recvA" 일 때, main 은 "done" 으로, worker 는 "sendB" 로. SyncB: workerPc = "sendB" 이고 mainPc = "recvB" 일 때, worker 는 "done" 으로, main 은 "sendA" 로.`,
+			"en": `SyncA: Op(MainCode, mainPc) = "sendA" and Op(WorkerCode, workerPc) = "recvA"; then both pcs move to the next operation (+ 1). SyncB is the same with "sendB" for the worker and "recvB" for main.`,
+			"ko": `SyncA: Op(MainCode, mainPc) = "sendA" 이고 Op(WorkerCode, workerPc) = "recvA" 일 때, 두 pc 를 모두 다음 연산으로 (+ 1). SyncB 는 worker 가 "sendB", main 이 "recvB" 인 경우로 같은 모양입니다.`,
 		},
 	},
 	{
