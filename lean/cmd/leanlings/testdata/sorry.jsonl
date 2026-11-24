@@ -1,0 +1,3 @@
+{"caption":"","data":"declaration uses `sorry`","endPos":{"column":7,"line":1},"fileName":"Exercise.lean","isSilent":false,"keepFullRange":false,"kind":"hasSorry","pos":{"column":4,"line":1},"severity":"warning"}
+{"caption":"","data":"declaration uses `sorry`","endPos":{"column":9,"line":2},"fileName":"Exercise.lean","isSilent":false,"keepFullRange":false,"kind":"hasSorry","pos":{"column":8,"line":2},"severity":"warning"}
+{"caption":"","data":"'t' depends on axioms: [sorryAx]","endPos":{"column":6,"line":4},"fileName":"Exercise.lean","isSilent":false,"keepFullRange":false,"kind":"[anonymous]","pos":{"column":0,"line":4},"severity":"information"}

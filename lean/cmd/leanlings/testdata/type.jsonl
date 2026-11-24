@@ -1,0 +1,1 @@
+{"caption":"","data":"Type mismatch\n  n\nhas type\n  Nat\nbut is expected to have type\n  String","endPos":{"column":29,"line":1},"fileName":"Exercise.lean","isSilent":false,"keepFullRange":false,"kind":"[anonymous]","pos":{"column":28,"line":1},"severity":"error"}

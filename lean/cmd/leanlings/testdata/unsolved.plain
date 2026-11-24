@@ -1,0 +1,6 @@
+Exercise.lean:1:52: error: unsolved goals
+case right
+p q : Prop
+hp : p
+hq : q
+⊢ q
