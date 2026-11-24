@@ -617,6 +617,81 @@ var exercises = []Exercise{
 			"ko": "if hlt : lo < hi then (let mid := (lo + hi) / 2; if a[mid] = x then some ⟨mid, by omega⟩ else if a[mid] < x then bsearch a x (mid + 1) hi h else bsearch a x lo mid (by omega)) else none, 그리고 정의 뒤에 termination_by hi - lo.",
 		},
 	},
+
+	// Part 7: verified programs. Specifications and proofs of sorting, binary search, a compiler
+	// and state machines, with grind. Only the search tactics stay forbidden (suggest).
+	{
+		Name:   "066_grind",
+		Expect: fill().without(suggest...),
+		Broken: blank("theorem gauss"),
+		Hint: L{
+			"en": "gauss: induction n with | zero => rfl | succ n ih => grind [sumTo]. square_sum and odd_succ: grind. len_append: induction xs <;> grind [append, len].",
+			"ko": "gauss: induction n with | zero => rfl | succ n ih => grind [sumTo]. square_sum 과 odd_succ: grind. len_append: induction xs <;> grind [append, len].",
+		},
+	},
+	{
+		Name:   "067_sorted",
+		Expect: fill().without(suggest...),
+		Broken: blank("theorem sorted_123"),
+		Hint: L{
+			"en": "sorted_123: .cons (by decide) (.cons (by decide) (.single 3)). not_sorted_21: intro h, then cases h with | cons h12 _ => omega. ins_sorted: induction h <;> grind [ins, Sorted.nil, Sorted.single, Sorted.cons].",
+			"ko": "sorted_123: .cons (by decide) (.cons (by decide) (.single 3)). not_sorted_21: intro h 다음 cases h with | cons h12 _ => omega. ins_sorted: induction h <;> grind [ins, Sorted.nil, Sorted.single, Sorted.cons].",
+		},
+	},
+	{
+		Name:   "068_isort",
+		Expect: fill().without(suggest...),
+		Broken: blank("theorem isort_sorted"),
+		Hint: L{
+			"en": "isort_sorted: induction xs; cons, exact ins_sorted x _ ih. ins_perm: induction xs; cons, unfold ins, split, then .refl _ or (ih.cons y).trans (.swap x y ys). isort_perm: (ins_perm x _).trans (ih.cons x). badSort_not_perm: intro h, have := h.length_eq, simp [badSort] at this.",
+			"ko": "isort_sorted: xs 에 대한 귀납. cons 는 exact ins_sorted x _ ih. ins_perm: xs 에 대한 귀납. cons 는 unfold ins, split 다음 .refl _ 또는 (ih.cons y).trans (.swap x y ys). isort_perm: (ins_perm x _).trans (ih.cons x). badSort_not_perm: intro h, have := h.length_eq, simp [badSort] at this.",
+		},
+	},
+	{
+		Name:   "069_bsearch",
+		Expect: fill().without(suggest...),
+		Broken: blank("theorem bsearch_sound"),
+		Hint: L{
+			"en": "bsearch_sound: fun_induction bsearch a x lo hi h with | case1 => cases hs; simp_all | case2 => simp_all | case3 => simp_all | case4 => simp at hs. find_sound: unfold find at h, cases hb : bsearch a x 0 a.size (Nat.le_refl _); none, simp [hb] at h; some j, simp [hb] at h, have := bsearch_sound a x 0 a.size (Nat.le_refl _) j hb, grind.",
+			"ko": "bsearch_sound: fun_induction bsearch a x lo hi h with | case1 => cases hs; simp_all | case2 => simp_all | case3 => simp_all | case4 => simp at hs. find_sound: unfold find at h, cases hb : bsearch a x 0 a.size (Nat.le_refl _). none 은 simp [hb] at h, some j 는 simp [hb] at h, have := bsearch_sound a x 0 a.size (Nat.le_refl _) j hb, grind.",
+		},
+	},
+	{
+		Name:   "070_compiler",
+		Expect: fill().without(suggest...),
+		Broken: blank("theorem exec_compile"),
+		Hint: L{
+			"en": "exec_compile: induction e generalizing is s, then simp [compile, exec, eval] for num and simp [compile, eval, iha, ihb, exec] for add and mul. compile_correct: simpa [exec] using exec_compile e [] [].",
+			"ko": "exec_compile: induction e generalizing is s 다음, num 은 simp [compile, exec, eval], add 와 mul 은 simp [compile, eval, iha, ihb, exec]. compile_correct: simpa [exec] using exec_compile e [] [].",
+		},
+	},
+	{
+		Name:   "071_invariants",
+		Expect: fill().without(suggest...),
+		Broken: blank("theorem bounded"),
+		Hint: L{
+			"en": "bounded and conserved: induction h with | init => ... | step _ hst ih => cases hst <;> simp_all <;> omega. The init case: simp [capacity] for bounded, rfl for conserved. consumed_le: have := conserved s h, then omega.",
+			"ko": "bounded 와 conserved: induction h with | init => ... | step _ hst ih => cases hst <;> simp_all <;> omega. init 경우는 bounded 는 simp [capacity], conserved 는 rfl. consumed_le: have := conserved s h 다음 omega.",
+		},
+	},
+	{
+		Name:   "072_strengthening",
+		Expect: fill().without(suggest...),
+		Broken: blank("def LockInv"),
+		Hint: L{
+			"en": "LockInv s := (s.p1 = .critical → s.locked = true) ∧ (s.p2 = .critical → s.locked = true) ∧ Mutex s. lockInv_holds: induction h; init, simp [LockInv, Mutex]; step, cases hst <;> simp_all [LockInv, Mutex]. mutex: (lockInv_holds s h).2.2.",
+			"ko": "LockInv s := (s.p1 = .critical → s.locked = true) ∧ (s.p2 = .critical → s.locked = true) ∧ Mutex s. lockInv_holds: h 에 대한 귀납. init 은 simp [LockInv, Mutex], step 은 cases hst <;> simp_all [LockInv, Mutex]. mutex: (lockInv_holds s h).2.2.",
+		},
+	},
+	{
+		Name:   "073_quiz7",
+		Expect: fill().without(suggest...),
+		Broken: blank("theorem all_insert"),
+		Hint: L{
+			"en": "all_insert: induction t <;> grind [insert, All]. insert_bst: induction t <;> grind [insert, BST, All, all_insert]. contains_insert: induction t <;> grind [insert, contains].",
+			"ko": "all_insert: induction t <;> grind [insert, All]. insert_bst: induction t <;> grind [insert, BST, All, all_insert]. contains_insert: induction t <;> grind [insert, contains].",
+		},
+	},
 }
 
 // logic is what Part 4 does not accept: the tactics that would take the steps for the learner.
@@ -625,6 +700,9 @@ var logic = []string{"simp", "simp_all", "simpa", "omega", "decide", "grind", "t
 // search is what Part 5 does not accept once simp and omega are allowed: grind, which comes
 // in Part 7, and the tactics that search the library for the next step.
 var search = []string{"grind", "exact?", "apply?", "rw?"}
+
+// suggest is what Part 7 does not accept: the tactics that search the library for the next step.
+var suggest = []string{"exact?", "apply?", "rw?"}
 
 // Exercise is a single exercise.
 type Exercise struct {

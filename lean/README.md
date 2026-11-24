@@ -5,7 +5,7 @@
 Learn Lean 4, the programming language and proof assistant, by fixing small, broken Lean files one at a time.
 Modeled after [ziglings](https://codeberg.org/ziglings/exercises/) and [rustlings](https://github.com/rust-lang/rustlings).
 
-> **Work in progress:** there are 65 exercises so far (Part 0: tools, Part 1: values and functions, Part 2: data, Part 3: programs, Part 4: propositions and proofs, Part 5: induction, Part 6: dependent types), and more parts are being added.
+There are 73 exercises, in eight parts: Part 0: tools, Part 1: values and functions, Part 2: data, Part 3: programs, Part 4: propositions and proofs, Part 5: induction, Part 6: dependent types, Part 7: verified programs.
 
 ## Getting started
 
