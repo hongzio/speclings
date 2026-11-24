@@ -28,8 +28,8 @@
 -- B") into the two goals A and B, which you then prove one after the
 -- other, each after a · (type \. in your editor, or write a plain .).
 --
--- Replace every sorry. rfl and decide work both as a proof (:= rfl) and
--- as a tactic (by rfl).
+-- Replace every sorry. rfl works both as a proof (:= rfl) and as a
+-- tactic (by rfl), but decide only works as a tactic (by decide).
 
 def double (n : Nat) : Nat := n + n
 
