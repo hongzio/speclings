@@ -1,0 +1,26 @@
+TLC2 Version 2026.11.19.180144 (rev: bc1b506)
+Running breadth-first search Model-Checking with fp 4 and seed -8834525593085997385 with 1 worker on 8 cores with 3641MB heap and 64MB offheap memory [pid: 1] (Mac OS X 27.0.1 aarch64, Eclipse Adoptium 21.0.13.1 64bit, MSBDiskFPSet, DiskStateQueue).
+Parsing file /tmp/x/S043.tla
+Parsing file /tmp/tlc-1/Integers.tla (jar:file:/opt/tla2tools.jar!/tla2sany/StandardModules/Integers.tla)
+Parsing file /tmp/tlc-1/Naturals.tla (jar:file:/opt/tla2tools.jar!/tla2sany/StandardModules/Naturals.tla)
+Semantic processing of module Naturals
+Semantic processing of module Integers
+Semantic processing of module S043
+Linting of module S043
+Starting... (2026-11-22 19:00:39)
+Computing initial states...
+Finished computing initial states: 1 distinct state generated at 2026-11-22 19:00:39.
+Error: Action property NeverBackwards is violated.
+Error: The behavior up to this point is:
+State 1: <Initial predicate>
+version = 0
+
+State 2: <Publish line 6, col 12 to line 6, col 48 of module S043>
+version = 1
+
+State 3: <Rollback line 7, col 13 to line 7, col 49 of module S043>
+version = 0
+
+4 states generated, 3 distinct states found, 1 states left on queue.
+The depth of the complete state graph search is 3.
+Finished in 00s at (2026-11-22 19:00:39)

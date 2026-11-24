@@ -1,0 +1,40 @@
+TLC2 Version 2026.11.19.180144 (rev: bc1b506)
+Running breadth-first search Model-Checking with fp 79 and seed 6036525857428329784 with 1 worker on 8 cores with 3641MB heap and 64MB offheap memory [pid: 1] (Mac OS X 27.0.1 aarch64, Eclipse Adoptium 21.0.13.1 64bit, MSBDiskFPSet, DiskStateQueue).
+Parsing file /tmp/x/S044.tla
+Parsing file /tmp/tlc-1/Integers.tla (jar:file:/opt/tla2tools.jar!/tla2sany/StandardModules/Integers.tla)
+Parsing file /tmp/tlc-1/Naturals.tla (jar:file:/opt/tla2tools.jar!/tla2sany/StandardModules/Naturals.tla)
+Semantic processing of module Naturals
+Semantic processing of module Integers
+Semantic processing of module S044
+Linting of module S044
+Starting... (2026-11-22 19:00:40)
+Implied-temporal checking--satisfiability problem has 1 branches.
+Computing initial states...
+Finished computing initial states: 1 distinct state generated at 2026-11-22 19:00:40.
+Progress(5) at 2026-11-22 19:00:40: 6 states generated, 5 distinct states found, 0 states left on queue.
+Checking temporal properties for the complete state space with 5 total distinct states at (2026-11-22 19:00:40)
+Error: Temporal property EventuallyDone was violated.
+
+Error: The following behavior constitutes a counter-example:
+
+State 1: <Initial predicate>
+/\ received = 0
+/\ status = "downloading"
+
+State 2: <Get line 6, col 8 to line 6, col 96 of module S044>
+/\ received = 1
+/\ status = "downloading"
+
+State 3: <Get line 6, col 8 to line 6, col 96 of module S044>
+/\ received = 2
+/\ status = "downloading"
+
+State 4: <Get line 6, col 8 to line 6, col 96 of module S044>
+/\ received = 3
+/\ status = "downloading"
+
+State 5: Stuttering
+Finished checking temporal properties in 00s at 2026-11-22 19:00:40
+6 states generated, 5 distinct states found, 0 states left on queue.
+The depth of the complete state graph search is 5.
+Finished in 00s at (2026-11-22 19:00:40)
