@@ -126,6 +126,19 @@ func TestForbidden(t *testing.T) {
 		}
 	}
 
+	// A word with ? forbids only the search tactic, not the tactic it suggests.
+	search := []string{"exact?", "simp"}
+	for src, want := range map[string][]string{
+		"by exact h":          nil,
+		"by exact?":           {"exact?"},
+		"by simp?":            {"simp"},
+		"by apply h; exact? ": {"exact?"},
+	} {
+		if got := forbidden(src, search); !slices.Equal(got, want) {
+			t.Errorf("forbidden(%q) = %q, want %q", src, got, want)
+		}
+	}
+
 	// Library functions are forbidden however they are called.
 	lib := []string{"length", "sum"}
 	for src, want := range map[string][]string{

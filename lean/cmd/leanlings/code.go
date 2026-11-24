@@ -168,17 +168,25 @@ var reToken = regexp.MustCompile(`[\p{L}\p{N}_'.!?]+`)
 // forbidden returns the words of forbid that the code of src uses (outside comments and strings).
 // A word also matches with a trailing ? or ! (simp?, decide!) and as the last part of a
 // dotted name, so that forbidding length also forbids List.length and xs.length.
+// A word that ends with ? matches only itself: forbidding exact? leaves exact allowed.
 func forbidden(src string, forbid []string) []string {
 	if len(forbid) == 0 {
 		return nil
 	}
-	var tokens []string
-	for _, t := range reToken.FindAllString(stripComments(src, false), -1) {
-		tokens = append(tokens, strings.TrimRight(t, "?!"))
+	tokens := reToken.FindAllString(stripComments(src, false), -1)
+	matches := func(w string) func(string) bool {
+		return func(t string) bool {
+			for _, c := range []string{t, strings.TrimRight(t, "?!")} {
+				if c == w || strings.HasSuffix(c, "."+w) {
+					return true
+				}
+			}
+			return false
+		}
 	}
 	var used []string
 	for _, w := range forbid {
-		if slices.ContainsFunc(tokens, func(t string) bool { return t == w || strings.HasSuffix(t, "."+w) }) {
+		if slices.ContainsFunc(tokens, matches(w)) {
 			used = append(used, w)
 		}
 	}
