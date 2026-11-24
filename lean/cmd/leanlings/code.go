@@ -132,6 +132,8 @@ func guardLines(src string) []string {
 // missingGuards returns the #guard lines of orig that work no longer contains, ignoring whitespace.
 // Learners may add #guards of their own, but not remove or change the original ones:
 // they are the tests of the exercise, and removing them would make it pass.
+// A sorry in an original #guard is a blank to fill in, so it matches anything
+// (#guard 7 / 2 == sorry matches #guard 7 / 2 == 3), as ??? does in tlings.
 func missingGuards(orig, work string) []string {
 	var have []string
 	for _, l := range guardLines(work) {
@@ -139,12 +141,23 @@ func missingGuards(orig, work string) []string {
 	}
 	var missing []string
 	for _, l := range guardLines(orig) {
-		if !slices.Contains(have, squeeze(l)) {
+		if !slices.ContainsFunc(have, guardPattern(l).MatchString) {
 			missing = append(missing, l)
 		}
 	}
 	return missing
 }
+
+// guardPattern matches the squeezed line l, with each sorry matching any non-empty text.
+func guardPattern(l string) *regexp.Regexp {
+	parts := reSorry.Split(l, -1)
+	for i, p := range parts {
+		parts[i] = regexp.QuoteMeta(squeeze(p))
+	}
+	return regexp.MustCompile("^" + strings.Join(parts, ".+") + "$")
+}
+
+var reSorry = regexp.MustCompile(`\bsorry\b`)
 
 func squeeze(s string) string {
 	return strings.Join(strings.Fields(s), "")
@@ -153,18 +166,19 @@ func squeeze(s string) string {
 var reToken = regexp.MustCompile(`[\p{L}\p{N}_'.!?]+`)
 
 // forbidden returns the words of forbid that the code of src uses (outside comments and strings).
-// A word also matches with a trailing ? or ! (simp?, decide!).
+// A word also matches with a trailing ? or ! (simp?, decide!) and as the last part of a
+// dotted name, so that forbidding length also forbids List.length and xs.length.
 func forbidden(src string, forbid []string) []string {
 	if len(forbid) == 0 {
 		return nil
 	}
-	tokens := map[string]bool{}
+	var tokens []string
 	for _, t := range reToken.FindAllString(stripComments(src, false), -1) {
-		tokens[strings.TrimRight(t, "?!")] = true
+		tokens = append(tokens, strings.TrimRight(t, "?!"))
 	}
 	var used []string
 	for _, w := range forbid {
-		if tokens[w] {
+		if slices.ContainsFunc(tokens, func(t string) bool { return t == w || strings.HasSuffix(t, "."+w) }) {
 			used = append(used, w)
 		}
 	}

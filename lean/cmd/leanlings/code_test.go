@@ -87,6 +87,26 @@ func TestMissingGuards(t *testing.T) {
 	}
 }
 
+// A sorry in an original #guard is a blank: anything may replace it, but the rest must stay.
+func TestMissingGuardsBlanks(t *testing.T) {
+	orig := "#guard 7 / 2 == sorry\n#guard (-7 : Int) / 2 == sorry\n#guard sorryCount == 0\n"
+	tests := []struct {
+		name, work string
+		missing    int
+	}{
+		{"filled", "#guard 7 / 2 == 3\n#guard (-7 : Int) / 2 == -4\n#guard sorryCount == 0\n", 0},
+		{"filled with an expression", "#guard 7/2 == (3 : Nat)\n#guard (-7 : Int) / 2 == -(4 : Int)\n#guard sorryCount == 0\n", 0},
+		{"left side changed", "#guard 8 / 2 == 4\n#guard (-7 : Int) / 2 == -4\n#guard sorryCount == 0\n", 1},
+		{"blank emptied", "#guard 7 / 2 ==\n#guard (-7 : Int) / 2 == -4\n#guard sorryCount == 0\n", 1},
+		{"sorry inside a name is not a blank", "#guard 7 / 2 == 3\n#guard (-7 : Int) / 2 == -4\n#guard xCount == 0\n", 1},
+	}
+	for _, tt := range tests {
+		if got := missingGuards(orig, tt.work); len(got) != tt.missing {
+			t.Errorf("%s: missing = %q, want %d", tt.name, got, tt.missing)
+		}
+	}
+}
+
 func TestForbidden(t *testing.T) {
 	forbid := []string{"omega", "simp", "decide"}
 	tests := []struct {
@@ -103,6 +123,20 @@ func TestForbidden(t *testing.T) {
 	for _, tt := range tests {
 		if got := forbidden(tt.src, forbid); !slices.Equal(got, tt.want) {
 			t.Errorf("forbidden(%q) = %q, want %q", tt.src, got, tt.want)
+		}
+	}
+
+	// Library functions are forbidden however they are called.
+	lib := []string{"length", "sum"}
+	for src, want := range map[string][]string{
+		"def len (xs : List Nat) : Nat := xs.length":               {"length"},
+		"def len (xs : List Nat) : Nat := List.length xs":          {"length"},
+		"def total (xs : List Nat) := xs |>.sum":                   {"sum"},
+		"def len : List Nat → Nat | [] => 0 | _ :: t => 1 + len t": nil,
+		"def lengthy := 1\ndef summary := lengthy":                 nil,
+	} {
+		if got := forbidden(src, lib); !slices.Equal(got, want) {
+			t.Errorf("forbidden(%q) = %q, want %q", src, got, want)
 		}
 	}
 }
