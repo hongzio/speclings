@@ -52,6 +52,125 @@ var exercises = []Exercise{
 			"ko": "two_plus_two 와 double_three 는 계산하면 성립하는 등식입니다: rfl. small 은 계산으로 판정됩니다: decide. both 에서 첫 목표는 등식(rfl), 둘째는 비교(decide)입니다.",
 		},
 	},
+
+	// Part 1: values and functions. Programming with Nat, Int, Bool, functions, recursion, List, Option and pairs.
+	{
+		Name:   "005_nat",
+		Expect: fill(),
+		Broken: blank("#guard 7 / 2"),
+		Hint: L{
+			"en": "Division rounds down and drops the remainder. A subtraction that would go below 0 gives 0, and so does dividing by 0. Evaluate the inner parentheses first.",
+			"ko": "나눗셈은 내림하고 나머지를 버립니다. 0 아래로 내려가는 뺄셈은 0 이고, 0 으로 나누는 것도 0 입니다. 안쪽 괄호부터 계산하세요.",
+		},
+	},
+	{
+		Name:   "006_int",
+		Expect: fix(),
+		Broken: blank("#guard (-7 : Int) / 2"),
+		Hint: L{
+			"en": "-7 / 2 rounds down to -4, so the remainder is 1. In change, give diff the type Int (let diff : Int := ...): then Lean converts paid and price to Int before subtracting.",
+			"ko": "-7 / 2 는 -4 로 내림되므로 나머지는 1 입니다. change 에서는 diff 에 Int 타입을 주세요 (let diff : Int := ...). 그러면 Lean 이 빼기 전에 paid 와 price 를 Int 로 바꿉니다.",
+		},
+	},
+	{
+		Name:   "007_bool",
+		Expect: fill(),
+		Broken: blank("def isEven"),
+		Hint: L{
+			"en": "n is even when n % 2 == 0. A leap year: divisible by 4 && (not divisible by 100 || divisible by 400).",
+			"ko": "n % 2 == 0 이면 짝수입니다. 윤년: 4 로 나누어떨어지고 && (100 으로 나누어떨어지지 않거나 || 400 으로 나누어떨어짐).",
+		},
+	},
+	{
+		Name:   "008_if_let",
+		Expect: fix(),
+		Broken: Broken{Contains: "expected 'else'", At: "def abs"},
+		Hint: L{
+			"en": "abs needs an else: the value when x is not negative is x itself. For clamp, first let atLeastLo := if x < lo then lo else x, then cap it at hi the same way.",
+			"ko": "abs 에는 else 가 필요합니다. x 가 음수가 아닐 때의 값은 x 그대로입니다. clamp 는 먼저 let atLeastLo := if x < lo then lo else x 로 두고, 같은 방법으로 hi 를 넘지 않게 하세요.",
+		},
+	},
+	{
+		Name:   "009_functions",
+		Expect: fix(),
+		Broken: Broken{Contains: "Type mismatch", At: "def square"},
+		Hint: L{
+			"en": "area side is still waiting for its second argument: a square has the same width and height. areaWithWidth2 is area applied to 2 only.",
+			"ko": "area side 는 아직 두 번째 인자를 기다리고 있습니다. 정사각형은 가로와 세로가 같습니다. areaWithWidth2 는 area 에 2 만 준 것입니다.",
+		},
+	},
+	{
+		Name:   "010_lambdas",
+		Expect: fix(),
+		Broken: Broken{Contains: "expected '↦', '=>'", At: "def doubled"},
+		Hint: L{
+			"en": "Lean writes fun x => ..., not ->. twice f x is f (f x). compose g f is fun x => g (f x).",
+			"ko": "Lean 은 -> 가 아니라 fun x => ... 로 씁니다. twice f x 는 f (f x) 입니다. compose g f 는 fun x => g (f x) 입니다.",
+		},
+	},
+	{
+		Name:   "011_match",
+		Expect: fix(),
+		Broken: Broken{Contains: "Missing cases", At: `| 0 => "none"`},
+		Hint: L{
+			"en": `Add a last case | _ => "many" to size. minusTwo has three cases: 0, 1, and n + 2.`,
+			"ko": `size 에 마지막 경우 | _ => "many" 를 더하세요. minusTwo 는 0, 1, n + 2 의 세 경우입니다.`,
+		},
+	},
+	{
+		Name:   "012_recursion",
+		Expect: fix(),
+		Broken: Broken{Contains: "fail to show termination", At: "def sumTo"},
+		Hint: L{
+			"en": "sumTo (n + 1) calls itself on the same argument, so it never stops: call it on n. fib has three cases: 0, 1, and n + 2, which is fib n + fib (n + 1).",
+			"ko": "sumTo (n + 1) 은 같은 인자로 자신을 불러서 끝나지 않습니다. n 으로 부르세요. fib 는 0, 1, n + 2 의 세 경우이고, n + 2 는 fib n + fib (n + 1) 입니다.",
+		},
+	},
+	{
+		Name:   "013_lists",
+		Expect: fill().without("length", "sum", "contains", "elem", "foldl", "foldr", "any"),
+		Broken: blank("def len"),
+		Hint: L{
+			"en": "Each has two cases. len: [] is 0, and _ :: xs is 1 + len xs. total is similar. has: match xs with | [] => false | x :: rest => x == y || has rest y.",
+			"ko": "모두 두 경우입니다. len: [] 는 0, _ :: xs 는 1 + len xs. total 도 비슷합니다. has: match xs with | [] => false | x :: rest => x == y || has rest y.",
+		},
+	},
+	{
+		Name:   "014_list_functions",
+		Expect: fill(),
+		Broken: blank("def squares"),
+		Hint: L{
+			"en": "squares: map (· ^ 2) over List.range n. evens: filter. product: foldl with (· * ·), starting from 1. sumOfOddSquares: range, then filter, map and foldl.",
+			"ko": "squares: List.range n 에 map (· ^ 2). evens: filter. product: 1 에서 시작하는 (· * ·) 의 foldl. sumOfOddSquares: range 다음에 filter, map, foldl.",
+		},
+	},
+	{
+		Name:   "015_option",
+		Expect: fix(),
+		Broken: Broken{Contains: "Type mismatch", At: "def first"},
+		Hint: L{
+			"en": "first is xs.head?. firstOr: (first xs).getD fallback. safeDiv: if b == 0 then none else some (a / b).",
+			"ko": "first 는 xs.head? 입니다. firstOr: (first xs).getD fallback. safeDiv: if b == 0 then none else some (a / b).",
+		},
+	},
+	{
+		Name:   "016_pairs",
+		Expect: fill(),
+		Broken: blank("def divMod"),
+		Hint: L{
+			"en": "divMod a b is (a / b, a % b). swap p is (p.2, p.1). sumPairs maps fun (a, b) => a + b. indexed zips List.range xs.length with xs.",
+			"ko": "divMod a b 는 (a / b, a % b), swap p 는 (p.2, p.1) 입니다. sumPairs 는 fun (a, b) => a + b 로 map 합니다. indexed 는 List.range xs.length 와 xs 를 zip 합니다.",
+		},
+	},
+	{
+		Name:   "017_quiz1",
+		Expect: fill(),
+		Broken: blank("def digits"),
+		Hint: L{
+			"en": "digits n: if n < 10 then [n] else digits (n / 10) ++ [n % 10]. digitSum folds digits n. fizzbuzz: an if ... else if chain, testing 15 first; toString n for the rest. fizzbuzzUpTo maps over List.range n, adding 1.",
+			"ko": "digits n: if n < 10 then [n] else digits (n / 10) ++ [n % 10]. digitSum 은 digits n 을 fold 합니다. fizzbuzz: 15 부터 검사하는 if ... else if 사슬이고, 나머지는 toString n. fizzbuzzUpTo 는 List.range n 에 1 을 더해 map 합니다.",
+		},
+	},
 }
 
 // Exercise is a single exercise.
