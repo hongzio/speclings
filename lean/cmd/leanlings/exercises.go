@@ -171,6 +171,107 @@ var exercises = []Exercise{
 			"ko": "digits n: if n < 10 then [n] else digits (n / 10) ++ [n % 10]. digitSum 은 digits n 을 fold 합니다. fizzbuzz: 15 부터 검사하는 if ... else if 사슬이고, 나머지는 toString n. fizzbuzzUpTo 는 List.range n 에 1 을 더해 map 합니다.",
 		},
 	},
+
+	// Part 2: data. Defining types: structures, inductive types, trees, polymorphism, namespaces and type classes.
+	{
+		Name:   "018_structures",
+		Expect: fix(),
+		Broken: Broken{Contains: "Fields missing", At: "def origin"},
+		Hint: L{
+			"en": "origin needs both fields: { x := 0, y := 0 }. moveRight: { p with x := p.x + dx }. add: ⟨p.x + q.x, p.y + q.y⟩.",
+			"ko": "origin 에는 두 필드가 모두 필요합니다: { x := 0, y := 0 }. moveRight: { p with x := p.x + dx }. add: ⟨p.x + q.x, p.y + q.y⟩.",
+		},
+	},
+	{
+		Name:   "019_deriving",
+		Expect: fix(),
+		Broken: Broken{Contains: "BEq Point", At: "#guard p == ⟨1, 2⟩"},
+		Hint: L{
+			"en": "Add the line deriving BEq, Repr at the end of the structure, indented like the fields. swapXY p is ⟨p.y, p.x⟩.",
+			"ko": "structure 끝에 필드와 같은 들여쓰기로 deriving BEq, Repr 줄을 더하세요. swapXY p 는 ⟨p.y, p.x⟩ 입니다.",
+		},
+	},
+	{
+		Name:   "020_enums",
+		Expect: fill(),
+		Broken: blank("def isWeekend"),
+		Hint: L{
+			"en": "isWeekend: | .saturday | .sunday => true and | _ => false. next has one case per day, and .sunday goes back to .monday.",
+			"ko": "isWeekend: | .saturday | .sunday => true 와 | _ => false. next 는 요일마다 한 경우이고, .sunday 다음은 다시 .monday 입니다.",
+		},
+	},
+	{
+		Name:   "021_inductive_data",
+		Expect: fill(),
+		Broken: blank("def area"),
+		Hint: L{
+			"en": "Match with one case per constructor: | .square s => ... | .rect w h => ... | .triangle b h => .... A triangle's area is b * h / 2. In isSquare, a rectangle is a square when w == h.",
+			"ko": "생성자마다 한 경우로 match 하세요: | .square s => ... | .rect w h => ... | .triangle b h => .... 삼각형의 넓이는 b * h / 2 입니다. isSquare 에서 직사각형은 w == h 일 때 정사각형입니다.",
+		},
+	},
+	{
+		Name:   "022_trees",
+		Expect: fill(),
+		Broken: blank("def size"),
+		Hint: L{
+			"en": "Two cases each, | .leaf => ... and | .node l v r => .... size: size l + 1 + size r. depth: 1 + max (depth l) (depth r). mirror swaps l and r, mirroring both. toList: toList l ++ [v] ++ toList r.",
+			"ko": "모두 | .leaf => ... 와 | .node l v r => ... 의 두 경우입니다. size: size l + 1 + size r. depth: 1 + max (depth l) (depth r). mirror 는 l 과 r 을 바꾸고 둘 다 mirror 합니다. toList: toList l ++ [v] ++ toList r.",
+		},
+	},
+	{
+		Name:   "023_expressions",
+		Expect: fill(),
+		Broken: blank("def eval"),
+		Hint: L{
+			"en": `eval: | .add a b => eval a + eval b, and the same for mul. render: s!"({render a} + {render b})". simplify (.add a b): match simplify a, simplify b with | .num 0, b' => b' | a', .num 0 => a' | a', b' => .add a' b', and the same with 1 for mul.`,
+			"ko": `eval: | .add a b => eval a + eval b, mul 도 같은 식입니다. render: s!"({render a} + {render b})". simplify (.add a b): match simplify a, simplify b with | .num 0, b' => b' | a', .num 0 => a' | a', b' => .add a' b', mul 은 1 로 같은 식입니다.`,
+		},
+	},
+	{
+		Name:   "024_polymorphism",
+		Expect: fill(),
+		Broken: blank("def swap"),
+		Hint: L{
+			"en": "swap p is (p.2, p.1). mapOption: | none => none | some x => some (f x). mapTree: | .leaf => .leaf | .node l v r => .node (mapTree f l) (f v) (mapTree f r).",
+			"ko": "swap p 는 (p.2, p.1) 입니다. mapOption: | none => none | some x => some (f x). mapTree: | .leaf => .leaf | .node l v r => .node (mapTree f l) (f v) (mapTree f r).",
+		},
+	},
+	{
+		Name:   "025_namespaces",
+		Expect: fix(),
+		Broken: Broken{Contains: "Invalid field", At: "#guard sample.size"},
+		Hint: L{
+			"en": "Rename size to Tree.size (def Tree.size ...); inside it, size still refers to itself. sum: | leaf => 0 | node l v r => sum l + v + sum r.",
+			"ko": "size 의 이름을 Tree.size 로 바꾸세요 (def Tree.size ...). 그 안에서 size 는 여전히 자기 자신입니다. sum: | leaf => 0 | node l v r => sum l + v + sum r.",
+		},
+	},
+	{
+		Name:   "026_instances",
+		Expect: fix(),
+		Broken: Broken{Contains: "HAdd Point Point", At: "def shift"},
+		Hint: L{
+			"en": `Before shift: instance : Add Point where add p q := ⟨p.x + q.x, p.y + q.y⟩. toString p is s!"({p.x}, {p.y})".`,
+			"ko": `shift 앞에: instance : Add Point where add p q := ⟨p.x + q.x, p.y + q.y⟩. toString p 는 s!"({p.x}, {p.y})" 입니다.`,
+		},
+	},
+	{
+		Name:   "027_classes",
+		Expect: fix(),
+		Broken: Broken{Contains: "BEq α", At: "def count"},
+		Hint: L{
+			"en": `Add [BEq α] after {α : Type} in count. describe n is s!"the number {n}". describeAll maps Describe.describe. The list instance: "[" ++ ", ".intercalate (describeAll xs) ++ "]".`,
+			"ko": `count 의 {α : Type} 다음에 [BEq α] 를 더하세요. describe n 은 s!"the number {n}" 입니다. describeAll 은 Describe.describe 로 map 합니다. 리스트 instance: "[" ++ ", ".intercalate (describeAll xs) ++ "]".`,
+		},
+	},
+	{
+		Name:   "028_quiz2",
+		Expect: fill(),
+		Broken: blank("def insert"),
+		Hint: L{
+			"en": "insert: match t with | leaf => node leaf x leaf | node l v r => if x < v then node (l.insert x) v r else if v < x then node l v (r.insert x) else t. contains follows the same path. ofList: xs.foldl insert leaf.",
+			"ko": "insert: match t with | leaf => node leaf x leaf | node l v r => if x < v then node (l.insert x) v r else if v < x then node l v (r.insert x) else t. contains 도 같은 경로를 따라갑니다. ofList: xs.foldl insert leaf.",
+		},
+	},
 }
 
 // Exercise is a single exercise.
