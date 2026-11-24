@@ -155,6 +155,17 @@ func TestReferenceSource(t *testing.T) {
 	}
 }
 
+// Explanations show code like the snippet; Broken.At must find the code, not the comment.
+func TestLineOfSkipsComments(t *testing.T) {
+	src := "-- Write it like this:\n--   def swap {α β : Type} (p : α × β) := ...\ndef swap {α β : Type} (p : α × β) : β × α := sorry\n"
+	if got := lineOf(src, "def swap"); got != 3 {
+		t.Errorf("lineOf = %d, want 3", got)
+	}
+	if got := lineOf(src, "like this"); got != 0 {
+		t.Errorf("a snippet only in a comment: lineOf = %d, want 0", got)
+	}
+}
+
 func TestGuardMsgsDetected(t *testing.T) {
 	for src, want := range map[string]bool{
 		"/-- info: 2 -/\n#guard_msgs in\n#eval 1 + 1\n": true,

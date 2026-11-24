@@ -205,9 +205,10 @@ func readOriginal(root, lang string, ex Exercise) (string, error) {
 	return string(b), err
 }
 
-// lineOf returns the 1-based number of the first line of src containing snippet, or 0.
+// lineOf returns the 1-based number of the first line of src whose code contains snippet, or 0.
+// Comments do not count: explanations often show code like the snippet.
 func lineOf(src, snippet string) int {
-	for i, line := range strings.Split(src, "\n") {
+	for i, line := range strings.Split(stripComments(src, true), "\n") {
 		if strings.Contains(line, snippet) {
 			return i + 1
 		}
