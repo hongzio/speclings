@@ -272,6 +272,80 @@ var exercises = []Exercise{
 			"ko": "insert: match t with | leaf => node leaf x leaf | node l v r => if x < v then node (l.insert x) v r else if v < x then node l v (r.insert x) else t. contains 도 같은 경로를 따라갑니다. ofList: xs.foldl insert leaf.",
 		},
 	},
+
+	// Part 3: programs. IO, do, mutable variables and loops, arrays, errors, strings and partial functions.
+	{
+		Name:   "029_main",
+		Expect: fix().prints("Hello, leanlings!\n"),
+		Broken: Broken{Contains: "Type mismatch", At: "def main"},
+		Hint: L{
+			"en": "IO.println greeting is an action of type IO Unit, so main must have that type: def main : IO Unit := ...",
+			"ko": "IO.println greeting 은 IO Unit 타입의 동작이므로 main 도 그 타입이어야 합니다: def main : IO Unit := ...",
+		},
+	},
+	{
+		Name:   "030_do",
+		Expect: fix().prints("Rolling...\nYou rolled 4, plus one is 5.\n"),
+		Broken: Broken{Contains: "ToString (IO Nat)", At: "You rolled"},
+		Hint: L{
+			"en": "let n := roll names the action. let n ← roll runs it, and n is the Nat it gives.",
+			"ko": "let n := roll 은 동작에 이름만 붙입니다. let n ← roll 은 동작을 실행하고, n 은 그 결과인 Nat 입니다.",
+		},
+	},
+	{
+		Name:   "031_mut_for",
+		Expect: fix().prints("3\n2\n1\nliftoff!\n"),
+		Broken: Broken{Contains: "cannot be mutated", At: "sum := sum + x"},
+		Hint: L{
+			"en": `Declare sum with let mut. countdown: Id.run do, let mut lines := [], then for i in List.range n do lines := toString (i + 1) :: lines, and return lines ++ ["liftoff!"].`,
+			"ko": `sum 을 let mut 으로 선언하세요. countdown: Id.run do 안에서 let mut lines := [], 그다음 for i in List.range n do lines := toString (i + 1) :: lines, 마지막에 return lines ++ ["liftoff!"].`,
+		},
+	},
+	{
+		Name:   "032_arrays",
+		Expect: fill(),
+		Broken: blank("def squaresArray"),
+		Hint: L{
+			"en": "squaresArray: Id.run do with let mut out := #[] and out := out.push (i * i) in a for loop. get: a[i]?.getD 0. histogram: start from Array.replicate buckets 0 and modify x (· + 1) for every x < buckets.",
+			"ko": "squaresArray: Id.run do 안에서 let mut out := #[] 로 시작해, for 반복에서 out := out.push (i * i). get: a[i]?.getD 0. histogram: Array.replicate buckets 0 에서 시작해, buckets 보다 작은 x 마다 modify x (· + 1).",
+		},
+	},
+	{
+		Name:   "033_except",
+		Expect: fill(),
+		Broken: blank("def parseAge"),
+		Hint: L{
+			"en": `parseAge: match s.toNat? with | none => throw s!"not a number: {s}" | some n => if n > 150 then throw s!"too old: {n}" else pure n. averageAge: do, let x ← parseAge a, the same for b, return (x + y) / 2. parseAll: xs.mapM parseAge.`,
+			"ko": `parseAge: match s.toNat? with | none => throw s!"not a number: {s}" | some n => if n > 150 then throw s!"too old: {n}" else pure n. averageAge: do 안에서 let x ← parseAge a, b 도 같게, return (x + y) / 2. parseAll: xs.mapM parseAge.`,
+		},
+	},
+	{
+		Name:   "034_strings",
+		Expect: fill(),
+		Broken: blank("def wordCount"),
+		Hint: L{
+			"en": `wordCount: split on " ", filter out the empty Strings, take the length. sumNumbers: split, filterMap String.toNat?, foldl. onlyDigits: String.ofList of the filtered toList. titleCase: " ".intercalate of the capitalized words.`,
+			"ko": `wordCount: " " 로 나누고, 빈 String 을 걸러 내고, 길이를 셉니다. sumNumbers: 나누고, String.toNat? 로 filterMap, foldl. onlyDigits: toList 를 거른 것의 String.ofList. titleCase: capitalize 한 단어들을 " ".intercalate.`,
+		},
+	},
+	{
+		Name:   "035_partial",
+		Expect: fix(),
+		Broken: Broken{Contains: "fail to show termination", At: "def collatz"},
+		Hint: L{
+			"en": "Write partial def collatz. longestBelow: Id.run do, let mut best := 0, and for i in List.range n, take i when collatz i > collatz best.",
+			"ko": "partial def collatz 로 쓰세요. longestBelow: Id.run do 안에서 let mut best := 0, for i in List.range n 에서 collatz i > collatz best 이면 i 로 바꿉니다.",
+		},
+	},
+	{
+		Name:   "036_quiz3",
+		Expect: fill().prints("the: 3\ncat: 1\nsat: 1\non: 1\nmat: 1\nend: 1\n"),
+		Broken: blank("def countWords"),
+		Hint: L{
+			"en": `countWords: words.foldl (init := []) fun counts w => if counts.any (·.1 == w) then counts.map (fun (v, c) => if v == w then (v, c + 1) else (v, c)) else counts ++ [(w, 1)]. main: for (word, count) in countWords (text.splitOn " ") do IO.println s!"{word}: {count}".`,
+			"ko": `countWords: words.foldl (init := []) fun counts w => if counts.any (·.1 == w) then counts.map (fun (v, c) => if v == w then (v, c + 1) else (v, c)) else counts ++ [(w, 1)]. main: for (word, count) in countWords (text.splitOn " ") do IO.println s!"{word}: {count}".`,
+		},
+	},
 }
 
 // Exercise is a single exercise.
