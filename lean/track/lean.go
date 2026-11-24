@@ -63,8 +63,77 @@ func (msg Message) kindName() string {
 // Compiled is the result of compiling one file.
 type Compiled struct {
 	Msgs     []Message
-	Other    string // output that is not a message (unusual)
+	Other    string // output that is not a message (unusual), shortened by trimOutput
 	TimedOut bool
+	// Crash says why Lean stopped before the end of the file: crashRecursion, how the
+	// process ended, or "" if it did not stop early. Msgs then lack the rest of the file.
+	Crash string
+}
+
+// crashRecursion is the Crash of a #guard or #eval whose code recursed too deeply,
+// typically a function that fails to show termination: Lean reports the error, but
+// still runs the function.
+const crashRecursion = "deep recursion"
+
+// crashOf tells from Lean's stderr and exit why it stopped early, or returns "".
+func crashOf(stderr string, ee *exec.ExitError) string {
+	switch {
+	case isDeepRecursion(stderr):
+		return crashRecursion
+	case ee != nil && ee.ExitCode() == -1: // killed by a signal, e.g. an abort
+		return ee.Error()
+	}
+	return ""
+}
+
+// isDeepRecursion reports whether out is Lean's report of a recursion that went too deep.
+// Compiling, Lean aborts with it; running main (lean --run), it exits with code 1.
+func isDeepRecursion(out string) bool {
+	return strings.Contains(out, "deep recursion was detected")
+}
+
+// Limits of trimOutput.
+const (
+	keepFrames = 10 // of an interpreter stack trace
+	maxLines   = 50 // in all
+)
+
+// trimOutput shortens what Lean printed besides its messages. When running code recurses
+// too deeply, Lean's interpreter prints its stack, a line per call: about 1.3 million lines
+// (18 MB, tens of seconds in a terminal) for a recursion that never ends. trimOutput keeps
+// the first keepFrames frames of each stack trace, and at most maxLines lines in all.
+func trimOutput(s string) string {
+	var out []string
+	inTrace, frames, skipped := false, 0, 0
+	flush := func() {
+		if skipped > 0 {
+			out = append(out, fmt.Sprintf(m.MoreFrames, skipped)+"\n")
+			skipped = 0
+		}
+	}
+	for l := range strings.Lines(s) {
+		switch {
+		case strings.HasPrefix(l, "interpreter stacktrace:"):
+			flush()
+			inTrace, frames = true, 0
+			out = append(out, l)
+		case inTrace && strings.HasPrefix(l, "#"):
+			if frames++; frames <= keepFrames {
+				out = append(out, l)
+			} else {
+				skipped++
+			}
+		default:
+			inTrace = false
+			flush()
+			out = append(out, l)
+		}
+	}
+	flush()
+	if n := len(out) - maxLines; n > 0 {
+		out = append(out[:maxLines], fmt.Sprintf(m.MoreLines, n)+"\n")
+	}
+	return strings.Join(out, "")
 }
 
 func (c Compiled) count(severity string) int {
@@ -146,7 +215,7 @@ func compile(ctx context.Context, dir string) (Compiled, error) {
 	cmd.Stdout, cmd.Stderr = &stdout, &stderr
 	err := cmd.Run()
 	msgs, other := parseMessages(stdout.String())
-	c := Compiled{Msgs: msgs, Other: other + stderr.String()}
+	c := Compiled{Msgs: msgs, Other: trimOutput(other + stderr.String())}
 	if errors.Is(ctx.Err(), context.DeadlineExceeded) {
 		c.TimedOut = true
 		return c, nil
@@ -155,10 +224,12 @@ func compile(ctx context.Context, dir string) (Compiled, error) {
 	if err != nil && !errors.As(err, &ee) {
 		return c, fmt.Errorf(m.NoLean, err)
 	}
+	c.Crash = crashOf(stderr.String(), ee)
 	return c, nil
 }
 
-// runMain runs the main of dir/Exercise.lean with `lean --run` and returns what it printed.
+// runMain runs the main of dir/Exercise.lean with `lean --run` and returns what it printed,
+// shortened by trimOutput.
 func runMain(ctx context.Context, dir string) (stdout string, exit int, timedOut bool, err error) {
 	ctx, cancel := context.WithTimeout(ctx, runTimeout)
 	defer cancel()
@@ -167,15 +238,16 @@ func runMain(ctx context.Context, dir string) (stdout string, exit int, timedOut
 	var out bytes.Buffer
 	cmd.Stdout, cmd.Stderr = &out, &out
 	err = cmd.Run()
+	printed := trimOutput(out.String())
 	if errors.Is(ctx.Err(), context.DeadlineExceeded) {
-		return out.String(), -1, true, nil
+		return printed, -1, true, nil
 	}
 	var ee *exec.ExitError
 	switch {
 	case err == nil:
-		return out.String(), 0, false, nil
+		return printed, 0, false, nil
 	case errors.As(err, &ee):
-		return out.String(), ee.ExitCode(), false, nil
+		return printed, ee.ExitCode(), false, nil
 	default:
 		return "", 0, false, fmt.Errorf(m.NoLean, err)
 	}

@@ -1,6 +1,7 @@
 package track
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
@@ -146,5 +147,45 @@ func TestVersionFiles(t *testing.T) {
 	}
 	if tv != mv {
 		t.Errorf("lean-toolchain has %s, mise.toml has %s", tv, mv)
+	}
+}
+
+func TestTrimOutput(t *testing.T) {
+	var trace strings.Builder
+	trace.WriteString("libc++abi: terminating due to uncaught exception of type lean::throwable: deep recursion was detected at 'interpreter'\n")
+	trace.WriteString("interpreter stacktrace:\n")
+	for i := 1; i <= 1000; i++ {
+		fmt.Fprintf(&trace, "#%d sumTo\n", i)
+	}
+	trace.WriteString("\n")
+	got := trimOutput(trace.String())
+	lines := strings.Split(strings.TrimSuffix(got, "\n"), "\n")
+	if len(lines) != 2+keepFrames+2 {
+		t.Fatalf("%d lines:\n%s", len(lines), got)
+	}
+	if lines[2+keepFrames-1] != fmt.Sprintf("#%d sumTo", keepFrames) || lines[2+keepFrames] != fmt.Sprintf(m.MoreFrames, 1000-keepFrames) {
+		t.Errorf("frames not cut after %d:\n%s", keepFrames, got)
+	}
+	if !isDeepRecursion(got) {
+		t.Error("the trimmed output no longer says what happened")
+	}
+
+	long := strings.Repeat("x\n", 200)
+	if got := trimOutput(long); strings.Count(got, "\n") != maxLines+1 || !strings.HasSuffix(got, fmt.Sprintf(m.MoreLines, 200-maxLines)+"\n") {
+		t.Errorf("long output not cut at %d lines: %d lines", maxLines, strings.Count(got, "\n"))
+	}
+	for _, s := range []string{"", "one line\n", "no newline", "#1 not a frame without a stack trace\n"} {
+		if got := trimOutput(s); got != s {
+			t.Errorf("trimOutput(%q) = %q", s, got)
+		}
+	}
+}
+
+func TestCrashOf(t *testing.T) {
+	if got := crashOf("libc++abi: ... deep recursion was detected at 'interpreter' ...", nil); got != crashRecursion {
+		t.Errorf("deep recursion: %q", got)
+	}
+	if got := crashOf("", nil); got != "" {
+		t.Errorf("no crash: %q", got)
 	}
 }

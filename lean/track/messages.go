@@ -13,6 +13,8 @@ type messages struct {
 	VersionMismatch                      string
 	ProbErrors, ProbSorry, ProbSorryRun  string
 	ProbTimeout                          string
+	ProbDeepRecursion, ProbCrash         string
+	MoreFrames, MoreLines                string
 	ProbGuard, ProbForbid, ProbReference string
 	ProbOutput, ProbRunFailed            string
 	ProbRunTimeout                       string
@@ -35,10 +37,15 @@ var en = messages{
 	CheckerBuild:    "cannot build the checker in lean/checker/ (lake build): %v",
 	VersionMismatch: "warning: lean is version %s, but lean-toolchain asks for %s. Lean's messages may differ from what the exercises expect; run mise install.",
 
-	ProbErrors:     "Lean reported %d error(s). Start with the first one",
-	ProbSorry:      "there is still a sorry to replace",
-	ProbSorryRun:   "there is still a sorry to replace. #guard and #eval cannot run code with sorry, so they report errors until it is gone",
-	ProbTimeout:    "Lean did not finish within %s. Is there a recursion or a proof search that never ends?",
+	ProbErrors:   "Lean reported %d error(s). Start with the first one",
+	ProbSorry:    "there is still a sorry to replace",
+	ProbSorryRun: "there is still a sorry to replace. #guard and #eval cannot run code with sorry, so they report errors until it is gone",
+	ProbTimeout:  "Lean did not finish within %s. Is there a recursion or a proof search that never ends?",
+	ProbDeepRecursion: "Lean stopped while running your code (#guard, #eval or main) because a recursion went too deep; the messages after that point are missing.\n" +
+		"Does a function call itself without getting any closer to a base case?",
+	ProbCrash:      "Lean stopped unexpectedly (%s); the messages after that point are missing. Start with the first one",
+	MoreFrames:     "… %d more frames",
+	MoreLines:      "… %d more lines",
 	ProbGuard:      "Lean is happy, but a #guard of the original is missing or changed.\nKeep every original #guard; adding your own is fine:\n%s",
 	ProbForbid:     "Lean is happy, but this exercise asks you to do without %s",
 	ProbReference:  "Lean is happy, but the file no longer matches the exercise:\n%s",
@@ -73,10 +80,15 @@ var ko = messages{
 	CheckerBuild:    "lean/checker/ 의 검사기를 빌드할 수 없습니다 (lake build): %v",
 	VersionMismatch: "경고: lean 버전은 %s 인데 lean-toolchain 은 %s 입니다. 문제가 기대하는 것과 Lean 메시지가 다를 수 있습니다. mise install 을 실행하세요.",
 
-	ProbErrors:     "Lean 이 에러 %d 개를 보고했습니다. 첫 번째 에러부터 보세요",
-	ProbSorry:      "아직 바꿔야 할 sorry 가 있습니다",
-	ProbSorryRun:   "아직 바꿔야 할 sorry 가 있습니다. #guard 와 #eval 은 sorry 가 든 코드를 실행할 수 없어서, sorry 가 없어질 때까지 에러를 냅니다",
-	ProbTimeout:    "Lean 이 %s 안에 끝나지 않았습니다. 끝나지 않는 재귀나 증명 탐색이 있나요?",
+	ProbErrors:   "Lean 이 에러 %d 개를 보고했습니다. 첫 번째 에러부터 보세요",
+	ProbSorry:    "아직 바꿔야 할 sorry 가 있습니다",
+	ProbSorryRun: "아직 바꿔야 할 sorry 가 있습니다. #guard 와 #eval 은 sorry 가 든 코드를 실행할 수 없어서, sorry 가 없어질 때까지 에러를 냅니다",
+	ProbTimeout:  "Lean 이 %s 안에 끝나지 않았습니다. 끝나지 않는 재귀나 증명 탐색이 있나요?",
+	ProbDeepRecursion: "Lean 이 코드를 실행하다가 (#guard, #eval 이나 main) 재귀가 너무 깊어져 멈췄습니다. 그 뒤의 메시지는 빠져 있습니다.\n" +
+		"기저 사례에 가까워지지 않은 채 자신을 부르는 함수가 있나요?",
+	ProbCrash:      "Lean 이 예기치 않게 멈췄습니다 (%s). 그 뒤의 메시지는 빠져 있습니다. 첫 번째 메시지부터 보세요",
+	MoreFrames:     "… 프레임 %d 개 생략",
+	MoreLines:      "… %d 줄 생략",
 	ProbGuard:      "Lean 은 통과했지만 원본의 #guard 가 없어졌거나 바뀌었습니다.\n원본 #guard 는 모두 남겨 두세요 (새 #guard 를 더하는 건 괜찮습니다):\n%s",
 	ProbForbid:     "Lean 은 통과했지만 이 문제는 다음 없이 풀어야 합니다: %s",
 	ProbReference:  "Lean 은 통과했지만 파일이 문제와 달라졌습니다:\n%s",

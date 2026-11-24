@@ -140,3 +140,34 @@ func TestCheckBrokenReference(t *testing.T) {
 		t.Errorf("err = %v", err)
 	}
 }
+
+// A function that fails to show termination is still run by #guard, and recurses until Lean
+// aborts with a stack trace of about 1.3 million lines (exercise 012). Running main does the
+// same with a partial def. Both must give a short output and say what happened.
+func TestCheckDeepRecursion(t *testing.T) {
+	orig := "def sumTo : Nat → Nat\n  | 0 => 0\n  | n + 1 => (n + 1) + sumTo (n + 1)\n\n#guard sumTo 4 == 10\n"
+	root := testRoot(t, orig)
+	r, err := checkSource(context.Background(), root, Exercise{Name: "X", Expect: fix()}, []byte(orig))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if r.Problem != m.ProbDeepRecursion {
+		t.Errorf("problem %q", r.Problem)
+	}
+	if n := strings.Count(r.Other, "\n"); n > maxLines+1 || !strings.Contains(r.Other, "interpreter stacktrace:") {
+		t.Errorf("Other has %d lines:\n%.2000s", n, r.Other)
+	}
+	if !strings.Contains(render(r.Msgs, "X.lean", nil), "fail to show termination") {
+		t.Error("the termination error is missing")
+	}
+
+	loop := "partial def loop (n : Nat) : Nat := loop (n + 1) + 1\n\ndef main : IO Unit := IO.println (loop 3)\n"
+	root = testRoot(t, loop)
+	r, err = checkSource(context.Background(), root, Exercise{Name: "X", Expect: fix().prints("4\n")}, []byte(loop))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if r.Problem != m.ProbDeepRecursion || strings.Count(r.Output, "\n") > maxLines+1 {
+		t.Errorf("main: problem %q, output of %d lines", r.Problem, strings.Count(r.Output, "\n"))
+	}
+}

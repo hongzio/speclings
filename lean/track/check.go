@@ -19,7 +19,8 @@ func (r Report) ok() bool { return r.Problem == "" }
 
 // checkSource checks src as a solution of ex. The steps, in order:
 //
-//  1. Lean compiles it with no errors and no sorry.
+//  1. Lean compiles it with no errors and no sorry (and does not stop early, e.g. on a recursion
+//     that never ends in a #guard).
 //  2. Every #guard of the en original is still there.
 //  3. It uses none of ex.Expect.Forbid.
 //  4. With ex.Expect.Reference: the declarations of the original are still there, with the
@@ -45,6 +46,12 @@ func checkSource(ctx context.Context, root string, ex Exercise, src []byte) (Rep
 		return r, err
 	case c.TimedOut:
 		r.Problem = fmt.Sprintf(m.ProbTimeout, leanTimeout)
+		return r, nil
+	case c.Crash == crashRecursion:
+		r.Problem = m.ProbDeepRecursion
+		return r, nil
+	case c.Crash != "":
+		r.Problem = fmt.Sprintf(m.ProbCrash, c.Crash)
 		return r, nil
 	case c.has(kindSorry) && onlySorryErrors(c.Msgs):
 		r.Problem = m.ProbSorry
@@ -100,6 +107,8 @@ func checkSource(ctx context.Context, root string, ex Exercise, src []byte) (Rep
 			return r, err
 		case timedOut:
 			r.Problem = fmt.Sprintf(m.ProbRunTimeout, runTimeout)
+		case isDeepRecursion(out):
+			r.Problem = m.ProbDeepRecursion
 		case exit != 0:
 			r.Problem = fmt.Sprintf(m.ProbRunFailed, exit)
 		case out != want:
