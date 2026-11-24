@@ -457,10 +457,99 @@ var exercises = []Exercise{
 			"ko": "or_and_distrib 의 오른쪽에서 왼쪽: p ∨ q 로 rcases 하고, q 일 때는 p ∨ r 로도 rcases. exists_forall_swap: intro ⟨x, hx⟩ y, exact ⟨x, hx y⟩. forall_not_exists: h x hx. iff_trans': .mp 와 .mpr 로 만든 함수 한 쌍.",
 		},
 	},
+
+	// Part 5: induction. Proofs about recursive functions defined in the exercise, so that the
+	// library's theorems about List and Nat do not apply. 049-052 by hand (logic); from 053 on,
+	// simp and omega are accepted (search).
+	{
+		Name:   "049_induction",
+		Expect: fill().without(logic...),
+		Broken: blank("theorem zero_add'"),
+		Hint: L{
+			"en": "zero_add': induction n with | zero => rfl | succ n ih => rw [add_succ', ih]. succ_add' is the same, with rw [add_succ', add_succ', ih]. add_comm': induction n; zero: rw [add_zero', zero_add']; succ: rw [add_succ', succ_add', ih].",
+			"ko": "zero_add': induction n with | zero => rfl | succ n ih => rw [add_succ', ih]. succ_add' 도 같고, rw [add_succ', add_succ', ih]. add_comm': induction n 다음 zero 는 rw [add_zero', zero_add'], succ 는 rw [add_succ', succ_add', ih].",
+		},
+	},
+	{
+		Name:   "050_lists",
+		Expect: fill().without(logic...),
+		Broken: blank("theorem append_nil"),
+		Hint: L{
+			"en": "append_nil: induction xs with | nil => rfl | cons x xs ih => rw [append, ih]. append_assoc: rw [append, append, append, ih] in the cons case. len_append: nil, rw [append, len, Nat.zero_add]; cons, rw [append, len, len, ih, Nat.add_right_comm].",
+			"ko": "append_nil: induction xs with | nil => rfl | cons x xs ih => rw [append, ih]. append_assoc: cons 경우에 rw [append, append, append, ih]. len_append: nil 은 rw [append, len, Nat.zero_add], cons 는 rw [append, len, len, ih, Nat.add_right_comm].",
+		},
+	},
+	{
+		Name:   "051_map",
+		Expect: fill().without(logic...),
+		Broken: blank("theorem map_id'"),
+		Hint: L{
+			"en": "Induction on xs, nil by rfl. cons: map_id', rw [map, ih]; map_map, rw [map, map, map, ih]; map_append, rw [append, map, map, append, ih].",
+			"ko": "xs 에 대한 귀납, nil 은 rfl. cons: map_id' 는 rw [map, ih], map_map 은 rw [map, map, map, ih], map_append 는 rw [append, map, map, append, ih].",
+		},
+	},
+	{
+		Name:   "052_lemmas",
+		Expect: fill().without(logic...),
+		Broken: blank("theorem reverse_append"),
+		Hint: L{
+			"en": "reverse_append: induction xs; nil, rw [append, reverse, append_nil]; cons, rw [append, reverse, reverse, ih, append_assoc]. reverse_reverse: cons, rw [reverse, reverse_append, ih], then rfl.",
+			"ko": "reverse_append: xs 에 대한 귀납. nil 은 rw [append, reverse, append_nil], cons 는 rw [append, reverse, reverse, ih, append_assoc]. reverse_reverse: cons 는 rw [reverse, reverse_append, ih] 다음 rfl.",
+		},
+	},
+	{
+		Name:   "053_simp_omega",
+		Expect: fill().without(search...),
+		Broken: blank("theorem shuffle"),
+		Hint: L{
+			"en": "shuffle and reverse_sum: omega. len_append: induction xs; nil, simp [append, len]; cons, simp [append, len, ih]; omega. append_nil: induction xs <;> simp [append, *]. len_append_nil: simp.",
+			"ko": "shuffle 과 reverse_sum: omega. len_append: xs 에 대한 귀납. nil 은 simp [append, len], cons 는 simp [append, len, ih]; omega. append_nil: induction xs <;> simp [append, *]. len_append_nil: simp.",
+		},
+	},
+	{
+		Name:   "054_generalizing",
+		Expect: fill().without(search...),
+		Broken: blank("theorem sumAcc_eq"),
+		Hint: L{
+			"en": "sumAcc_eq: induction xs generalizing acc; nil, simp [sumAcc, sum]; cons, simp [sumAcc, sum, ih]; omega. sumTR_eq: simp [sumTR, sumAcc_eq]. revAcc_eq: induction xs generalizing acc, then simp [revAcc, ih] in the cons case.",
+			"ko": "sumAcc_eq: induction xs generalizing acc. nil 은 simp [sumAcc, sum], cons 는 simp [sumAcc, sum, ih]; omega. sumTR_eq: simp [sumTR, sumAcc_eq]. revAcc_eq: induction xs generalizing acc 다음 cons 경우에 simp [revAcc, ih].",
+		},
+	},
+	{
+		Name:   "055_trees",
+		Expect: fill().without(search...),
+		Broken: blank("theorem mirror_mirror"),
+		Hint: L{
+			"en": "induction t with | leaf => rfl | node l v r ihl ihr => simp [mirror, ihl, ihr]. Add size or toList to the simp list for the other two, and omega after it for size_mirror.",
+			"ko": "induction t with | leaf => rfl | node l v r ihl ihr => simp [mirror, ihl, ihr]. 나머지 둘은 simp 목록에 size 나 toList 를 더하고, size_mirror 는 그 뒤에 omega.",
+		},
+	},
+	{
+		Name:   "056_fun_induction",
+		Expect: fill().without(search...),
+		Broken: blank("theorem evens_le"),
+		Hint: L{
+			"en": "fun_induction evens xs with | case1 => simp | case2 x => simp | case3 x y xs ih => simp; omega. The same works for evens_half.",
+			"ko": "fun_induction evens xs with | case1 => simp | case2 x => simp | case3 x y xs ih => simp; omega. evens_half 도 같은 방법으로 됩니다.",
+		},
+	},
+	{
+		Name:   "057_quiz5",
+		Expect: fill().without(search...),
+		Broken: blank("theorem eval_addS"),
+		Hint: L{
+			"en": "eval_addS: unfold addS, then split <;> simp [eval]; the same for eval_mulS. simplify_correct: induction e; num, rfl; add, rw [simplify, eval_addS, iha, ihb, eval]; mul, the same with eval_mulS.",
+			"ko": "eval_addS: unfold addS 다음 split <;> simp [eval]. eval_mulS 도 같습니다. simplify_correct: e 에 대한 귀납. num 은 rfl, add 는 rw [simplify, eval_addS, iha, ihb, eval], mul 은 eval_mulS 로 같게.",
+		},
+	},
 }
 
 // logic is what Part 4 does not accept: the tactics that would take the steps for the learner.
 var logic = []string{"simp", "simp_all", "simpa", "omega", "decide", "grind", "trivial", "exact?", "apply?", "rw?", "native_decide"}
+
+// search is what Part 5 does not accept once simp and omega are allowed: grind, which comes
+// in Part 7, and the tactics that search the library for the next step.
+var search = []string{"grind", "exact?", "apply?", "rw?"}
 
 // Exercise is a single exercise.
 type Exercise struct {
