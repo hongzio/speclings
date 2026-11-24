@@ -20,9 +20,12 @@
 --
 --   work/001_hello.lean:LINE:COLUMN: error: Type mismatch
 --
--- One mistake often causes more errors further down, so always start
--- with the first one. If your editor runs Lean (lean.nvim, VS Code), it
--- shows the same messages as you type.
+-- One mistake often causes more errors further down. Below, the #eval
+-- and the #guard fail too, because answer has an error. (Their messages
+-- mention sorry: Lean puts a sorry in place of a definition with an
+-- error. You will meet sorry in 003.) So always start with the first
+-- error. If your editor runs Lean (lean.nvim, VS Code), it shows the
+-- same messages as you type.
 --
 -- #eval shows the value of an expression, and #guard checks that a
 -- condition holds. leanlings tests your solutions with #guard: keep

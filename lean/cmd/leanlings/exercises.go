@@ -15,6 +15,7 @@ import (
 // Learners work in work/; leanlings copies each exercise there, in their language, when they reach it.
 // Never mention line numbers in explanations or hints: comments differ in length, so line numbers differ by language.
 var exercises = []Exercise{
+	// Part 0: tools. How leanlings and Lean report problems: errors, types, sorry, goals.
 	{
 		Name:   "001_hello",
 		Expect: fix(),
@@ -25,12 +26,30 @@ var exercises = []Exercise{
 		},
 	},
 	{
-		Name:   "002_sorry",
+		Name:   "002_types",
+		Expect: fix(),
+		Broken: Broken{Contains: "Neg Nat", At: "def temperature"},
+		Hint: L{
+			"en": `temperature is negative, so its type must be Int, not Nat. In describe, convert count with toString count, or write the whole String as s!"{name} has {count} letters".`,
+			"ko": `temperature 는 음수이므로 타입이 Nat 이 아니라 Int 여야 합니다. describe 에서는 count 를 toString count 로 바꾸거나, 전체를 s!"{name} has {count} letters" 로 쓰세요.`,
+		},
+	},
+	{
+		Name:   "003_sorry",
 		Expect: fill(),
 		Broken: blank("def triple"),
 		Hint: L{
-			"en": "triple n is n + n + n, or 3 * n. For the theorem, double 2 computes to 4, and rfl proves an equation whose two sides compute to the same value.",
-			"ko": "triple n 은 n + n + n, 또는 3 * n 입니다. 정리에서 double 2 는 계산하면 4 이고, rfl 은 양쪽을 계산한 값이 같은 등식을 증명합니다.",
+			"en": `triple n is n + n + n, or 3 * n. greet name is "Hello, " ++ name ++ "!", or s!"Hello, {name}!".`,
+			"ko": `triple n 은 n + n + n, 또는 3 * n 입니다. greet name 은 "Hello, " ++ name ++ "!", 또는 s!"Hello, {name}!" 입니다.`,
+		},
+	},
+	{
+		Name:   "004_goals",
+		Expect: fill(),
+		Broken: blank("theorem two_plus_two"),
+		Hint: L{
+			"en": "two_plus_two and double_three are equations that hold by computing: rfl. small is decided by computing: decide. In both, the first goal is an equation (rfl) and the second a comparison (decide).",
+			"ko": "two_plus_two 와 double_three 는 계산하면 성립하는 등식입니다: rfl. small 은 계산으로 판정됩니다: decide. both 에서 첫 목표는 등식(rfl), 둘째는 비교(decide)입니다.",
 		},
 	},
 }

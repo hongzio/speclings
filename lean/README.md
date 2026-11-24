@@ -5,7 +5,7 @@
 Learn Lean 4, the programming language and proof assistant, by fixing small, broken Lean files one at a time.
 Modeled after [ziglings](https://codeberg.org/ziglings/exercises/) and [rustlings](https://github.com/rust-lang/rustlings).
 
-> **Work in progress:** the runner is done, and there are only 2 exercises so far.
+> **Work in progress:** there are 4 exercises so far (Part 0: tools), and more parts are being added.
 
 ## Getting started
 
