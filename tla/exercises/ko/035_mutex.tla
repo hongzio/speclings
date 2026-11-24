@@ -20,7 +20,7 @@ EXTENDS Integers, FiniteSets
 \*
 \* Lock(w) 와 Unlock(w) 를 쓰세요. 이제 Correct 가 성립해야 합니다.
 \*
-\* 다 풀었다면: go run -race ./go/034_lost_update -fix mutex
+\* 다 풀었다면: go run -race ./tla/go/034_lost_update -fix mutex
 
 CONSTANTS Workers, NoOne
 

@@ -4,8 +4,8 @@
 // A real program would crash on the first panic. This one recovers it in the
 // producer, so that it can count how often it happens.
 //
-//	go run ./go/042_close        close without waiting for the producers
-//	go run ./go/042_close -fix   close after wg.Wait()
+//	go run ./tla/go/042_close        close without waiting for the producers
+//	go run ./tla/go/042_close -fix   close after wg.Wait()
 package main
 
 import (

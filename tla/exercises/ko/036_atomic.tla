@@ -18,7 +18,7 @@ EXTENDS Integers, FiniteSets
 \*
 \* 원자적 증가 Incr(w) 를 action 하나로 쓰세요.
 \*
-\* 다 풀었다면: go run -race ./go/034_lost_update -fix atomic
+\* 다 풀었다면: go run -race ./tla/go/034_lost_update -fix atomic
 
 CONSTANT Workers
 

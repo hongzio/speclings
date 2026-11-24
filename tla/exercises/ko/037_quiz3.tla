@@ -26,8 +26,8 @@ EXTENDS Integers
 \*
 \* Go 에서 고치기 전과 후를 보세요.
 \*
-\*   go run -race ./go/037_transfer
-\*   go run -race ./go/037_transfer -fix
+\*   go run -race ./tla/go/037_transfer
+\*   go run -race ./tla/go/037_transfer -fix
 
 CONSTANTS Accounts, Workers, InitBalance, MaxAmount
 

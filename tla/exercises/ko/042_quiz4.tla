@@ -24,8 +24,8 @@ EXTENDS Integers, Sequences
 \*      Close 를 고치세요: go func() { wg.Wait(); close(jobs) }(). 스펙에서는
 \*      모든 producer 가 끝난 뒤에만 Close 가 가능하다는 뜻입니다.
 \*
-\*   go run ./go/042_close
-\*   go run ./go/042_close -fix
+\*   go run ./tla/go/042_close
+\*   go run ./tla/go/042_close -fix
 
 CONSTANT Producers
 

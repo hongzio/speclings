@@ -109,8 +109,9 @@ func runVerify(ctx context.Context, root string) int {
 // verifyVersions reports whether lean --version, lean-toolchain and mise.toml name the same Lean.
 func verifyVersions(ctx context.Context, root string) bool {
 	lv, err1 := leanVersion(ctx)
-	tv, err2 := toolchainVersion(root)
-	mv, err3 := miseVersion(root)
+	repo := filepath.Dir(root) // lean-toolchain and mise.toml are shared by the whole repository
+	tv, err2 := toolchainVersion(repo)
+	mv, err3 := miseVersion(repo)
 	if err := errors.Join(err1, err2, err3); err != nil {
 		fmt.Printf("%s %v\n", red("✗"), err)
 		return false

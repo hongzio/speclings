@@ -4,8 +4,8 @@
 // The network is simulated: each request or response is lost with some
 // probability, and the client retries until it gets a response.
 //
-//	go run ./go/052_retry        the server charges every request it receives
-//	go run ./go/052_retry -fix   the server remembers request IDs it has applied
+//	go run ./tla/go/052_retry        the server charges every request it receives
+//	go run ./tla/go/052_retry -fix   the server remembers request IDs it has applied
 package main
 
 import (

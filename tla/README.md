@@ -67,7 +67,7 @@ Each TLC run is stopped after 30 seconds. Exercises finish in about a second, so
 exercises/en/     original exercises (broken), English. The reference language
 exercises/ko/     Korean translations. Only comments differ; code must match en
 solutions/        solutions (English). Only look when you are stuck
-go/               Go programs that go with Parts 3 and 5. Run them as the exercises say, e.g. go run -race ./go/034_lost_update
+go/               Go programs that go with Parts 3 and 5. Run them as the exercises say, e.g. go run -race ./tla/go/034_lost_update
 work/             your workspace, created by tlings
 cmd/tlings/       the runner. Exercise order and expectations are in cmd/tlings/exercises.go
 ```

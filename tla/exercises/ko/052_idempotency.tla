@@ -15,8 +15,8 @@ EXTENDS Integers
 \* 변수 applied. Serve 가 처음에만 청구하고, 청구했다는 것을 기록하도록
 \* 고치세요.
 \*
-\*   go run ./go/052_retry          두 번 청구된 결제
-\*   go run ./go/052_retry -fix     멱등성 키를 쓴 경우
+\*   go run ./tla/go/052_retry          두 번 청구된 결제
+\*   go run ./tla/go/052_retry -fix     멱등성 키를 쓴 경우
 
 VARIABLES client, msgs, charged, applied
 

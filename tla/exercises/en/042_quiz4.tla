@@ -23,8 +23,8 @@ EXTENDS Integers, Sequences
 \*      WaitGroup: go func() { wg.Wait(); close(jobs) }(). In the spec,
 \*      that means Close may only happen once every producer is done.
 \*
-\*   go run ./go/042_close
-\*   go run ./go/042_close -fix
+\*   go run ./tla/go/042_close
+\*   go run ./tla/go/042_close -fix
 
 CONSTANT Producers
 

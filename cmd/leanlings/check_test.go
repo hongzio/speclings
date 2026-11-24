@@ -42,7 +42,7 @@ func testRoot(t *testing.T, orig string) string {
 	if _, err := exec.LookPath("lean"); err != nil {
 		t.Skip("lean not on PATH (run inside mise)")
 	}
-	real, err := filepath.Abs(filepath.Join("..", ".."))
+	real, err := filepath.Abs(filepath.Join("..", "..", "lean"))
 	if err != nil {
 		t.Fatal(err)
 	}

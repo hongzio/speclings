@@ -148,13 +148,13 @@ func check(err error) {
 func warnVersion(ctx context.Context, root string) {
 	have, err := leanVersion(ctx)
 	check(err)
-	if want, err := toolchainVersion(root); err == nil && have != want {
+	if want, err := toolchainVersion(filepath.Dir(root)); err == nil && have != want {
 		fmt.Fprintln(os.Stderr, yellow(fmt.Sprintf(m.VersionMismatch, have, want)))
 	}
 }
 
-// findRoot finds the repository root. bin/leanlings passes it in LEANLINGS_ROOT;
-// otherwise it walks up from the current directory to one containing exercises/ and go.mod.
+// findRoot finds the lean/ directory of the repository. bin/leanlings passes it in LEANLINGS_ROOT;
+// otherwise it walks up from the current directory to the repository root (go.mod and lean/exercises/).
 func findRoot() (string, error) {
 	if r := os.Getenv("LEANLINGS_ROOT"); r != "" {
 		return r, nil
@@ -164,12 +164,12 @@ func findRoot() (string, error) {
 		return "", err
 	}
 	for {
-		if isDir(filepath.Join(dir, "exercises")) && isFile(filepath.Join(dir, "go.mod")) {
-			return dir, nil
+		if isDir(filepath.Join(dir, "lean", "exercises")) && isFile(filepath.Join(dir, "go.mod")) {
+			return filepath.Join(dir, "lean"), nil
 		}
 		parent := filepath.Dir(dir)
 		if parent == dir {
-			return "", errors.New("cannot find the leanlings root (a directory with exercises/ and go.mod)")
+			return "", errors.New("cannot find the speclings repository (a directory with go.mod and lean/exercises/)")
 		}
 		dir = parent
 	}

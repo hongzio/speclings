@@ -32,8 +32,8 @@ EXTENDS Integers, Sequences
 \* goroutines on to their next operation. TLC should then report the
 \* deadlock after the first exchange, and tlings passes when it does.
 \*
-\*   go run ./go/039_deadlock
-\*   go run ./go/039_deadlock -fix
+\*   go run ./tla/go/039_deadlock
+\*   go run ./tla/go/039_deadlock -fix
 
 MainCode == <<"sendA", "recvB", "recvB", "sendA">>
 WorkerCode == <<"recvA", "sendB", "recvA", "sendB">>

@@ -236,9 +236,9 @@ func leanVersion(ctx context.Context) (string, error) {
 	return mm[1], nil
 }
 
-// toolchainVersion returns the version in root/lean-toolchain, e.g. "4.36.0".
-func toolchainVersion(root string) (string, error) {
-	b, err := os.ReadFile(filepath.Join(root, "lean-toolchain"))
+// toolchainVersion returns the version in repo/lean-toolchain, e.g. "4.36.0".
+func toolchainVersion(repo string) (string, error) {
+	b, err := os.ReadFile(filepath.Join(repo, "lean-toolchain"))
 	if err != nil {
 		return "", err
 	}
@@ -249,9 +249,9 @@ func toolchainVersion(root string) (string, error) {
 	return mm[1], nil
 }
 
-// miseVersion returns the Lean version pinned in root/mise.toml, e.g. "4.36.0".
-func miseVersion(root string) (string, error) {
-	b, err := os.ReadFile(filepath.Join(root, "mise.toml"))
+// miseVersion returns the Lean version pinned in repo/mise.toml, e.g. "4.36.0".
+func miseVersion(repo string) (string, error) {
+	b, err := os.ReadFile(filepath.Join(repo, "mise.toml"))
 	if err != nil {
 		return "", err
 	}

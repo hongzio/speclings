@@ -20,7 +20,7 @@ EXTENDS Integers, FiniteSets
 \*
 \* Write Lock(w) and Unlock(w). Correct must hold now.
 \*
-\* Afterwards: go run -race ./go/034_lost_update -fix mutex
+\* Afterwards: go run -race ./tla/go/034_lost_update -fix mutex
 
 CONSTANTS Workers, NoOne
 

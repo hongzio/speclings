@@ -25,8 +25,8 @@ EXTENDS Integers, FiniteSets
 \*
 \* Then watch it happen in Go:
 \*
-\*   go run ./go/034_lost_update          lost updates, counted
-\*   go run -race ./go/034_lost_update    the race detector reports it
+\*   go run ./tla/go/034_lost_update          lost updates, counted
+\*   go run -race ./tla/go/034_lost_update    the race detector reports it
 
 CONSTANT Workers
 

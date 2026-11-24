@@ -16,8 +16,8 @@ EXTENDS Integers
 \* whether it has applied it: the variable applied. Change Serve so that it
 \* charges only the first time, and records that it has.
 \*
-\*   go run ./go/052_retry          payments charged twice
-\*   go run ./go/052_retry -fix     with an idempotency key
+\*   go run ./tla/go/052_retry          payments charged twice
+\*   go run ./tla/go/052_retry -fix     with an idempotency key
 
 VARIABLES client, msgs, charged, applied
 

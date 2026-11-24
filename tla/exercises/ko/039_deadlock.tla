@@ -32,8 +32,8 @@ EXTENDS Integers, Sequences
 \* TLC 가 첫 주고받기 뒤의 deadlock 을 보고해야 하고, 보고하면 tlings 가
 \* 통과시킵니다.
 \*
-\*   go run ./go/039_deadlock
-\*   go run ./go/039_deadlock -fix
+\*   go run ./tla/go/039_deadlock
+\*   go run ./tla/go/039_deadlock -fix
 
 MainCode == <<"sendA", "recvB", "recvB", "sendA">>
 WorkerCode == <<"recvA", "sendB", "recvA", "sendB">>

@@ -143,8 +143,8 @@ func check(err error) {
 	}
 }
 
-// findRoot finds the repository root. bin/tlings passes it in TLINGS_ROOT;
-// otherwise it walks up from the current directory to one containing exercises/ and go.mod.
+// findRoot finds the tla/ directory of the repository. bin/tlings passes it in TLINGS_ROOT;
+// otherwise it walks up from the current directory to the repository root (go.mod and tla/exercises/).
 func findRoot() (string, error) {
 	if r := os.Getenv("TLINGS_ROOT"); r != "" {
 		return r, nil
@@ -154,12 +154,12 @@ func findRoot() (string, error) {
 		return "", err
 	}
 	for {
-		if isDir(filepath.Join(dir, "exercises")) && isFile(filepath.Join(dir, "go.mod")) {
-			return dir, nil
+		if isDir(filepath.Join(dir, "tla", "exercises")) && isFile(filepath.Join(dir, "go.mod")) {
+			return filepath.Join(dir, "tla"), nil
 		}
 		parent := filepath.Dir(dir)
 		if parent == dir {
-			return "", errors.New("cannot find the tlings root (a directory with exercises/ and go.mod)")
+			return "", errors.New("cannot find the speclings repository (a directory with go.mod and tla/exercises/)")
 		}
 		dir = parent
 	}

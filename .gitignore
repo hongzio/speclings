@@ -1,0 +1,12 @@
+# Learner workspaces (created by the runners)
+/tla/work/
+/lean/work/
+# Local mise state: GOPATH and the built runners
+/.mise/
+# Lake build output of the Lean checker
+/lean/checker/.lake/
+# TLC output when running tlc by hand
+states/
+*_TTrace_*.tla
+*_TTrace_*.bin
+.DS_Store

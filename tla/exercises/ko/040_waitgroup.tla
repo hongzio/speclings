@@ -30,8 +30,8 @@ EXTENDS Integers, FiniteSets
 \*   - Spawn 은 worker 를 "work" 에서 시작하게 한다
 \*   - Add(w) 를 없앤다
 \*
-\*   go run ./go/040_waitgroup
-\*   go run ./go/040_waitgroup -fix
+\*   go run ./tla/go/040_waitgroup
+\*   go run ./tla/go/040_waitgroup -fix
 
 CONSTANT Workers
 

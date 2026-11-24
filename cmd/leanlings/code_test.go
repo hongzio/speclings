@@ -191,7 +191,7 @@ func TestGuardMsgsDetected(t *testing.T) {
 }
 
 func TestOriginalsReadable(t *testing.T) {
-	root := filepath.Join("..", "..")
+	root := filepath.Join("..", "..", "lean")
 	for _, ex := range exercises {
 		if _, err := os.Stat(filepath.Join(root, "solutions", ex.file())); err != nil {
 			t.Errorf("%s: %v", ex.Name, err)

@@ -1,7 +1,0 @@
-# Learner workspace (created by leanlings)
-/work/
-# Local mise state: GOPATH and the built runner
-/.mise/
-# Lake build output of the checker
-/checker/.lake/
-.DS_Store

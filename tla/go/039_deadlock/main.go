@@ -5,8 +5,8 @@
 // The first exchange over the unbuffered channels works. Then main waits for b
 // while the worker waits for a.
 //
-//	go run ./go/039_deadlock        main receives from b again before sending on a
-//	go run ./go/039_deadlock -fix   main sends on a, then receives from b
+//	go run ./tla/go/039_deadlock        main receives from b again before sending on a
+//	go run ./tla/go/039_deadlock -fix   main sends on a, then receives from b
 package main
 
 import (

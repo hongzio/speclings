@@ -1,8 +1,8 @@
 // Command 040_waitgroup shows why wg.Add must be called before the goroutine
 // starts, not inside it. It accompanies tlings exercise 040.
 //
-//	go run ./go/040_waitgroup        Wait sometimes returns before the work is done
-//	go run ./go/040_waitgroup -fix   main calls wg.Add before starting the goroutines
+//	go run ./tla/go/040_waitgroup        Wait sometimes returns before the work is done
+//	go run ./tla/go/040_waitgroup -fix   main calls wg.Add before starting the goroutines
 package main
 
 import (

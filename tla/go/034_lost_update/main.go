@@ -2,10 +2,10 @@
 // without synchronization, and counts the increments that get lost.
 // It accompanies tlings exercises 034-036.
 //
-//	go run ./go/034_lost_update               lost updates, counted
-//	go run -race ./go/034_lost_update         the race detector reports the data race
-//	go run ./go/034_lost_update -fix mutex    the fix from 035
-//	go run ./go/034_lost_update -fix atomic   the fix from 036
+//	go run ./tla/go/034_lost_update               lost updates, counted
+//	go run -race ./tla/go/034_lost_update         the race detector reports the data race
+//	go run ./tla/go/034_lost_update -fix mutex    the fix from 035
+//	go run ./tla/go/034_lost_update -fix atomic   the fix from 036
 package main
 
 import (

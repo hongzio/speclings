@@ -5,8 +5,8 @@
 // detector stays silent. The bug is that Transfer checks the balance and
 // withdraws in two separate critical sections.
 //
-//	go run -race ./go/037_transfer        overdrafts, and no race report
-//	go run -race ./go/037_transfer -fix   check and withdraw under one lock
+//	go run -race ./tla/go/037_transfer        overdrafts, and no race report
+//	go run -race ./tla/go/037_transfer -fix   check and withdraw under one lock
 package main
 
 import (

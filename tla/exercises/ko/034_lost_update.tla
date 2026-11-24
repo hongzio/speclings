@@ -25,8 +25,8 @@ EXTENDS Integers, FiniteSets
 \*
 \* 그다음 Go 에서 직접 확인하세요.
 \*
-\*   go run ./go/034_lost_update          잃어버린 갱신 횟수
-\*   go run -race ./go/034_lost_update    race detector 가 잡아냄
+\*   go run ./tla/go/034_lost_update          잃어버린 갱신 횟수
+\*   go run -race ./tla/go/034_lost_update    race detector 가 잡아냄
 
 CONSTANT Workers
 

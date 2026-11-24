@@ -19,7 +19,7 @@ EXTENDS Integers, FiniteSets
 \*
 \* Write Incr(w), the atomic increment, as one action.
 \*
-\* Afterwards: go run -race ./go/034_lost_update -fix atomic
+\* Afterwards: go run -race ./tla/go/034_lost_update -fix atomic
 
 CONSTANT Workers
 

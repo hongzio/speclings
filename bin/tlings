@@ -3,4 +3,4 @@
 set -euo pipefail
 root="$(cd "$(dirname "$0")/.." && pwd)"
 go -C "$root" build -o "$root/.mise/tlings" ./cmd/tlings
-TLINGS_ROOT="$root" exec "$root/.mise/tlings" "$@"
+TLINGS_ROOT="$root/tla" exec "$root/.mise/tlings" "$@"

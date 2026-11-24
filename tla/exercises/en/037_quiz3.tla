@@ -26,8 +26,8 @@ EXTENDS Integers
 \*
 \* See it in Go, before and after:
 \*
-\*   go run -race ./go/037_transfer
-\*   go run -race ./go/037_transfer -fix
+\*   go run -race ./tla/go/037_transfer
+\*   go run -race ./tla/go/037_transfer -fix
 
 CONSTANTS Accounts, Workers, InitBalance, MaxAmount
 

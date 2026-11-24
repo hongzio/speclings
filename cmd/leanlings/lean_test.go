@@ -127,7 +127,7 @@ func TestManifest(t *testing.T) {
 			t.Errorf("%s: Broken needs a Kind or a Contains", ex.Name)
 		}
 	}
-	if err := checkManifest(filepath.Join("..", "..")); err != nil {
+	if err := checkManifest(filepath.Join("..", "..", "lean")); err != nil {
 		t.Error(err)
 	}
 }

@@ -30,8 +30,8 @@ EXTENDS Integers, FiniteSets
 \*   - Spawn starts the workers at "work"
 \*   - remove Add(w)
 \*
-\*   go run ./go/040_waitgroup
-\*   go run ./go/040_waitgroup -fix
+\*   go run ./tla/go/040_waitgroup
+\*   go run ./tla/go/040_waitgroup -fix
 
 CONSTANT Workers
 
