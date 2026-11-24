@@ -542,6 +542,81 @@ var exercises = []Exercise{
 			"ko": "eval_addS: unfold addS 다음 split <;> simp [eval]. eval_mulS 도 같습니다. simplify_correct: e 에 대한 귀납. num 은 rfl, add 는 rw [simplify, eval_addS, iha, ihb, eval], mul 은 eval_mulS 로 같게.",
 		},
 	},
+
+	// Part 6: dependent types. Proofs inside programs: index proofs, Fin, length-indexed vectors,
+	// subtypes, termination proofs, invariants and Decidable instances.
+	{
+		Name:   "058_indices",
+		Expect: fix().without(search...),
+		Broken: Broken{Contains: "failed to prove index is valid", At: "def third"},
+		Hint: L{
+			"en": "Give third a hypothesis: def third (xs : Array Nat) (h : 2 < xs.size) : Nat := xs[2]. Fin 5 counts modulo 5: 3 + 4 is 7, which is 2. Fin.last 4 is the largest Fin 5, 4.",
+			"ko": "third 에 가정을 주세요: def third (xs : Array Nat) (h : 2 < xs.size) : Nat := xs[2]. Fin 5 는 5 로 나눈 나머지로 셉니다. 3 + 4 는 7 이고, 이는 2 입니다. Fin.last 4 는 가장 큰 Fin 5 인 4 입니다.",
+		},
+	},
+	{
+		Name:   "059_vectors",
+		Expect: fix().without(search...),
+		Broken: Broken{Contains: "Type mismatch", At: "| nil, ys => ys"},
+		Hint: L{
+			"en": "append returns Vec α (n + m): then nil gives n + 0, which computes to n, and cons gives n + (m' + 1), which computes to (n + m') + 1. map: | nil => nil | cons x xs => cons (f x) (xs.map f). zip: | nil, nil => nil | cons x xs, cons y ys => cons (x, y) (zip xs ys).",
+			"ko": "append 가 Vec α (n + m) 을 돌려주게 하세요. 그러면 nil 은 n + 0 이 되어 n 으로 계산되고, cons 는 n + (m' + 1) 이 되어 (n + m') + 1 로 계산됩니다. map: | nil => nil | cons x xs => cons (f x) (xs.map f). zip: | nil, nil => nil | cons x xs, cons y ys => cons (x, y) (zip xs ys).",
+		},
+	},
+	{
+		Name:   "060_subtypes",
+		Expect: fill().without(search...),
+		Broken: blank("def ten"),
+		Hint: L{
+			"en": "ten: ⟨10, rfl⟩. addEven: ⟨a.val + b.val, by have := a.property; have := b.property; omega⟩. double: ⟨2 * n, by omega⟩. three: ⟨3, by decide⟩.",
+			"ko": "ten: ⟨10, rfl⟩. addEven: ⟨a.val + b.val, by have := a.property; have := b.property; omega⟩. double: ⟨2 * n, by omega⟩. three: ⟨3, by decide⟩.",
+		},
+	},
+	{
+		Name:   "061_proof_args",
+		Expect: fill().without(search...),
+		Broken: blank("def firstAndLast"),
+		Hint: L{
+			"en": "firstAndLast: (xs.head h, xs.getLast h). second: xs[1]. middle: xs[xs.length / 2]. Lean finds the index proofs from h. secondOfLong: second xs (by omega).",
+			"ko": "firstAndLast: (xs.head h, xs.getLast h). second: xs[1]. middle: xs[xs.length / 2]. Lean 이 h 로부터 인덱스 증명을 찾습니다. secondOfLong: second xs (by omega).",
+		},
+	},
+	{
+		Name:   "062_termination",
+		Expect: fix().without(search...),
+		Broken: Broken{Contains: "fail to show termination", At: "def euclid"},
+		Hint: L{
+			"en": "Write if h : b = 0 then a else euclid b (a % b), and after the definition: termination_by b, then decreasing_by exact Nat.mod_lt a (Nat.pos_of_ne_zero h).",
+			"ko": "if h : b = 0 then a else euclid b (a % b) 로 쓰고, 정의 뒤에 termination_by b, 그다음 decreasing_by exact Nat.mod_lt a (Nat.pos_of_ne_zero h) 를 더하세요.",
+		},
+	},
+	{
+		Name:   "063_invariants",
+		Expect: fill().without(search...),
+		Broken: blank("def make"),
+		Hint: L{
+			"en": "make: if h : a ≤ b then ⟨a, b, h⟩ else ⟨b, a, by omega⟩. widen: ⟨r.lo, r.hi + k, by have := r.ok; omega⟩, and shift adds k to both. Theorems: have := r.ok, simp only [widen, length], omega.",
+			"ko": "make: if h : a ≤ b then ⟨a, b, h⟩ else ⟨b, a, by omega⟩. widen: ⟨r.lo, r.hi + k, by have := r.ok; omega⟩, shift 는 둘 다에 k 를 더합니다. 정리: have := r.ok, simp only [widen, length], omega.",
+		},
+	},
+	{
+		Name:   "064_decidable",
+		Expect: fill().without(search...),
+		Broken: blank("instance (n : Nat) : Decidable (Even n)"),
+		Hint: L{
+			"en": "Even: inferInstanceAs (Decidable (n % 2 = 0)). isSorted follows the three cases of Sorted, with a ≤ b && isSorted (b :: rest). isSorted_iff: fun_induction isSorted xs <;> simp_all [Sorted]. The instance: fun xs => decidable_of_iff _ (isSorted_iff xs).",
+			"ko": "Even: inferInstanceAs (Decidable (n % 2 = 0)). isSorted 는 Sorted 의 세 경우를 따르고 a ≤ b && isSorted (b :: rest) 를 씁니다. isSorted_iff: fun_induction isSorted xs <;> simp_all [Sorted]. instance: fun xs => decidable_of_iff _ (isSorted_iff xs).",
+		},
+	},
+	{
+		Name:   "065_quiz6",
+		Expect: fill().without(search...),
+		Broken: blank("def bsearch"),
+		Hint: L{
+			"en": "if hlt : lo < hi then (let mid := (lo + hi) / 2; if a[mid] = x then some ⟨mid, by omega⟩ else if a[mid] < x then bsearch a x (mid + 1) hi h else bsearch a x lo mid (by omega)) else none, and termination_by hi - lo after the definition.",
+			"ko": "if hlt : lo < hi then (let mid := (lo + hi) / 2; if a[mid] = x then some ⟨mid, by omega⟩ else if a[mid] < x then bsearch a x (mid + 1) hi h else bsearch a x lo mid (by omega)) else none, 그리고 정의 뒤에 termination_by hi - lo.",
+		},
+	},
 }
 
 // logic is what Part 4 does not accept: the tactics that would take the steps for the learner.

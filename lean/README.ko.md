@@ -5,7 +5,7 @@
 작게 "고장 난" Lean 파일을 하나씩 고치면서 프로그래밍 언어이자 증명 보조기인 Lean 4 를 배우는 튜토리얼입니다.
 [ziglings](https://codeberg.org/ziglings/exercises/) 와 [rustlings](https://github.com/rust-lang/rustlings) 방식을 따릅니다.
 
-> **작업 중:** 지금은 57문제(Part 0: 도구, Part 1: 값과 함수, Part 2: 데이터 정의, Part 3: 프로그램, Part 4: 명제와 증명, Part 5: 귀납법)가 있고, 계속 추가하고 있습니다.
+> **작업 중:** 지금은 65문제(Part 0: 도구, Part 1: 값과 함수, Part 2: 데이터 정의, Part 3: 프로그램, Part 4: 명제와 증명, Part 5: 귀납법, Part 6: 종속 타입)가 있고, 계속 추가하고 있습니다.
 
 ## 시작하기
 
