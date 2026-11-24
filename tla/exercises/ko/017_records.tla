@@ -1,6 +1,6 @@
 ---------------------------- MODULE 017_records -----------------------------
 EXTENDS Integers, FiniteSets
-\* tlings 017: 레코드
+\* speclings tla 017: 레코드
 \*
 \*   [from |-> "alice", amt |-> 3]    레코드. Go 의 struct 값과 비슷
 \*   r.amt                            필드

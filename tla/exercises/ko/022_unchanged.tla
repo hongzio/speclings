@@ -1,6 +1,6 @@
 --------------------------- MODULE 022_unchanged ----------------------------
 EXTENDS Integers
-\* tlings 022: UNCHANGED
+\* speclings tla 022: UNCHANGED
 \*
 \* step 은 모든 변수에 다음 상태의 값을 줘야 합니다. Next 가 어떤 변수에
 \* 대해 아무 말도 하지 않으면 다음 값이 무엇이든 될 수 있으므로, TLC 는

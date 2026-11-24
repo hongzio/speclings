@@ -1,6 +1,6 @@
 ----------------------------- MODULE 020_quiz1 ------------------------------
 EXTENDS Integers, FiniteSets
-\* tlings 020: quiz
+\* speclings tla 020: quiz
 \*
 \* Two goroutines each call Transfer(from, to, amt) once. To check every
 \* way that can happen, a spec first needs the set of all possible calls.

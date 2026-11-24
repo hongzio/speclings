@@ -1,4 +1,4 @@
--- leanlings 037: implication (solution)
+-- speclings lean 037: implication (solution)
 
 theorem self_imp (p : Prop) : p → p := fun hp => hp
 

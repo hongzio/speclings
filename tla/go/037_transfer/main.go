@@ -1,5 +1,5 @@
 // Command 037_transfer runs concurrent bank transfers and counts overdrafts.
-// It accompanies tlings exercise 037.
+// It accompanies exercise 037 of the tla track.
 //
 // Every method locks the bank's mutex, so there is no data race and the race
 // detector stays silent. The bug is that Transfer checks the balance and

@@ -1,6 +1,6 @@
 ---------------------------- MODULE 039_deadlock ----------------------------
 EXTENDS Integers, Sequences
-\* tlings 039: 버퍼 없는 채널과 deadlock
+\* speclings tla 039: 버퍼 없는 채널과 deadlock
 \*
 \* 버퍼 없는 채널에는 자리가 전혀 없습니다. 보내기와 받기는 두 goroutine 이
 \* 모두 준비됐을 때 한 step 으로 함께 일어납니다. TLA+ 에서는 두
@@ -29,7 +29,7 @@ EXTENDS Integers, Sequences
 \* 연산의 위치입니다. 두 랑데부 SyncA 와 SyncB 를 쓰세요. 각각 한
 \* goroutine 의 다음 연산이 보내기이고 다른 쪽의 다음 연산이 짝이 맞는
 \* 받기일 때만 일어나며, 두 goroutine 을 모두 다음 연산으로 옮깁니다. 그러면
-\* TLC 가 첫 주고받기 뒤의 deadlock 을 보고해야 하고, 보고하면 tlings 가
+\* TLC 가 첫 주고받기 뒤의 deadlock 을 보고해야 하고, 보고하면 speclings 가
 \* 통과시킵니다.
 \*
 \*   go run ./tla/go/039_deadlock

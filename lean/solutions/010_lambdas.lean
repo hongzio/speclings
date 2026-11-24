@@ -1,4 +1,4 @@
--- leanlings 010: anonymous functions (solution)
+-- speclings lean 010: anonymous functions (solution)
 
 def doubled (xs : List Nat) : List Nat := xs.map (fun x => x * 2)
 

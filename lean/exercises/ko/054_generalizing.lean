@@ -1,4 +1,4 @@
--- leanlings 054: 일반화
+-- speclings lean 054: 일반화
 --
 -- sumAcc 는 반복문처럼 누산기로 리스트를 더합니다. 지금까지의 합을 acc
 -- 에 들고 다닙니다. 0 에서 시작하는 sumTR 은 sum 과 같은 값을

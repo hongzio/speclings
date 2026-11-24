@@ -1,6 +1,6 @@
 ---------------------------- MODULE 038_buffered ----------------------------
 EXTENDS Integers, Sequences
-\* tlings 038: buffered channels
+\* speclings tla 038: buffered channels
 \*
 \*   ch := make(chan int, 2)
 \*   go func() {                       // producer

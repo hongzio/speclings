@@ -1,4 +1,4 @@
--- leanlings 061: proofs as arguments (solution)
+-- speclings lean 061: proofs as arguments (solution)
 
 def firstAndLast (xs : List Nat) (h : xs ≠ []) : Nat × Nat := (xs.head h, xs.getLast h)
 

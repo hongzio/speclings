@@ -1,4 +1,4 @@
--- leanlings 039: and
+-- speclings lean 039: and
 --
 -- A proof of p ∧ q (type ∧ as \and) is a pair: a proof of p and a proof
 -- of q.

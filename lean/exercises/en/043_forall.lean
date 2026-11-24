@@ -1,4 +1,4 @@
--- leanlings 043: for all
+-- speclings lean 043: for all
 --
 -- A statement can depend on a value. Even below is a predicate: for each
 -- n, Even n is a statement, which holds when n % 2 = 0. Even 4 holds by

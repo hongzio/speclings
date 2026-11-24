@@ -1,4 +1,4 @@
--- leanlings 070: a compiler
+-- speclings lean 070: a compiler
 --
 -- This compiles the expressions of 023 to a stack machine. A program is a
 -- list of instructions; exec runs it on a stack, a list whose head is the

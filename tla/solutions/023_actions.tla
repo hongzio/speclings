@@ -1,6 +1,6 @@
 ---------------------------- MODULE 023_actions -----------------------------
 EXTENDS Integers
-\* tlings 023: actions and \/
+\* speclings tla 023: actions and \/
 \*
 \* Next usually allows several kinds of step. Each kind is called an
 \* action, and Next is their disjunction:

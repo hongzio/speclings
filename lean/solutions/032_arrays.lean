@@ -1,4 +1,4 @@
--- leanlings 032: arrays (solution)
+-- speclings lean 032: arrays (solution)
 
 def squaresArray (n : Nat) : Array Nat := Id.run do
   let mut out := #[]

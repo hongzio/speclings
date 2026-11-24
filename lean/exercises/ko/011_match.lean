@@ -1,4 +1,4 @@
--- leanlings 011: 패턴 매칭
+-- speclings lean 011: 패턴 매칭
 --
 -- match 는 값의 모양을 보고 맞는 첫 번째 경우를 고릅니다:
 --

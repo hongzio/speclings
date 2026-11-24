@@ -1,6 +1,6 @@
 ---------------------------- MODULE 023_actions -----------------------------
 EXTENDS Integers
-\* tlings 023: action 과 \/
+\* speclings tla 023: action 과 \/
 \*
 \* Next 는 보통 여러 종류의 step 을 허용합니다. 각 종류를 action 이라고
 \* 부르고, Next 는 그것들의 선언(\/)입니다.

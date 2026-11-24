@@ -1,4 +1,4 @@
--- leanlings 072: strengthening an invariant (solution)
+-- speclings lean 072: strengthening an invariant (solution)
 
 inductive Pc where
   | idle

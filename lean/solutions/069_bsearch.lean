@@ -1,4 +1,4 @@
--- leanlings 069: binary search (solution)
+-- speclings lean 069: binary search (solution)
 
 def bsearch (a : Array Nat) (x : Nat) (lo hi : Nat) (h : hi ≤ a.size) : Option (Fin a.size) :=
   if hlt : lo < hi then

@@ -1,4 +1,4 @@
--- leanlings 019: deriving
+-- speclings lean 019: deriving
 --
 -- In 018, the #guards compared points field by field. Comparing two
 -- Points with == needs a way to compare Points: an instance of BEq Point.

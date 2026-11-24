@@ -1,4 +1,4 @@
--- leanlings 017: 퀴즈 1
+-- speclings lean 017: 퀴즈 1
 --
 -- 이 퀴즈는 Part 1 의 내용을 조금씩 모두 씁니다.
 --

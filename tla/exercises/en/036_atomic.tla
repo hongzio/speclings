@@ -1,6 +1,6 @@
 ----------------------------- MODULE 036_atomic -----------------------------
 EXTENDS Integers, FiniteSets
-\* tlings 036: atomic steps
+\* speclings tla 036: atomic steps
 \*
 \* Another fix needs no lock at all:
 \*

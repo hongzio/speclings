@@ -1,4 +1,4 @@
--- leanlings 008: if and let (solution)
+-- speclings lean 008: if and let (solution)
 
 def abs (x : Int) : Int := if x < 0 then -x else x
 

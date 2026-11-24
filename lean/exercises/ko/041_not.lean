@@ -1,4 +1,4 @@
--- leanlings 041: 아님
+-- speclings lean 041: 아님
 --
 -- False 는 증명이 없는 명제입니다. ¬p ("p 가 아님", ¬ 는 \not 으로 입력) 는
 -- p → False 로 정의됩니다. ¬p 의 증명은 p 의 어떤 증명이든 불가능한 것으로

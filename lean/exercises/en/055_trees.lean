@@ -1,4 +1,4 @@
--- leanlings 055: induction on trees
+-- speclings lean 055: induction on trees
 --
 -- These are the tree functions of 022. Induction on a tree has one case
 -- per constructor, and a node has two subtrees, so it comes with two

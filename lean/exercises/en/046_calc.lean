@@ -1,4 +1,4 @@
--- leanlings 046: calc
+-- speclings lean 046: calc
 --
 -- A proof on paper often reads a = b = c ≤ d. calc writes it the same
 -- way, each step with its own proof:

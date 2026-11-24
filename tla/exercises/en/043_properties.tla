@@ -1,6 +1,6 @@
 --------------------------- MODULE 043_properties ---------------------------
 EXTENDS Integers
-\* tlings 043: properties
+\* speclings tla 043: properties
 \*
 \* An invariant talks about one state at a time. A property talks about a
 \* whole behavior, so it can also talk about steps and about the future.
@@ -21,7 +21,7 @@ EXTENDS Integers
 \* on the version never going backwards. Write NeverBackwards, "every step
 \* leaves version the same or larger", and add it to the .cfg as a
 \* property. The spec has a Rollback action, so TLC should find the
-\* property violated, and tlings passes when it does.
+\* property violated, and speclings passes when it does.
 
 VARIABLE version
 

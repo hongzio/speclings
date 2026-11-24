@@ -1,4 +1,4 @@
--- leanlings 025: namespaces
+-- speclings lean 025: namespaces
 --
 -- You have used xs.map f for List.map f xs. The dot looks at the type of
 -- xs, List, and calls the function List.map, with xs as the argument of

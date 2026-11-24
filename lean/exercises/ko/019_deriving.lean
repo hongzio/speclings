@@ -1,4 +1,4 @@
--- leanlings 019: deriving
+-- speclings lean 019: deriving
 --
 -- 018 의 #guard 는 점을 필드별로 비교했습니다. Point 두 개를 == 로
 -- 비교하려면 Point 를 비교하는 방법, 곧 BEq Point 의 instance 가

@@ -1,4 +1,4 @@
--- leanlings 047: classical logic
+-- speclings lean 047: classical logic
 --
 -- So far, every proof built what it claimed: a proof of p ∨ q said which
 -- side holds, a proof of ∃ said which value. This is constructive logic.
@@ -12,7 +12,7 @@
 --                                        one with hp : ¬p
 --
 -- Lean allows it; it is behind Classical.choice, one of the three
--- standard axioms that leanlings accepts. In return, statements such as
+-- standard axioms that speclings accepts. In return, statements such as
 -- ¬¬p → p become provable.
 --
 -- In not_and_iff and imp_iff_or, one direction is constructive and the

@@ -1,4 +1,4 @@
--- leanlings 009: functions
+-- speclings lean 009: functions
 --
 -- Arguments are written after the function, separated by spaces, with no
 -- parentheses or commas: area 3 4. (area (3, 4) would pass one argument,

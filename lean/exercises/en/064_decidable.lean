@@ -1,4 +1,4 @@
--- leanlings 064: decidable statements
+-- speclings lean 064: decidable statements
 --
 -- if c then ... and #guard c need more than a statement c: they need a way
 -- to compute whether c holds. That is an instance of Decidable c. Lean has

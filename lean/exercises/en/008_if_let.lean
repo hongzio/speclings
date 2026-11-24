@@ -1,4 +1,4 @@
--- leanlings 008: if and let
+-- speclings lean 008: if and let
 --
 -- if c then a else b is an expression: its value is a when c holds, and b
 -- otherwise. Every expression must have a value, so an if needs an else.

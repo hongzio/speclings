@@ -1,4 +1,4 @@
--- leanlings 067: a specification
+-- speclings lean 067: a specification
 --
 -- To prove a program correct, first say what correct means: a
 -- specification. For sorting, part of it is that the result is sorted.

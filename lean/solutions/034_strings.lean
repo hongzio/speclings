@@ -1,4 +1,4 @@
--- leanlings 034: strings (solution)
+-- speclings lean 034: strings (solution)
 
 def wordCount (s : String) : Nat := ((s.splitOn " ").filter (· != "")).length
 

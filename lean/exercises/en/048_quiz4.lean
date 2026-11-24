@@ -1,4 +1,4 @@
--- leanlings 048: quiz 4
+-- speclings lean 048: quiz 4
 --
 -- These use everything from Part 4. Plan each proof before you write it:
 -- what does the goal need, and what can each hypothesis give?

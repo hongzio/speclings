@@ -133,7 +133,7 @@ func guardLines(src string) []string {
 // Learners may add #guards of their own, but not remove or change the original ones:
 // they are the tests of the exercise, and removing them would make it pass.
 // A sorry in an original #guard is a blank to fill in, so it matches anything
-// (#guard 7 / 2 == sorry matches #guard 7 / 2 == 3), as ??? does in tlings.
+// (#guard 7 / 2 == sorry matches #guard 7 / 2 == 3), as ??? does in the TLA+ track.
 func missingGuards(orig, work string) []string {
 	var have []string
 	for _, l := range guardLines(work) {

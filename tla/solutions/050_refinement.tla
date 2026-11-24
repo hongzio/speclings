@@ -1,6 +1,6 @@
 --------------------------- MODULE 050_refinement ---------------------------
 EXTENDS Integers
-\* tlings 050: refinement
+\* speclings tla 050: refinement
 \*
 \* The atomic counter of 036 is the simplest correct description of "each
 \* goroutine adds 1 once". The mutex counter of 035 has more steps and more

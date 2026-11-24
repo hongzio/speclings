@@ -276,7 +276,7 @@ var exercises = []Exercise{
 	// Part 3: programs. IO, do, mutable variables and loops, arrays, errors, strings and partial functions.
 	{
 		Name:   "029_main",
-		Expect: fix().prints("Hello, leanlings!\n"),
+		Expect: fix().prints("Hello, speclings!\n"),
 		Broken: Broken{Contains: "Type mismatch", At: "def main"},
 		Hint: L{
 			"en": "IO.println greeting is an action of type IO Unit, so main must have that type: def main : IO Unit := ...",

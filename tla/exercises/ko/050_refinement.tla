@@ -1,6 +1,6 @@
 --------------------------- MODULE 050_refinement ---------------------------
 EXTENDS Integers
-\* tlings 050: refinement
+\* speclings tla 050: refinement
 \*
 \* 036 의 원자적 카운터는 "각 goroutine 이 한 번씩 1 을 더한다" 를 가장
 \* 단순하고 올바르게 기술한 것입니다. 035 의 mutex 카운터는 step 도 변수도

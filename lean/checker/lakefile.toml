@@ -1,8 +1,8 @@
 # The checker that compares a learner's exercise with the reference (see Main.lean).
-# bin/leanlings builds it; the build is cached.
-name = "leanlings-check"
-defaultTargets = ["leanlings-check"]
+# speclings lean builds it before checking; the build is cached.
+name = "speclings-check"
+defaultTargets = ["speclings-check"]
 
 [[lean_exe]]
-name = "leanlings-check"
+name = "speclings-check"
 root = "Main"

@@ -1,6 +1,6 @@
 ---------------------------- MODULE 006_bullets -----------------------------
 EXTENDS Integers
-\* tlings 006: /\ and \/ lists
+\* speclings tla 006: /\ and \/ lists
 \*
 \* Long formulas are written as lists of /\ or \/ bullets:
 \*

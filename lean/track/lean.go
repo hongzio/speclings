@@ -189,7 +189,7 @@ type RefProblem struct {
 }
 
 func checkerPath(root string) string {
-	return filepath.Join(root, "checker", ".lake", "build", "bin", "leanlings-check")
+	return filepath.Join(root, "checker", ".lake", "build", "bin", "speclings-check")
 }
 
 // compare runs the checker on refDir/Exercise.olean and learnerDir/Exercise.olean.
@@ -206,13 +206,13 @@ func compare(ctx context.Context, root, refDir, learnerDir string) ([]RefProblem
 	err := cmd.Run()
 	var ee *exec.ExitError
 	if err != nil && !(errors.As(err, &ee) && ee.ExitCode() == 1) {
-		return nil, fmt.Errorf("leanlings-check: %v %s", err, strings.TrimSpace(stderr.String()))
+		return nil, fmt.Errorf("speclings-check: %v %s", err, strings.TrimSpace(stderr.String()))
 	}
 	var problems []RefProblem
 	for line := range strings.Lines(stdout.String()) {
 		var p RefProblem
 		if err := json.Unmarshal([]byte(line), &p); err != nil {
-			return nil, fmt.Errorf("leanlings-check: unexpected output %q", line)
+			return nil, fmt.Errorf("speclings-check: unexpected output %q", line)
 		}
 		problems = append(problems, p)
 	}

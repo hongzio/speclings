@@ -1,4 +1,4 @@
--- leanlings 063: 불변식
+-- speclings lean 063: 불변식
 --
 -- structure 는 증명을 필드로 가질 수 있습니다. 아래 Range 는 구간
 -- lo .. hi 와 lo ≤ hi 라는 증명을 함께 담습니다. 그래서 거꾸로 된 Range 는

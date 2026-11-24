@@ -1,4 +1,4 @@
--- leanlings 058: indices
+-- speclings lean 058: indices
 --
 -- Part 6 is about types that depend on values, and proofs inside
 -- programs. The first example you have met already: xs[i] reads position

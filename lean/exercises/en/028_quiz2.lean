@@ -1,4 +1,4 @@
--- leanlings 028: quiz 2
+-- speclings lean 028: quiz 2
 --
 -- A binary search tree is a tree in which every node is larger than all
 -- values in its left subtree and smaller than all values in its right

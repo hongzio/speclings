@@ -1,4 +1,4 @@
--- leanlings 040: or (solution)
+-- speclings lean 040: or (solution)
 
 theorem or_swap (p q : Prop) : p ∨ q → q ∨ p := by
   intro h

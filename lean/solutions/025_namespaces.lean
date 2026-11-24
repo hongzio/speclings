@@ -1,4 +1,4 @@
--- leanlings 025: namespaces (solution)
+-- speclings lean 025: namespaces (solution)
 
 inductive Tree where
   | leaf

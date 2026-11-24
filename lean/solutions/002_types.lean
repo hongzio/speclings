@@ -1,4 +1,4 @@
--- leanlings 002: types (solution)
+-- speclings lean 002: types (solution)
 
 def temperature : Int := -5
 

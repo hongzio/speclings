@@ -1,6 +1,6 @@
 ----------------------------- MODULE 042_quiz4 ------------------------------
 EXTENDS Integers, Sequences
-\* tlings 042: 퀴즈
+\* speclings tla 042: 퀴즈
 \*
 \* producer 들이 채널로 job 을 보내고, consumer 는 채널이 닫힐 때까지
 \* range 로 받습니다. 누군가는 채널을 닫아야 하는데, 너무 일찍 닫는 것은

@@ -1,6 +1,6 @@
 -------------------------- MODULE 052_idempotency ---------------------------
 EXTENDS Integers
-\* tlings 052: idempotency
+\* speclings tla 052: idempotency
 \*
 \* Retries (051) have a price. When the response is lost, the client cannot
 \* tell whether the server got the request, so it sends it again, and the

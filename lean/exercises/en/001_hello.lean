@@ -1,10 +1,10 @@
--- leanlings 001: hello
+-- speclings lean 001: hello
 --
--- Welcome to leanlings!
+-- Welcome to the Lean track of speclings!
 --
--- leanlings is a collection of small, broken Lean files. You learn to
+-- This track is a collection of small, broken Lean files. You learn to
 -- read and write Lean by fixing them one at a time. Once you have fixed
--- one, save it and run leanlings again to move on to the next. All
+-- one, save it and run speclings lean again to move on to the next. All
 -- explanations are written as comments, like this one.
 --
 --   -- ...        comment to the end of the line
@@ -28,7 +28,7 @@
 -- same messages as you type.
 --
 -- #eval shows the value of an expression, and #guard checks that a
--- condition holds. leanlings tests your solutions with #guard: keep
+-- condition holds. speclings tests your solutions with #guard: keep
 -- every #guard of an exercise as it is.
 --
 -- Now look at answer below.

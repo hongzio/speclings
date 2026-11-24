@@ -1,4 +1,4 @@
--- leanlings 052: helper lemmas
+-- speclings lean 052: helper lemmas
 --
 -- reverse below puts the first element at the end of the reversed rest.
 -- Reversing twice gives the list back. Try to prove reverse_reverse by

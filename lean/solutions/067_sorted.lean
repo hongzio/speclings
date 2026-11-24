@@ -1,4 +1,4 @@
--- leanlings 067: a specification (solution)
+-- speclings lean 067: a specification (solution)
 
 inductive Sorted : List Nat → Prop where
   | nil : Sorted []

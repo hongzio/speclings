@@ -1,4 +1,4 @@
--- leanlings 044: exists (solution)
+-- speclings lean 044: exists (solution)
 
 theorem square_49 : ∃ n : Nat, n * n = 49 := ⟨7, rfl⟩
 

@@ -1,4 +1,4 @@
--- leanlings 042: iff (solution)
+-- speclings lean 042: iff (solution)
 
 theorem and_comm_iff (p q : Prop) : p ∧ q ↔ q ∧ p := by
   constructor

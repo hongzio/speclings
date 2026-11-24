@@ -1,4 +1,4 @@
--- leanlings 022: trees (solution)
+-- speclings lean 022: trees (solution)
 
 inductive Tree where
   | leaf

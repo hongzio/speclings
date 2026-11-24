@@ -1,4 +1,4 @@
--- leanlings 054: generalizing (solution)
+-- speclings lean 054: generalizing (solution)
 
 def sum : List Nat → Nat
   | [] => 0

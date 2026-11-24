@@ -1,5 +1,5 @@
 ------------------------- MODULE 051_lossy_network --------------------------
-\* tlings 051: a lossy network
+\* speclings tla 051: a lossy network
 \*
 \* A client sends a request and waits for the response. The network may
 \* lose any message, so the client sends the request again whenever

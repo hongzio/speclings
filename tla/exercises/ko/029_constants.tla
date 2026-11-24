@@ -1,6 +1,6 @@
 --------------------------- MODULE 029_constants ----------------------------
 EXTENDS Integers, FiniteSets
-\* tlings 029: CONSTANTS 와 model value
+\* speclings tla 029: CONSTANTS 와 model value
 \*
 \* 차 3 대 같은 크기를 스펙에 박아 넣으면 다시 쓰기 어렵습니다. 대신
 \* 상수로 선언하고, 값은 .cfg 에서 줍니다.

@@ -1,4 +1,4 @@
--- leanlings 062: termination
+-- speclings lean 062: termination
 --
 -- In 012, Lean accepted functions that call themselves on a structurally
 -- smaller argument. Euclid's algorithm does not: euclid a b calls

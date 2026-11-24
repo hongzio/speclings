@@ -1,6 +1,6 @@
 --------------------------- MODULE 044_eventually ---------------------------
 EXTENDS Integers
-\* tlings 044: eventually, and fairness
+\* speclings tla 044: eventually, and fairness
 \*
 \*   <>P     P holds at some point: "eventually P"
 \*

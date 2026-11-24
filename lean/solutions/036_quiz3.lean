@@ -1,4 +1,4 @@
--- leanlings 036: quiz 3 (solution)
+-- speclings lean 036: quiz 3 (solution)
 
 def text : String := "the cat sat on the mat the end"
 

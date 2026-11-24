@@ -1,6 +1,6 @@
 ----------------------------- MODULE 020_quiz1 ------------------------------
 EXTENDS Integers, FiniteSets
-\* tlings 020: 퀴즈
+\* speclings tla 020: 퀴즈
 \*
 \* goroutine 두 개가 각각 Transfer(from, to, amt) 를 한 번씩 호출합니다.
 \* 일어날 수 있는 모든 경우를 검사하려면, 스펙에는 먼저 가능한 모든

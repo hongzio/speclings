@@ -1,6 +1,6 @@
 ----------------------------- MODULE 032_quiz2 ------------------------------
 EXTENDS Integers
-\* tlings 032: quiz
+\* speclings tla 032: quiz
 \*
 \* The classic water jug puzzle: you have a 3-gallon jug, a 5-gallon jug
 \* and a tap. You may fill a jug, empty it, or pour one jug into the other
@@ -10,7 +10,7 @@ EXTENDS Integers
 \* Let TLC solve it. Write an invariant that says "the big jug never holds
 \* 4 gallons" and check it. If the puzzle can be solved, TLC reports the
 \* invariant violated, and its counterexample is the shortest solution.
-\* tlings passes when that happens.
+\* speclings passes when that happens.
 \*
 \* First finish the two pouring actions. Min(a, b) is the smaller of a and b.
 

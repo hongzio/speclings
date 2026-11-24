@@ -1,4 +1,4 @@
--- leanlings 005: natural numbers
+-- speclings lean 005: natural numbers
 --
 -- Nat, the type of natural numbers 0, 1, 2, ..., is the default type of
 -- number literals (#check 5 shows 5 : Nat). Its operations:

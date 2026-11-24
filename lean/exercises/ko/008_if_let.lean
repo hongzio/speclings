@@ -1,4 +1,4 @@
--- leanlings 008: if 와 let
+-- speclings lean 008: if 와 let
 --
 -- if c then a else b 는 식입니다. c 가 성립하면 값이 a 이고, 아니면 b
 -- 입니다. 모든 식에는 값이 있어야 하므로 if 에는 else 가 필요합니다.

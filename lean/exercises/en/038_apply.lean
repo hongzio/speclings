@@ -1,4 +1,4 @@
--- leanlings 038: apply
+-- speclings lean 038: apply
 --
 -- exact needs the whole proof at once. apply works backward instead: if
 -- the goal is s and you have h3 : r → s, then apply h3 leaves r to prove.

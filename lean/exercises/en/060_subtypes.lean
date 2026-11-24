@@ -1,4 +1,4 @@
--- leanlings 060: subtypes
+-- speclings lean 060: subtypes
 --
 -- { n : Nat // n % 2 = 0 } is the type of the Nats n with n % 2 = 0: each
 -- value is a pair of a number and a proof about it.

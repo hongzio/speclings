@@ -1,4 +1,4 @@
--- leanlings 071: invariants (solution)
+-- speclings lean 071: invariants (solution)
 
 def capacity : Nat := 3
 

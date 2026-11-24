@@ -1,5 +1,5 @@
 ---------------------------- MODULE 045_leads_to ----------------------------
-\* tlings 045: leads to
+\* speclings tla 045: leads to
 \*
 \*   P ~> Q     whenever P holds, Q holds then or later: "P leads to Q"
 \*
@@ -14,8 +14,8 @@
 \* Clients send requests to a server. Write Answered, "every waiting client
 \* is eventually answered", and add it to the .cfg as a property. Spec
 \* already has fairness, but requests can get dropped, so TLC should find
-\* Answered violated, and tlings passes when it does. Then read the
-\* counterexample: what happened to the request?
+\* Answered violated, and speclings passes when it does. Then read
+\* the counterexample: what happened to the request?
 
 CONSTANT Clients
 

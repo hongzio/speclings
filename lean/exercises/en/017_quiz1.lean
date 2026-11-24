@@ -1,4 +1,4 @@
--- leanlings 017: quiz 1
+-- speclings lean 017: quiz 1
 --
 -- This quiz uses a bit of everything from Part 1.
 --

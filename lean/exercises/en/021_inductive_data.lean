@@ -1,4 +1,4 @@
--- leanlings 021: constructors with data
+-- speclings lean 021: constructors with data
 --
 -- Constructors can carry data. A Shape below is a square with a side, a
 -- rectangle with a width and a height, or a triangle with a base and a

@@ -1,6 +1,6 @@
 ----------------------------- MODULE 024_exists -----------------------------
 EXTENDS Integers
-\* tlings 024: Next 안의 \E
+\* speclings tla 024: Next 안의 \E
 \*
 \* Next 안의 \E 는 식을 TRUE 로 만드는 값마다 step 하나씩을 허용합니다.
 \*

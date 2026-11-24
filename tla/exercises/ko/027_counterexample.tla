@@ -1,6 +1,6 @@
 ------------------------- MODULE 027_counterexample -------------------------
 EXTENDS Integers
-\* tlings 027: 반례 읽기
+\* speclings tla 027: 반례 읽기
 \*
 \* 불변식이 깨지면 TLC 는 나쁜 상태에 이르는 behavior 를 step 마다 상태
 \* 하나씩 출력합니다.

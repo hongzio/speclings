@@ -1,4 +1,4 @@
--- leanlings 036: quiz 3
+-- speclings lean 036: quiz 3
 --
 -- Write a program that counts the words of text and prints each word with
 -- its count, in the order the words first appear:

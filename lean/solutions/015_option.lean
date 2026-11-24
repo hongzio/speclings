@@ -1,4 +1,4 @@
--- leanlings 015: Option (solution)
+-- speclings lean 015: Option (solution)
 
 def first (xs : List Nat) : Option Nat := xs.head?
 

@@ -1,6 +1,6 @@
 ----------------------------- MODULE 013_choose -----------------------------
 EXTENDS Integers
-\* tlings 013: CHOOSE
+\* speclings tla 013: CHOOSE
 \*
 \*   CHOOSE x \in S : P    an element x of S for which P holds
 \*

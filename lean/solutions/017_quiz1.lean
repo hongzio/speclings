@@ -1,4 +1,4 @@
--- leanlings 017: quiz 1 (solution)
+-- speclings lean 017: quiz 1 (solution)
 
 def digits (n : Nat) : List Nat :=
   if n < 10 then [n] else digits (n / 10) ++ [n % 10]

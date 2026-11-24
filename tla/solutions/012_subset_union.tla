@@ -1,6 +1,6 @@
 -------------------------- MODULE 012_subset_union --------------------------
 EXTENDS Integers, FiniteSets
-\* tlings 012: SUBSET, UNION and Cardinality
+\* speclings tla 012: SUBSET, UNION and Cardinality
 \*
 \*   SUBSET S          the set of all subsets of S
 \*                     SUBSET {1, 2} = {{}, {1}, {2}, {1, 2}}

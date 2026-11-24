@@ -1,6 +1,6 @@
 ----------------------------- MODULE 037_quiz3 ------------------------------
 EXTENDS Integers
-\* tlings 037: 퀴즈
+\* speclings tla 037: 퀴즈
 \*
 \* Go 로 쓴 계좌 이체입니다. 모든 메서드가 은행의 mutex 를 잡으므로 data
 \* race 는 없고, go run -race 도 아무것도 보고하지 않습니다.

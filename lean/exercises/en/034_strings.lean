@@ -1,4 +1,4 @@
--- leanlings 034: strings
+-- speclings lean 034: strings
 --
 -- Some functions on Strings and Chars:
 --

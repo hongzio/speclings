@@ -1,4 +1,4 @@
--- leanlings 015: Option
+-- speclings lean 015: Option
 --
 -- What is the first element of an empty list? There is none. Some
 -- functions have no answer for some inputs, and Lean makes you say what

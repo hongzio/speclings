@@ -1,6 +1,6 @@
 --------------------------- MODULE 043_properties ---------------------------
 EXTENDS Integers
-\* tlings 043: 속성
+\* speclings tla 043: 속성
 \*
 \* 불변식은 한 번에 상태 하나에 대해 말합니다. 속성(property)은 behavior
 \* 전체에 대해 말하므로, step 과 미래에 대해서도 말할 수 있습니다. 속성은
@@ -21,7 +21,7 @@ EXTENDS Integers
 \* 뒤로 가지 않는다고 믿습니다. NeverBackwards, "모든 step 은 version 을
 \* 그대로 두거나 키운다" 를 쓰고 .cfg 에 속성으로 추가하세요. 스펙에
 \* Rollback action 이 있으므로 TLC 가 속성 위반을 찾아야 하고, 찾으면
-\* tlings 가 통과시킵니다.
+\* speclings 가 통과시킵니다.
 
 VARIABLE version
 

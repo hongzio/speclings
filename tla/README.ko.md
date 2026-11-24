@@ -1,49 +1,14 @@
-# tlings
+# speclings: TLA+ 트랙
 
-[English](README.md) | **한국어**
+[English](README.md) | **한국어** · [speclings](../README.ko.md)
 
-작게 "고장 난" TLA+ 스펙을 하나씩 고치면서 TLA+ 와 TLC 를 배우는 튜토리얼입니다.
-[ziglings](https://codeberg.org/ziglings/exercises/) 방식을 따릅니다.
+작게 "고장 난" TLA+ 스펙을 하나씩 고치면서 TLA+ 와 TLC 를 배웁니다.
 
 > **작업 중:** 지금은 53문제(Part 0: 도구, Part 1: 값, Part 2: 상태 기계, Part 3: 동시성, Part 4: 시간 속성, Part 5: 심화)가 있고, 계속 추가하고 있습니다.
 
-## 시작하기
+`speclings tla` 로 실행합니다. 설치와 명령은 [메인 README](../README.ko.md) 에 있습니다.
 
-macOS 나 Linux 에 [mise](https://mise.jdx.dev/) 만 있으면 됩니다. 나머지는 mise 가 설치합니다.
-
-```sh
-git clone https://github.com/hongzio/tlings.git && cd tlings
-mise trust         # 이 디렉터리의 mise.toml 을 허용
-mise install       # Java, Go, tla2tools, CommunityModules
-tlings -lang ko    # 한국어로 시작. 언어는 저장되므로 다음부터는 tlings 만
-```
-
-`tlings` 는 `bin/tlings` 입니다. mise 가
-[셸에서 활성화](https://mise.jdx.dev/getting-started.html#activate-mise)되어 있으면 `bin/` 이 PATH 에 들어가고,
-아니면 `mise exec -- tlings` 로 실행합니다.
-실행할 때마다 러너를 다시 빌드하므로(캐시됨) 문제가 추가되어도 재설치할 필요가 없습니다.
-
-문제는 `work/` 에서 풉니다. 차례가 된 문제를 tlings 가 고른 언어로 그곳에 복사합니다.
-`exercises/` 의 원본은 건드리지 않습니다.
-
-## 사용법
-
-| 명령 | 하는 일 |
-|---|---|
-| `tlings` | 진도 다음 문제부터 순서대로 검사하고, 첫 실패에서 멈춘다 |
-| `tlings -watch` | 위와 같고, `work/` 의 파일을 저장할 때마다 다시 검사한다 |
-| `tlings -lang en` | 언어를 바꾼다. `work/` 에 이미 있는 문제는 원래 언어 그대로다 |
-| `tlings -n 3` | 3 번 문제만 검사한다 (진도는 바뀌지 않음) |
-| `tlings -s 3` | 3 번부터 순서대로 검사한다 |
-| `tlings -restore 3` | 3 번 문제를 원래 상태로 되돌린다 (내 파일은 `.bak` 으로 남음) |
-| `tlings -hint` | 현재 문제의 힌트를 본다 (`-hint -n 3`: 3 번 문제) |
-| `tlings -v` | 통과했을 때도 TLC 출력을 보여준다 |
-| `tlings -reset` | 진도를 지운다 |
-
-실패하면 TLC 의 출력을 **그대로** 보여주고, 그 아래에 결과와 기대 결과를 덧붙입니다.
-힌트는 `tlings -hint` 로 요청할 때만 보여줍니다.
 통과했을 때는 `-v` 를 주거나, 파일에서 `Print`, `PrintT` 를 썼거나, 목표가 반례(위반이나 deadlock)였을 때만 TLC 출력을 보여줍니다. 반례를 읽을 수 있게 하려는 것입니다.
-TLC 출력을 읽는 것도 배울 거리입니다.
 
 ## 통과 기준
 
@@ -60,20 +25,21 @@ TLC 출력을 읽는 것도 배울 거리입니다.
 
 TLC 는 실행마다 30 초가 지나면 멈춥니다. 문제는 1 초 안팎이면 끝나므로, 더 오래 걸리는 스펙은 상태 공간이 무한할 가능성이 큽니다.
 
-## 구성
+## Go 프로그램
 
-```
-exercises/en/     원본 문제(고장 난 상태), 영어. 기준 언어
-exercises/ko/     한국어 번역. 주석만 다르고 코드는 en 과 같아야 한다
-solutions/        정답 (영어). 막혔을 때만 보세요
-go/               Part 3, 5 에 딸린 Go 프로그램. 문제에 적힌 대로 실행 (예: go run -race ./tla/go/034_lost_update)
-work/             내 작업 공간. tlings 가 만든다
-cmd/tlings/       러너. 문제 순서와 기대 결과는 cmd/tlings/exercises.go
-```
+Part 3, 5 는 실제 Go 코드를 모델링합니다. 프로그램은 `go/` 에 있고, 문제에 적힌 대로 저장소 루트에서 실행합니다 (예: `go run -race ./tla/go/034_lost_update`).
 
-## 문제 작성자용
+## 문제를 만드는 사람에게
 
-작성자용 절차(검사 항목, 문제 추가, 언어 추가)는 [README.md 의 For authors](README.md#for-authors) 를 보세요.
+`speclings verify tla` 는 모든 언어의 원본이 의도한 방식으로 실패하는지 확인합니다: exit code, 출력의 문구, 그리고 가리키는 줄.
+
+[모든 트랙에 공통인 규칙](../README.ko.md#문제를-만드는-사람에게)에 더해:
+
+- 원본의 `ASSUME` 은 모두 학습자 파일에 남아 있어야 합니다. 지워도 "통과"하면 안 되기 때문입니다.
+  speclings 는 공백을 무시하고 `???` 는 아무것에나 맞는 것으로 보고 줄을 비교합니다. 학습자는 새 `ASSUME` 을 더해도 됩니다.
+  `Broken.At` 이 든 `ASSUME` 줄은 그 코드 조각만 남아 있으면 되므로, 거기 있는 값을 고치게 하는 문제도 만들 수 있습니다.
+- 보조 모듈을 INSTANCE 하거나 EXTENDS 하는 문제는 그 모듈을 `Modules` 에 적습니다. speclings 는 보조 모듈을 문제와 함께 `work/tla/` 에 복사하고, `verify` 는 그 코드도 언어 사이에 같은지 확인합니다. `work/tla/` 는 공유되므로 이름 앞에 문제 번호를 붙이세요 (`050_AtomicCounter`).
+- `solutions/<Name>.cfg` 는 `.cfg` 를 고치는 문제에만 둡니다. 없으면 원본의 `.cfg` 로 정답을 검사합니다.
 
 ## 더 나아가기
 
@@ -81,7 +47,3 @@ cmd/tlings/       러너. 문제 순서와 기대 결과는 cmd/tlings/exercises
 - **시뮬레이션**: `tlc -simulate num=1000 -depth 100 Spec.tla` 는 모든 behavior 대신 최대 100 step 의 무작위 behavior 1000 개를 검사합니다. 다 탐색하기엔 너무 큰 상태 공간에 씁니다. `num` 이 없으면 멈출 때까지 계속 돕니다.
 - **[Apalache](https://github.com/apalache-mc/apalache)**: SMT solver 와 타입 주석을 쓰는 TLA+ 기호적(symbolic) 모델 검사기입니다. TLC 가 나열할 수 없는 크거나 무한한 데이터를 가진 스펙도 검사할 수 있습니다.
 - **더 읽을거리**: Leslie Lamport 의 [Specifying Systems](https://lamport.azurewebsites.net/tla/book.html), Hillel Wayne 의 [Learn TLA+](https://learntla.com).
-
-## 라이선스
-
-[MIT](LICENSE)

@@ -1,4 +1,4 @@
--- leanlings 031: let mut and for (solution)
+-- speclings lean 031: let mut and for (solution)
 
 def total (xs : List Nat) : Nat := Id.run do
   let mut sum := 0

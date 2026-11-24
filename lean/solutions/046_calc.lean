@@ -1,4 +1,4 @@
--- leanlings 046: calc (solution)
+-- speclings lean 046: calc (solution)
 
 theorem lt_chain (a b c d : Nat) (h1 : a = b) (h2 : b ≤ c) (h3 : c < d) : a < d :=
   calc a = b := h1

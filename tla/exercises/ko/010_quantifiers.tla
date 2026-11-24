@@ -1,6 +1,6 @@
 -------------------------- MODULE 010_quantifiers ---------------------------
 EXTENDS Integers
-\* tlings 010: \A 와 \E
+\* speclings tla 010: \A 와 \E
 \*
 \*   \A x \in S : P     S 의 모든 x 에 대해 P 가 성립한다    ("모든")
 \*   \E x \in S : P     P 가 성립하는 x 가 하나 이상 있다    ("존재")

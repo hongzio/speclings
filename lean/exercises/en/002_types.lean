@@ -1,4 +1,4 @@
--- leanlings 002: types
+-- speclings lean 002: types
 --
 -- Every value in Lean has a type, and Lean checks that types fit.
 -- #check shows the type of an expression without running it:

@@ -1,4 +1,4 @@
--- leanlings 030: do
+-- speclings lean 030: do
 --
 -- do 는 동작들을 한 줄에 하나씩, 차례로 실행합니다:
 --

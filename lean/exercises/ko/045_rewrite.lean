@@ -1,4 +1,4 @@
--- leanlings 045: 다시 쓰기
+-- speclings lean 045: 다시 쓰기
 --
 -- h : a = b 가 있으면, rw [h] 는 목표의 모든 a 를 b 로 바꿉니다. rw [← h]
 -- (← 는 \l 로 입력) 는 b 를 a 로 바꿉니다. rw [h1, h2] 는 h1 로 바꾼 다음

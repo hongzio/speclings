@@ -1,4 +1,4 @@
--- leanlings 003: sorry
+-- speclings lean 003: sorry
 --
 -- sorry stands for something not written yet. Lean accepts it in place
 -- of any value or proof, but warns:

@@ -1,4 +1,4 @@
--- leanlings 014: functions on lists
+-- speclings lean 014: functions on lists
 --
 -- Lists come with many functions. Several take a function as argument:
 --

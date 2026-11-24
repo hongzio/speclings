@@ -1,4 +1,4 @@
--- leanlings 039: and (solution)
+-- speclings lean 039: and (solution)
 
 theorem and_swap (p q : Prop) : p ∧ q → q ∧ p := by
   intro h

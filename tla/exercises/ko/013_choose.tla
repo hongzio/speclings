@@ -1,6 +1,6 @@
 ----------------------------- MODULE 013_choose -----------------------------
 EXTENDS Integers
-\* tlings 013: CHOOSE
+\* speclings tla 013: CHOOSE
 \*
 \*   CHOOSE x \in S : P    S 의 원소 중 P 가 성립하는 어떤 x
 \*

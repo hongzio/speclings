@@ -1,4 +1,4 @@
--- leanlings 045: rewriting (solution)
+-- speclings lean 045: rewriting (solution)
 
 theorem eq_chain (a b c : Nat) (h1 : a = b) (h2 : b = c) : a = c := by
   rw [h1, h2]

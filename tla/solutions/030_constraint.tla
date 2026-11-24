@@ -1,10 +1,10 @@
 --------------------------- MODULE 030_constraint ---------------------------
 EXTENDS Integers
-\* tlings 030: infinite state spaces
+\* speclings tla 030: infinite state spaces
 \*
 \* TLC lists every reachable state, so there must be finitely many. This
 \* sender numbers its messages and never stops, so its state space is
-\* infinite and TLC would run forever. tlings gives up after 30 seconds.
+\* infinite and TLC would run forever. speclings gives up after 30 seconds.
 \*
 \* There are two ways out:
 \*

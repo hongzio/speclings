@@ -1,6 +1,6 @@
 ------------------------------- MODULE 033_pc -------------------------------
 EXTENDS Integers
-\* tlings 033: the program counter
+\* speclings tla 033: the program counter
 \*
 \* From here on, specs model Go code. Start with one goroutine:
 \*

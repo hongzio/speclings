@@ -1,4 +1,4 @@
--- leanlings 027: type classes
+-- speclings lean 027: type classes
 --
 -- A polymorphic function works for every type α, so it may only do what
 -- works for every type. Not every type has ==: count below needs one for

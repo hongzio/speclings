@@ -1,4 +1,4 @@
--- leanlings 046: calc
+-- speclings lean 046: calc
 --
 -- 종이 위의 증명은 흔히 a = b = c ≤ d 처럼 읽힙니다. calc 는 같은 모양으로
 -- 쓰고, 단계마다 증명을 붙입니다:

@@ -1,4 +1,4 @@
--- leanlings 026: instances (solution)
+-- speclings lean 026: instances (solution)
 
 structure Point where
   x : Int

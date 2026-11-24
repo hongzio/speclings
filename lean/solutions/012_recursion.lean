@@ -1,4 +1,4 @@
--- leanlings 012: recursion (solution)
+-- speclings lean 012: recursion (solution)
 
 def sumTo : Nat → Nat
   | 0 => 0

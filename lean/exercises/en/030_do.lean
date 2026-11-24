@@ -1,4 +1,4 @@
--- leanlings 030: do
+-- speclings lean 030: do
 --
 -- do runs actions one after the other, one per line:
 --

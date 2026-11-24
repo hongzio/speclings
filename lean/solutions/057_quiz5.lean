@@ -1,4 +1,4 @@
--- leanlings 057: quiz 5 (solution)
+-- speclings lean 057: quiz 5 (solution)
 
 inductive Expr where
   | num (n : Nat)

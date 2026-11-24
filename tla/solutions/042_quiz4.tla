@@ -1,6 +1,6 @@
 ----------------------------- MODULE 042_quiz4 ------------------------------
 EXTENDS Integers, Sequences
-\* tlings 042: quiz
+\* speclings tla 042: quiz
 \*
 \* Producers send jobs on a channel, and a consumer ranges over it until it
 \* is closed. Someone has to close the channel, and closing it too early is

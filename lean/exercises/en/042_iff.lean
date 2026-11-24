@@ -1,4 +1,4 @@
--- leanlings 042: if and only if
+-- speclings lean 042: if and only if
 --
 -- p ↔ q ("p if and only if q", type ↔ as \iff) holds when p and q imply
 -- each other. A proof of it is a pair of implications:

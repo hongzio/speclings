@@ -1,6 +1,6 @@
 ------------------------ MODULE 046_fair_goroutines -------------------------
 EXTENDS Integers
-\* tlings 046: fairness for each goroutine
+\* speclings tla 046: fairness for each goroutine
 \*
 \* Two goroutines loop forever, each counting 0, 1, 2, 0, 1, 2, ...
 \* Progress says that both keep going: for every worker, count is 2 again

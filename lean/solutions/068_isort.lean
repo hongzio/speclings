@@ -1,4 +1,4 @@
--- leanlings 068: insertion sort (solution)
+-- speclings lean 068: insertion sort (solution)
 
 inductive Sorted : List Nat → Prop where
   | nil : Sorted []

@@ -1,4 +1,4 @@
--- leanlings 053: simp and omega (solution)
+-- speclings lean 053: simp and omega (solution)
 
 def append {α : Type} : List α → List α → List α
   | [], ys => ys

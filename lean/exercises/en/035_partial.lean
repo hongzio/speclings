@@ -1,4 +1,4 @@
--- leanlings 035: partial functions
+-- speclings lean 035: partial functions
 --
 -- The Collatz steps of n: if n is even, halve it, otherwise take 3n + 1,
 -- and count the steps until 1. Starting from 6:

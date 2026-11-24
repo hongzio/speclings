@@ -1,4 +1,4 @@
--- leanlings 020: enumerations (solution)
+-- speclings lean 020: enumerations (solution)
 
 inductive Weekday where
   | monday

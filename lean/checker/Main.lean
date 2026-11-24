@@ -2,13 +2,13 @@ import Lean
 open Lean
 
 /-!
-# leanlings-check
+# speclings-check
 
 Compares a learner's compiled exercise with the reference: the original exercise
 (with its `sorry`s) compiled the same way. Both are `.olean` files of a module with
 the same name, in different directories.
 
-    leanlings-check <refDir> <learnerDir> <Module>
+    speclings-check <refDir> <learnerDir> <Module>
 
 For every declaration of the reference module, except internal ones and the
 auxiliary declarations of theorems and of definitions that contain `sorry`:
@@ -63,7 +63,7 @@ structure Problem where
   deriving ToJson
 
 def runCore (env : Environment) (x : CoreM α) : IO α := do
-  let ctx : Core.Context := { fileName := "<leanlings-check>", fileMap := default }
+  let ctx : Core.Context := { fileName := "<speclings-check>", fileMap := default }
   let (a, _) ← x.toIO ctx { env }
   return a
 
@@ -107,12 +107,12 @@ def check (refDir learnerDir : System.FilePath) (mod : Name) : IO (Array Problem
 
 def main (args : List String) : IO UInt32 := do
   let [refDir, learnerDir, mod] := args
-    | IO.eprintln "usage: leanlings-check <refDir> <learnerDir> <Module>"; return 2
+    | IO.eprintln "usage: speclings-check <refDir> <learnerDir> <Module>"; return 2
   try
     let problems ← check refDir learnerDir mod.toName
     for p in problems do
       IO.println (toJson p).compress
     return if problems.isEmpty then 0 else 1
   catch e =>
-    IO.eprintln s!"leanlings-check: {e}"
+    IO.eprintln s!"speclings-check: {e}"
     return 2

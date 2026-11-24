@@ -1,4 +1,4 @@
--- leanlings 053: simp and omega
+-- speclings lean 053: simp and omega
 --
 -- You have now taken the steps of many proofs by hand. Two tactics take
 -- most of them for you, and from here on they are accepted:

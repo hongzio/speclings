@@ -1,4 +1,4 @@
--- leanlings 034: 문자열
+-- speclings lean 034: 문자열
 --
 -- String 과 Char 에 대한 함수 몇 가지:
 --

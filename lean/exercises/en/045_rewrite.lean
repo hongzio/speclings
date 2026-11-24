@@ -1,4 +1,4 @@
--- leanlings 045: rewriting
+-- speclings lean 045: rewriting
 --
 -- With h : a = b, rw [h] replaces every a in the goal with b. rw [← h]
 -- (type ← as \l) replaces b with a. rw [h1, h2] rewrites with h1, then

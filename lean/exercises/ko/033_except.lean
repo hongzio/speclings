@@ -1,4 +1,4 @@
--- leanlings 033: 에러
+-- speclings lean 033: 에러
 --
 -- Option 은 "값이 없음" 을 말합니다. Except ε α 는 이유도 말합니다. 값은
 -- x : α 인 .ok x 이거나, e : ε 인 .error e 이고, e 는 흔히 메시지

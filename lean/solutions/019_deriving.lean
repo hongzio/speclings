@@ -1,4 +1,4 @@
--- leanlings 019: deriving (solution)
+-- speclings lean 019: deriving (solution)
 
 structure Point where
   x : Int

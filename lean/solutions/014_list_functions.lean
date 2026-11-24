@@ -1,4 +1,4 @@
--- leanlings 014: functions on lists (solution)
+-- speclings lean 014: functions on lists (solution)
 
 def squares (n : Nat) : List Nat := (List.range n).map (· ^ 2)
 

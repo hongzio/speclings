@@ -1,6 +1,6 @@
 ---------------------------- MODULE 039_deadlock ----------------------------
 EXTENDS Integers, Sequences
-\* tlings 039: unbuffered channels and deadlock
+\* speclings tla 039: unbuffered channels and deadlock
 \*
 \* An unbuffered channel has no room at all: a send and a receive happen
 \* together, as one step, when both goroutines are ready. In TLA+ that is a
@@ -30,7 +30,7 @@ EXTENDS Integers, Sequences
 \* rendezvous: each happens only when one goroutine's next operation is a
 \* send and the other's is the matching receive, and it moves both
 \* goroutines on to their next operation. TLC should then report the
-\* deadlock after the first exchange, and tlings passes when it does.
+\* deadlock after the first exchange, and speclings passes when it does.
 \*
 \*   go run ./tla/go/039_deadlock
 \*   go run ./tla/go/039_deadlock -fix

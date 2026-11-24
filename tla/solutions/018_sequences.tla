@@ -1,6 +1,6 @@
 --------------------------- MODULE 018_sequences ----------------------------
 EXTENDS Integers, Sequences
-\* tlings 018: tuples and sequences
+\* speclings tla 018: tuples and sequences
 \*
 \*   <<1, 2, 3>>        a tuple, also called a sequence; indexes start at 1
 \*   s[i]               the i-th element

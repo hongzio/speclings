@@ -1,4 +1,4 @@
--- leanlings 054: generalizing
+-- speclings lean 054: generalizing
 --
 -- sumAcc adds up a list with an accumulator, the way a loop would: it
 -- carries the sum so far in acc. sumTR, which starts it at 0, computes the

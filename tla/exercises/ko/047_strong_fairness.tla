@@ -1,5 +1,5 @@
 ------------------------ MODULE 047_strong_fairness -------------------------
-\* tlings 047: 강한 공정성
+\* speclings tla 047: 강한 공정성
 \*
 \* goroutine 두 개가 영원히 돕니다: mutex 를 잡고, 일하고, 풀고, 다시
 \* 잡습니다. NoStarvation 은 lock 을 기다리는 goroutine 이 결국 lock 을

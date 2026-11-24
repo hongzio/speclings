@@ -1,6 +1,6 @@
 -------------------------- MODULE 007_definitions ---------------------------
 EXTENDS Integers
-\* tlings 007: 정의
+\* speclings tla 007: 정의
 \*
 \* Name == e 는 Name 이 식 e 를 뜻한다고 정의합니다. 매개변수를 받을 수도
 \* 있습니다.

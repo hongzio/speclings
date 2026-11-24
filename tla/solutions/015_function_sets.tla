@@ -1,6 +1,6 @@
 ------------------------- MODULE 015_function_sets --------------------------
 EXTENDS Integers, FiniteSets
-\* tlings 015: sets of functions
+\* speclings tla 015: sets of functions
 \*
 \*   [S -> T]    the set of ALL functions with domain S and values in T
 \*

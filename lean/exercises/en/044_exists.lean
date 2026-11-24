@@ -1,4 +1,4 @@
--- leanlings 044: exists
+-- speclings lean 044: exists
 --
 -- ∃ x, P x ("there is an x with P x", type ∃ as \exists) is proved by
 -- giving one such x, the witness, with a proof that it fits:

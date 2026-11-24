@@ -1,4 +1,4 @@
--- leanlings 002: 타입
+-- speclings lean 002: 타입
 --
 -- Lean 의 모든 값에는 타입이 있고, Lean 은 타입이 맞는지 검사합니다.
 -- #check 는 식을 실행하지 않고 타입을 보여 줍니다:

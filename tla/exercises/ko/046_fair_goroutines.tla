@@ -1,6 +1,6 @@
 ------------------------ MODULE 046_fair_goroutines -------------------------
 EXTENDS Integers
-\* tlings 046: goroutine 마다의 공정성
+\* speclings tla 046: goroutine 마다의 공정성
 \*
 \* goroutine 두 개가 각자 0, 1, 2, 0, 1, 2, ... 를 세며 영원히 돕니다.
 \* Progress 는 둘 다 계속 나아간다는 뜻입니다. 모든 worker 에 대해 count

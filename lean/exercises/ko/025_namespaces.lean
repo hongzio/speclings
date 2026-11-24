@@ -1,4 +1,4 @@
--- leanlings 025: 이름공간
+-- speclings lean 025: 이름공간
 --
 -- List.map f xs 대신 xs.map f 를 써 왔습니다. 점은 xs 의 타입인 List 를
 -- 보고, List 타입 인자로 xs 를 넣어 함수 List.map 을 부릅니다. 그러니

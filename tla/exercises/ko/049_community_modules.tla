@@ -1,9 +1,9 @@
 ----------------------- MODULE 049_community_modules ------------------------
 EXTENDS Integers, FiniteSets, Functions
-\* tlings 049: CommunityModules
+\* speclings tla 049: CommunityModules
 \*
 \* 표준 모듈은 일부러 작게 만들어져 있습니다. TLA+ CommunityModules 는 자주
-\* 쓰는 연산자를 많이 더해 주고, tlings 는 이것을 TLC 의 경로에 넣어 두었으니
+\* 쓰는 연산자를 많이 더해 주고, speclings 는 이것을 TLC 의 경로에 넣어 두었으니
 \* 표준 모듈처럼 EXTENDS 하면 됩니다. 그중 몇 가지:
 \*
 \*   Functions       SumFunction(f), Range(f), Restrict(f, S), ...

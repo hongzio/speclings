@@ -1,5 +1,5 @@
 ------------------------ MODULE 047_strong_fairness -------------------------
-\* tlings 047: strong fairness
+\* speclings tla 047: strong fairness
 \*
 \* Two goroutines loop forever: lock the mutex, work, unlock, and lock
 \* again. NoStarvation says that a goroutine waiting for the lock

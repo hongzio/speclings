@@ -1,4 +1,4 @@
--- leanlings 066: grind
+-- speclings lean 066: grind
 --
 -- Part 7, the last, proves programs correct. First, a stronger tool.
 --

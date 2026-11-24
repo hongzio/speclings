@@ -1,4 +1,4 @@
--- leanlings 004: goals
+-- speclings lean 004: goals
 --
 -- Lean is also a proof assistant. A theorem states a fact and proves it:
 --
@@ -22,7 +22,7 @@
 -- Your editor shows the goal at the cursor (lean.nvim and VS Code call
 -- this the infoview). In the terminal, Lean shows the goals left when a
 -- proof is incomplete, as "unsolved goals". Try it: delete a sorry after
--- by, and run leanlings.
+-- by, and run speclings lean.
 --
 -- Some tactics turn a goal into several. constructor turns A ∧ B ("A and
 -- B") into the two goals A and B, which you then prove one after the

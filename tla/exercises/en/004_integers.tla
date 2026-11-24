@@ -1,6 +1,6 @@
 ---------------------------- MODULE 004_integers ----------------------------
 EXTENDS Integers, TLC
-\* tlings 004: integers
+\* speclings tla 004: integers
 \*
 \* From here on, ??? marks a blank for you to fill in. TLC cannot read ???,
 \* so until you replace it you get a "Lexical error" that points at it.

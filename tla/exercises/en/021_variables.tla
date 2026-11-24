@@ -1,6 +1,6 @@
 --------------------------- MODULE 021_variables ----------------------------
 EXTENDS Integers
-\* tlings 021: variables, Init and Next
+\* speclings tla 021: variables, Init and Next
 \*
 \* Until now every name stood for a fixed value. From here on, a spec
 \* describes a system that changes:
@@ -19,7 +19,7 @@ EXTENDS Integers
 \* The .cfg file tells TLC which formula is which. Have a look at it.
 \*
 \* This clock shows the hours 0, 1, ..., 11 and then 0 again. Write Next.
-\* From now on tlings also checks how many distinct states TLC finds: the
+\* From now on speclings also checks how many distinct states TLC finds: the
 \* clock has exactly 12.
 
 VARIABLE hour

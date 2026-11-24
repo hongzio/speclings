@@ -1,4 +1,4 @@
--- leanlings 018: structures
+-- speclings lean 018: structures
 --
 -- A structure groups named values, its fields, into one value:
 --

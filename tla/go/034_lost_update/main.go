@@ -1,6 +1,6 @@
 // Command 034_lost_update runs two goroutines that increment a shared counter
 // without synchronization, and counts the increments that get lost.
-// It accompanies tlings exercises 034-036.
+// It accompanies exercises 034-036 of the tla track.
 //
 //	go run ./tla/go/034_lost_update               lost updates, counted
 //	go run -race ./tla/go/034_lost_update         the race detector reports the data race

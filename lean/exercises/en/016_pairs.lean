@@ -1,4 +1,4 @@
--- leanlings 016: pairs
+-- speclings lean 016: pairs
 --
 -- A pair holds two values, of the same or different types. The type of a
 -- pair is written with × (type \x):

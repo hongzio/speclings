@@ -9,7 +9,7 @@ import (
 )
 
 func TestCodeLines(t *testing.T) {
-	src := `-- leanlings 000
+	src := `-- speclings lean 000
 def s := "a -- not a comment" -- but this is
 /- block
    /- nested -/ still comment

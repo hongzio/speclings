@@ -1,6 +1,6 @@
 ------------------------------ MODULE 009_sets ------------------------------
 EXTENDS Integers
-\* tlings 009: sets
+\* speclings tla 009: sets
 \*
 \*   {1, 2, 3}        a set. Order and repetition do not matter:
 \*                    {1, 2} = {2, 1, 1}

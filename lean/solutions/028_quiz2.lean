@@ -1,4 +1,4 @@
--- leanlings 028: quiz 2 (solution)
+-- speclings lean 028: quiz 2 (solution)
 
 inductive Tree where
   | leaf

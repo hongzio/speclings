@@ -1,6 +1,6 @@
 -------------------------- MODULE 034_lost_update ---------------------------
 EXTENDS Integers, FiniteSets
-\* tlings 034: two goroutines, one counter
+\* speclings tla 034: two goroutines, one counter
 \*
 \* Now two goroutines run incr at the same time:
 \*
@@ -20,8 +20,8 @@ EXTENDS Integers, FiniteSets
 \* TLC tries every interleaving of the two goroutines.
 \*
 \* Write Write(w): w writes tmp[w] + 1, the value it read earlier. TLC
-\* should then find Correct violated, and tlings passes when it does. Read
-\* the trace: it is a lost update, step by step.
+\* should then find Correct violated, and speclings passes when it does.
+\* Read the trace: it is a lost update, step by step.
 \*
 \* Then watch it happen in Go:
 \*

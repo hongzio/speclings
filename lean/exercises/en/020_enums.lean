@@ -1,4 +1,4 @@
--- leanlings 020: enumerations
+-- speclings lean 020: enumerations
 --
 -- inductive defines a new type by listing every way to build a value of
 -- it, its constructors. With constructors that take nothing, that is just

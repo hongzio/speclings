@@ -1,4 +1,4 @@
--- leanlings 053: simp 와 omega
+-- speclings lean 053: simp 와 omega
 --
 -- 이제 많은 증명의 단계를 손으로 밟아 보았습니다. 그 대부분을 대신 해
 -- 주는 전술이 둘 있고, 이제부터는 받아들입니다:

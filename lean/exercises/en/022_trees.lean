@@ -1,4 +1,4 @@
--- leanlings 022: trees
+-- speclings lean 022: trees
 --
 -- A constructor can also take values of the type being defined. A binary
 -- tree is a leaf, or a node with a value and two smaller trees:

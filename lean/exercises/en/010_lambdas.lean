@@ -1,4 +1,4 @@
--- leanlings 010: anonymous functions
+-- speclings lean 010: anonymous functions
 --
 -- fun x => e is a function without a name. (Instead of => you may write
 -- ↦, typed \mapsto.)

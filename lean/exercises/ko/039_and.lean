@@ -1,4 +1,4 @@
--- leanlings 039: 그리고
+-- speclings lean 039: 그리고
 --
 -- p ∧ q (∧ 는 \and 로 입력) 의 증명은 쌍입니다. p 의 증명과 q 의 증명.
 --

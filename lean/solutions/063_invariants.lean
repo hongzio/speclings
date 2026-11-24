@@ -1,4 +1,4 @@
--- leanlings 063: invariants (solution)
+-- speclings lean 063: invariants (solution)
 
 structure Range where
   lo : Nat

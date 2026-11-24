@@ -1,6 +1,6 @@
 ----------------------------- MODULE 016_except -----------------------------
 EXTENDS Integers
-\* tlings 016: EXCEPT
+\* speclings tla 016: EXCEPT
 \*
 \* TLA+ 에서 값은 절대 바뀌지 않습니다. 함수를 수정하는 게 아니라, 몇몇
 \* 키만 다른 새 함수를 씁니다.

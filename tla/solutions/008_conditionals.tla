@@ -1,6 +1,6 @@
 -------------------------- MODULE 008_conditionals --------------------------
 EXTENDS Integers
-\* tlings 008: IF, CASE and LET
+\* speclings tla 008: IF, CASE and LET
 \*
 \*   IF c THEN a ELSE b    an expression, not a statement: it has a value,
 \*                         so ELSE is required

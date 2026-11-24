@@ -1,4 +1,4 @@
--- leanlings 072: strengthening an invariant
+-- speclings lean 072: strengthening an invariant
 --
 -- Two processes share a lock. Each is idle, waiting, or in its critical
 -- section. A waiting process may enter when the lock is free, taking it;

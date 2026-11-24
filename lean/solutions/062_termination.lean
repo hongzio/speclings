@@ -1,4 +1,4 @@
--- leanlings 062: termination (solution)
+-- speclings lean 062: termination (solution)
 
 def euclid (a b : Nat) : Nat :=
   if h : b = 0 then a else euclid b (a % b)

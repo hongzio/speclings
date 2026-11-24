@@ -1,4 +1,4 @@
--- leanlings 026: instance
+-- speclings lean 026: instance
 --
 -- 연산자는 타입 클래스의 함수입니다. a + b 는 HAdd.hAdd a b 라는 뜻이고,
 -- Lean 은 이 타입들의 값 두 개를 더하는 방법을 말해 주는 instance 를

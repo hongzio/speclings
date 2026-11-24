@@ -1,4 +1,4 @@
--- leanlings 012: recursion
+-- speclings lean 012: recursion
 --
 -- Lean has no loops in plain definitions (do blocks have them; see Part
 -- 3). A function repeats by calling itself:

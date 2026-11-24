@@ -1,9 +1,9 @@
 ----------------------- MODULE 049_community_modules ------------------------
 EXTENDS Integers, FiniteSets, Functions
-\* tlings 049: CommunityModules
+\* speclings tla 049: CommunityModules
 \*
 \* The standard modules are small on purpose. The TLA+ CommunityModules add
-\* many everyday operators, and tlings puts them on TLC's path, so you can
+\* many everyday operators, and speclings puts them on TLC's path, so you can
 \* EXTENDS them like standard modules. A few of them:
 \*
 \*   Functions       SumFunction(f), Range(f), Restrict(f, S), ...

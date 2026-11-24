@@ -1,4 +1,4 @@
--- leanlings 064: decidable statements (solution)
+-- speclings lean 064: decidable statements (solution)
 
 def Even (n : Nat) : Prop := n % 2 = 0
 

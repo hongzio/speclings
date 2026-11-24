@@ -1,4 +1,4 @@
--- leanlings 006: integers (solution)
+-- speclings lean 006: integers (solution)
 
 #guard (-7 : Int) / 2 == -4
 #guard (-7 : Int) % 2 == 1

@@ -1,4 +1,4 @@
--- leanlings 031: let mut and for
+-- speclings lean 031: let mut and for
 --
 -- Inside do, you can write code the way you would in an imperative
 -- language. let mut declares a variable that can change, and := assigns

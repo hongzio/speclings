@@ -1,6 +1,6 @@
 --------------------------- MODULE 014_functions ----------------------------
 EXTENDS Integers
-\* tlings 014: functions
+\* speclings tla 014: functions
 \*
 \* A TLA+ function is like a Go map whose keys are exactly its domain:
 \*

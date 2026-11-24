@@ -1,4 +1,4 @@
--- leanlings 013: lists (solution)
+-- speclings lean 013: lists (solution)
 
 def len : List Nat → Nat
   | [] => 0

@@ -1,4 +1,4 @@
--- leanlings 023: expressions
+-- speclings lean 023: expressions
 --
 -- Programs are data too. An arithmetic expression is a number, a sum of
 -- two expressions or a product of two expressions:

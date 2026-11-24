@@ -1,5 +1,5 @@
 // Command 042_close shows a channel closed too early: a producer then panics
-// with "send on closed channel". It accompanies tlings exercise 042.
+// with "send on closed channel". It accompanies exercise 042 of the tla track.
 //
 // A real program would crash on the first panic. This one recovers it in the
 // producer, so that it can count how often it happens.

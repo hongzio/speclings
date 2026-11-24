@@ -1,4 +1,4 @@
--- leanlings 043: for all (solution)
+-- speclings lean 043: for all (solution)
 
 def Even (n : Nat) : Prop := n % 2 = 0
 

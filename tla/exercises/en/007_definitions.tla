@@ -1,6 +1,6 @@
 -------------------------- MODULE 007_definitions ---------------------------
 EXTENDS Integers
-\* tlings 007: definitions
+\* speclings tla 007: definitions
 \*
 \* Name == e defines Name to mean the expression e. Definitions can take
 \* parameters:

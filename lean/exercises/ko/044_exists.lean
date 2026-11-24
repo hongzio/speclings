@@ -1,4 +1,4 @@
--- leanlings 044: 존재
+-- speclings lean 044: 존재
 --
 -- ∃ x, P x ("P x 인 x 가 있다", ∃ 는 \exists 로 입력) 는 그런 x 하나, 곧
 -- 증인(witness)을 그것이 맞다는 증명과 함께 주어서 증명합니다:

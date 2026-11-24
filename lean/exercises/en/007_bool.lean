@@ -1,4 +1,4 @@
--- leanlings 007: Bool
+-- speclings lean 007: Bool
 --
 -- Bool has two values, true and false. Comparisons compute Bools:
 --

@@ -1,6 +1,6 @@
 -------------------------- MODULE 012_subset_union --------------------------
 EXTENDS Integers, FiniteSets
-\* tlings 012: SUBSET, UNION, Cardinality
+\* speclings tla 012: SUBSET, UNION, Cardinality
 \*
 \*   SUBSET S          S 의 모든 부분집합의 집합
 \*                     SUBSET {1, 2} = {{}, {1}, {2}, {1, 2}}

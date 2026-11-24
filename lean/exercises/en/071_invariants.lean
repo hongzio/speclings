@@ -1,6 +1,6 @@
--- leanlings 071: invariants
+-- speclings lean 071: invariants
 --
--- If you know TLA+ (or tlings), this will look familiar. A system is a
+-- If you know TLA+ (the tla track), this will look familiar. A system is a
 -- set of states, an initial state and steps between states. Here, a
 -- producer puts items into a buffer of capacity 3, and a consumer takes
 -- them out:

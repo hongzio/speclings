@@ -1,4 +1,4 @@
--- leanlings 066: grind
+-- speclings lean 066: grind
 --
 -- 마지막 Part 7 은 프로그램이 올바르다는 것을 증명합니다. 먼저 더 강한
 -- 도구부터.

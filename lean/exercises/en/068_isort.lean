@@ -1,4 +1,4 @@
--- leanlings 068: insertion sort
+-- speclings lean 068: insertion sort
 --
 -- isort sorts a list by inserting its elements, one by one, into a sorted
 -- list. Its result is sorted: that follows from ins_sorted (067, given).

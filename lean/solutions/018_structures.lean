@@ -1,4 +1,4 @@
--- leanlings 018: structures (solution)
+-- speclings lean 018: structures (solution)
 
 structure Point where
   x : Int

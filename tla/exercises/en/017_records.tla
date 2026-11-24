@@ -1,6 +1,6 @@
 ---------------------------- MODULE 017_records -----------------------------
 EXTENDS Integers, FiniteSets
-\* tlings 017: records
+\* speclings tla 017: records
 \*
 \*   [from |-> "alice", amt |-> 3]    a record, like a Go struct value
 \*   r.amt                            a field

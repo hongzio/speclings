@@ -1,4 +1,4 @@
--- leanlings 003: sorry
+-- speclings lean 003: sorry
 --
 -- sorry 는 아직 쓰지 않은 무언가를 나타냅니다. Lean 은 어떤 값이나 증명
 -- 자리에도 sorry 를 받아 주지만, 경고를 냅니다:

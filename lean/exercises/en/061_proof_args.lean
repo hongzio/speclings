@@ -1,4 +1,4 @@
--- leanlings 061: proofs as arguments
+-- speclings lean 061: proofs as arguments
 --
 -- 015 showed that List.head needs a proof that the list is not empty:
 --

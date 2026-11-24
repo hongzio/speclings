@@ -1,6 +1,6 @@
 --------------------------- MODULE 040_waitgroup ----------------------------
 EXTENDS Integers, FiniteSets
-\* tlings 040: WaitGroup
+\* speclings tla 040: WaitGroup
 \*
 \* 흔한 실수: goroutine 안에서 wg.Add 를 부르기.
 \*

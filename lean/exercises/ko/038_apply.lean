@@ -1,4 +1,4 @@
--- leanlings 038: apply
+-- speclings lean 038: apply
 --
 -- exact 는 증명 전체를 한 번에 요구합니다. apply 는 반대로 거꾸로
 -- 나아갑니다. 목표가 s 이고 h3 : r → s 가 있으면, apply h3 은 r 을 증명할

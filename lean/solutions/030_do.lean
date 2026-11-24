@@ -1,4 +1,4 @@
--- leanlings 030: do (solution)
+-- speclings lean 030: do (solution)
 
 def roll : IO Nat := pure 4
 

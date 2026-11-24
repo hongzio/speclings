@@ -1,4 +1,4 @@
--- leanlings 057: quiz 5
+-- speclings lean 057: quiz 5
 --
 -- In 023 you wrote simplify, which removes additions of 0 and
 -- multiplications by 1 from an expression. Here is a version that does the

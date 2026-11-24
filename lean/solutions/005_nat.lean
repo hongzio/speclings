@@ -1,4 +1,4 @@
--- leanlings 005: natural numbers (solution)
+-- speclings lean 005: natural numbers (solution)
 
 #guard 7 / 2 == 3
 #guard 7 % 2 == 1

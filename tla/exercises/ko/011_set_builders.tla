@@ -1,6 +1,6 @@
 -------------------------- MODULE 011_set_builders --------------------------
 EXTENDS Integers
-\* tlings 011: 집합 만들기
+\* speclings tla 011: 집합 만들기
 \*
 \*   {x \in S : P}    거르기: S 의 원소 x 중 P 가 성립하는 것들
 \*                    {x \in 1..6 : x % 2 = 0} = {2, 4, 6}

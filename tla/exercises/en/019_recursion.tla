@@ -1,6 +1,6 @@
 --------------------------- MODULE 019_recursion ----------------------------
 EXTENDS Integers
-\* tlings 019: RECURSIVE
+\* speclings tla 019: RECURSIVE
 \*
 \* A definition cannot use its own name, because a name can only be used
 \* below its definition (007). To write a recursive operator, declare it

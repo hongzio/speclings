@@ -1,4 +1,4 @@
--- leanlings 011: pattern matching
+-- speclings lean 011: pattern matching
 --
 -- match looks at the shape of a value and takes the first case that fits:
 --

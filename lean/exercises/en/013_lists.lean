@@ -1,4 +1,4 @@
--- leanlings 013: lists
+-- speclings lean 013: lists
 --
 -- A List Nat is a sequence of Nats. Every list is either empty, [], or an
 -- element in front of a list, x :: xs. [1, 2, 3] is short for

@@ -1,4 +1,4 @@
--- leanlings 037: implication
+-- speclings lean 037: implication
 --
 -- Part 4 is about proofs. In 004 you saw that a statement is a type, of
 -- type Prop, and that a proof of it is a value of that type. Here is what

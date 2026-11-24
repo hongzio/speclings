@@ -1,4 +1,4 @@
--- leanlings 010: 익명 함수
+-- speclings lean 010: 익명 함수
 --
 -- fun x => e 는 이름 없는 함수입니다. (=> 대신 \mapsto 로 입력하는 ↦ 를
 -- 써도 됩니다.)

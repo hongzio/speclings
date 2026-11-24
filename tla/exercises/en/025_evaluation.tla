@@ -1,6 +1,6 @@
 --------------------------- MODULE 025_evaluation ---------------------------
 EXTENDS Integers
-\* tlings 025: how TLC evaluates Init and Next
+\* speclings tla 025: how TLC evaluates Init and Next
 \*
 \* In math, A /\ B and B /\ A mean the same. But TLC has to compute
 \* states, not just check formulas. It reads a conjunction from left to

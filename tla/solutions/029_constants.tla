@@ -1,6 +1,6 @@
 --------------------------- MODULE 029_constants ----------------------------
 EXTENDS Integers, FiniteSets
-\* tlings 029: CONSTANTS and model values
+\* speclings tla 029: CONSTANTS and model values
 \*
 \* Hard-coded sizes, like 3 cars, make a spec hard to reuse. Declare them
 \* as constants instead, and give their values in the .cfg:

@@ -1,4 +1,4 @@
--- leanlings 049: induction
+-- speclings lean 049: induction
 --
 -- Part 5 proves things about recursive functions. Here is addition,
 -- written from scratch: add m n adds 1 to m, n times.

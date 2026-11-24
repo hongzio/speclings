@@ -1,6 +1,6 @@
 ------------------------------ MODULE 031_spec ------------------------------
 EXTENDS Integers
-\* tlings 031: the spec as one formula
+\* speclings tla 031: the spec as one formula
 \*
 \* Init and Next are normally combined into a single formula:
 \*

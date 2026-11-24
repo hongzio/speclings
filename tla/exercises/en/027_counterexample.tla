@@ -1,6 +1,6 @@
 ------------------------- MODULE 027_counterexample -------------------------
 EXTENDS Integers
-\* tlings 027: reading a counterexample
+\* speclings tla 027: reading a counterexample
 \*
 \* When an invariant fails, TLC prints the behavior that leads to the bad
 \* state, one state per step:

@@ -1,4 +1,4 @@
--- leanlings 033: errors (solution)
+-- speclings lean 033: errors (solution)
 
 deriving instance BEq for Except
 

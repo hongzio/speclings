@@ -1,4 +1,4 @@
--- leanlings 011: pattern matching (solution)
+-- speclings lean 011: pattern matching (solution)
 
 def size : Nat → String
   | 0 => "none"

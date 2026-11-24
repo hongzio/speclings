@@ -1,4 +1,4 @@
--- leanlings 024: polymorphism (solution)
+-- speclings lean 024: polymorphism (solution)
 
 def swap {α β : Type} (p : α × β) : β × α := (p.2, p.1)
 

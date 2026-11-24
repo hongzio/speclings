@@ -1,6 +1,6 @@
 ---------------------------- MODULE 041_symmetry ----------------------------
 EXTENDS Integers, FiniteSets, TLC
-\* tlings 041: symmetry
+\* speclings tla 041: symmetry
 \*
 \* With three workers, the mutex counter from 035 has 61 distinct states.
 \* Many of them are the same situation with the workers renamed: "w1

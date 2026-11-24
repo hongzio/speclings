@@ -1,6 +1,6 @@
 ----------------------------- MODULE 035_mutex ------------------------------
 EXTENDS Integers, FiniteSets
-\* tlings 035: a mutex
+\* speclings tla 035: a mutex
 \*
 \* The usual fix is a mutex:
 \*

@@ -1,4 +1,4 @@
--- leanlings 033: errors
+-- speclings lean 033: errors
 --
 -- Option says "no value". Except ε α says why: its values are .ok x, with
 -- x : α, or .error e, with e : ε, often a message String.

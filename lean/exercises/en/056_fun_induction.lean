@@ -1,4 +1,4 @@
--- leanlings 056: functional induction
+-- speclings lean 056: functional induction
 --
 -- evens keeps every other element: evens [1, 2, 3, 4, 5] is [1, 3, 5]. It
 -- does not follow the shape of a list one element at a time: it takes two

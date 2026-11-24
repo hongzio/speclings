@@ -1,4 +1,4 @@
--- leanlings 009: functions (solution)
+-- speclings lean 009: functions (solution)
 
 def area (width height : Nat) : Nat := width * height
 

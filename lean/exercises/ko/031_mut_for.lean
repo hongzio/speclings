@@ -1,4 +1,4 @@
--- leanlings 031: let mut 와 for
+-- speclings lean 031: let mut 와 for
 --
 -- do 안에서는 명령형 언어처럼 코드를 쓸 수 있습니다. let mut 은 바뀔 수
 -- 있는 변수를 선언하고, := 로 새 값을 대입합니다. for 는 리스트 (또는

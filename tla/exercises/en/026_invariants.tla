@@ -1,6 +1,6 @@
 --------------------------- MODULE 026_invariants ---------------------------
 EXTENDS Integers
-\* tlings 026: invariants
+\* speclings tla 026: invariants
 \*
 \* An invariant is a formula about one state that should be TRUE in every
 \* reachable state. You list invariants in the .cfg:
@@ -17,7 +17,7 @@ EXTENDS Integers
 \*
 \* This parking lot has room for Capacity cars. Write TypeOK, "cars is a
 \* number from 0 to Capacity", and add it to the .cfg as an invariant.
-\* The spec has a bug, so this time the goal is a violation: tlings passes
+\* The spec has a bug, so this time the goal is a violation: speclings passes
 \* when TLC reports TypeOK violated, and shows you the counterexample. You
 \* do not need to fix the bug: the next exercise is about reading
 \* counterexamples like this one and fixing what they show.

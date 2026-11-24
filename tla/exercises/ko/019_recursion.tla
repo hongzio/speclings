@@ -1,6 +1,6 @@
 --------------------------- MODULE 019_recursion ----------------------------
 EXTENDS Integers
-\* tlings 019: RECURSIVE
+\* speclings tla 019: RECURSIVE
 \*
 \* 이름은 정의보다 아래에서만 쓸 수 있으므로(007), 정의 안에서 자기 이름을
 \* 쓸 수 없습니다. 재귀 연산자를 쓰려면 먼저 선언합니다.

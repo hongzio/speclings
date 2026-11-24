@@ -1,4 +1,4 @@
--- leanlings 047: classical logic (solution)
+-- speclings lean 047: classical logic (solution)
 
 theorem excluded_middle (p : Prop) : p ∨ ¬p := Classical.em p
 

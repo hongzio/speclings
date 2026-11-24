@@ -1,4 +1,4 @@
--- leanlings 056: functional induction (solution)
+-- speclings lean 056: functional induction (solution)
 
 def evens {α : Type} : List α → List α
   | [] => []

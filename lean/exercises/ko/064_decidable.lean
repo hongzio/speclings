@@ -1,4 +1,4 @@
--- leanlings 064: 판정 가능한 명제
+-- speclings lean 064: 판정 가능한 명제
 --
 -- if c then ... 와 #guard c 에는 명제 c 이상의 것이 필요합니다. c 가
 -- 성립하는지 계산하는 방법, 곧 Decidable c 의 instance 입니다. Lean 에는

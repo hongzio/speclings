@@ -1,4 +1,4 @@
--- leanlings 055: induction on trees (solution)
+-- speclings lean 055: induction on trees (solution)
 
 inductive Tree where
   | leaf

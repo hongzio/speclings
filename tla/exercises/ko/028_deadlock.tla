@@ -1,6 +1,6 @@
 ---------------------------- MODULE 028_deadlock ----------------------------
 EXTENDS Integers
-\* tlings 028: deadlock
+\* speclings tla 028: deadlock
 \*
 \* deadlock 은 어떤 step 도 가능하지 않은, 도달 가능한 상태입니다. TLC 는
 \* 기본으로 deadlock 을 찾습니다. 대개 버그이기 때문입니다. Go 의 "fatal
@@ -17,7 +17,7 @@ EXTENDS Integers
 \* (tlc 를 -deadlock 으로 실행하면 검사가 꺼지지만, 그러면 진짜 deadlock
 \* 도 못 보고 지나칩니다.)
 \*
-\* tlings 를 실행해 TLC 가 보고하는 deadlock 을 읽어 보세요. 그다음
+\* speclings tla 를 실행해 TLC 가 보고하는 deadlock 을 읽어 보세요. 그다음
 \* Terminating 을 쓰고 Next 에 더하세요.
 
 VARIABLES received, status

@@ -1,4 +1,4 @@
--- leanlings 050: induction on lists
+-- speclings lean 050: induction on lists
 --
 -- Induction works on any inductive type, with one case per constructor.
 -- For lists:

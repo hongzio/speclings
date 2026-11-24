@@ -38,7 +38,7 @@ theorem double_two : double 2 = 4 := rfl
 theorem triple_eq (n : Nat) : triple n = 3 * n := rfl
 `
 
-// testRoot returns a leanlings root with exercises/en/X.lean set to orig, using the real checker.
+// testRoot returns a Lean track directory with exercises/en/X.lean set to orig, using the real checker.
 func testRoot(t *testing.T, orig string) string {
 	t.Helper()
 	if _, err := exec.LookPath("lean"); err != nil {

@@ -1,4 +1,4 @@
--- leanlings 026: instances
+-- speclings lean 026: instances
 --
 -- Operators are functions from type classes. a + b means HAdd.hAdd a b,
 -- and Lean looks for an instance that says how to add two values of these

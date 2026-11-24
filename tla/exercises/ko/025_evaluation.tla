@@ -1,6 +1,6 @@
 --------------------------- MODULE 025_evaluation ---------------------------
 EXTENDS Integers
-\* tlings 025: TLC 가 Init 과 Next 를 계산하는 방식
+\* speclings tla 025: TLC 가 Init 과 Next 를 계산하는 방식
 \*
 \* 수학에서 A /\ B 와 B /\ A 는 같은 뜻입니다. 하지만 TLC 는 식을 검사만
 \* 하는 게 아니라 상태를 계산해야 합니다. 연언을 왼쪽부터 읽고, 아직 값이

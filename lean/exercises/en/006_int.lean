@@ -1,4 +1,4 @@
--- leanlings 006: integers
+-- speclings lean 006: integers
 --
 -- Int is the type of integers ..., -2, -1, 0, 1, 2, ... A negative literal
 -- needs a type, as in (-5 : Int), unless Lean already expects an Int there.

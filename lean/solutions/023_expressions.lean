@@ -1,4 +1,4 @@
--- leanlings 023: expressions (solution)
+-- speclings lean 023: expressions (solution)
 
 inductive Expr where
   | num (n : Nat)

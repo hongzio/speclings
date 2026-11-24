@@ -1,4 +1,4 @@
--- leanlings 041: not
+-- speclings lean 041: not
 --
 -- False is the statement with no proof. ¬p ("not p", type ¬ as \not) is
 -- defined as p → False: a proof of ¬p turns any proof of p into the

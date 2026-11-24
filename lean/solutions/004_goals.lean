@@ -1,4 +1,4 @@
--- leanlings 004: goals (solution)
+-- speclings lean 004: goals (solution)
 
 def double (n : Nat) : Nat := n + n
 

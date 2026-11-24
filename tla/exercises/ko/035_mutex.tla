@@ -1,6 +1,6 @@
 ----------------------------- MODULE 035_mutex ------------------------------
 EXTENDS Integers, FiniteSets
-\* tlings 035: mutex
+\* speclings tla 035: mutex
 \*
 \* 흔한 해결책은 mutex 입니다.
 \*

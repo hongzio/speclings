@@ -1,4 +1,4 @@
--- leanlings 065: 퀴즈 6
+-- speclings lean 065: 퀴즈 6
 --
 -- 이진 탐색은 정렬된 배열에서, 수가 있을 수 있는 부분을 반씩 줄여 가며
 -- 수를 찾습니다. bsearch a x lo hi 는 위치 lo .. hi - 1 을 찾아보고, x 가

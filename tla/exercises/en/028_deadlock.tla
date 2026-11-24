@@ -1,6 +1,6 @@
 ---------------------------- MODULE 028_deadlock ----------------------------
 EXTENDS Integers
-\* tlings 028: deadlock
+\* speclings tla 028: deadlock
 \*
 \* A deadlock is a reachable state in which no step is possible. TLC looks
 \* for deadlocks by default, because they are usually bugs: Go's "fatal
@@ -17,8 +17,8 @@ EXTENDS Integers
 \* (Running tlc with -deadlock turns the check off, but then real deadlocks
 \* go unnoticed too.)
 \*
-\* Run tlings and read the deadlock TLC reports. Then write Terminating and
-\* add it to Next.
+\* Run speclings tla and read the deadlock TLC reports. Then write
+\* Terminating and add it to Next.
 
 VARIABLES received, status
 

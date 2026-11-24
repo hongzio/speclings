@@ -1,6 +1,6 @@
 ----------------------------- MODULE 037_quiz3 ------------------------------
 EXTENDS Integers
-\* tlings 037: quiz
+\* speclings tla 037: quiz
 \*
 \* A bank transfer in Go. Every method locks the bank's mutex, so there is
 \* no data race, and go run -race reports nothing:

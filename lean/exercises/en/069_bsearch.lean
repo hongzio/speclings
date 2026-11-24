@@ -1,4 +1,4 @@
--- leanlings 069: binary search
+-- speclings lean 069: binary search
 --
 -- This is the bsearch of 065. Prove that it is sound: when it returns a
 -- position, x is there.

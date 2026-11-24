@@ -1,6 +1,6 @@
 -------------------------- MODULE 008_conditionals --------------------------
 EXTENDS Integers
-\* tlings 008: IF, CASE, LET
+\* speclings tla 008: IF, CASE, LET
 \*
 \*   IF c THEN a ELSE b    문장이 아니라 식입니다. 값이 있어야 하므로 ELSE 가
 \*                         반드시 필요합니다

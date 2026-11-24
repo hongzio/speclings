@@ -1,4 +1,4 @@
--- leanlings 001: hello (solution)
+-- speclings lean 001: hello (solution)
 
 def answer : Nat := 42
 

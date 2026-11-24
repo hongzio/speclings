@@ -1,4 +1,4 @@
--- leanlings 051: map (solution)
+-- speclings lean 051: map (solution)
 
 def append {α : Type} : List α → List α → List α
   | [], ys => ys

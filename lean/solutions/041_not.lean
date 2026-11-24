@@ -1,4 +1,4 @@
--- leanlings 041: not (solution)
+-- speclings lean 041: not (solution)
 
 theorem double_neg_intro (p : Prop) : p → ¬¬p := by
   intro hp hnp

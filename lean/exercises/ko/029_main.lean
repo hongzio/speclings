@@ -1,4 +1,4 @@
--- leanlings 029: main
+-- speclings lean 029: main
 --
 -- 지금까지 Lean 은 값을 계산했습니다. 프로그램은 무언가를 하기도 합니다.
 -- 출력하고, 파일을 읽고, 네트워크와 통신합니다. Lean 에서는 이렇게 할
@@ -12,11 +12,11 @@
 --   lean --run work/029_main.lean
 --
 -- 파일에 #eval main 을 쓰면 됩니다. 이제부터 어떤 문제는 main 이 출력하는
--- 것을 검사합니다. leanlings 가 main 을 실행해 출력을 비교합니다.
+-- 것을 검사합니다. speclings 가 main 을 실행해 출력을 비교합니다.
 --
--- 아래 main 은 타입이 틀렸습니다. 프로그램이 Hello, leanlings! 를
+-- 아래 main 은 타입이 틀렸습니다. 프로그램이 Hello, speclings! 를
 -- 출력하도록 고치세요.
 
-def greeting : String := "Hello, leanlings!"
+def greeting : String := "Hello, speclings!"
 
 def main : Unit := IO.println greeting

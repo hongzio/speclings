@@ -1,4 +1,4 @@
--- leanlings 040: or
+-- speclings lean 040: or
 --
 -- A proof of p ∨ q (type ∨ as \or) is a proof of p or a proof of q, and
 -- says which:

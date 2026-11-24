@@ -1,4 +1,4 @@
--- leanlings 015: Option
+-- speclings lean 015: Option
 --
 -- 빈 리스트의 첫 원소는 무엇일까요? 없습니다. 어떤 입력에는 답이 없는
 -- 함수가 있고, Lean 은 그때 어떻게 할지 정하게 합니다. List.head 의

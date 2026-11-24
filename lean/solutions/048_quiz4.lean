@@ -1,4 +1,4 @@
--- leanlings 048: quiz 4 (solution)
+-- speclings lean 048: quiz 4 (solution)
 
 theorem or_and_distrib (p q r : Prop) : p ∨ (q ∧ r) ↔ (p ∨ q) ∧ (p ∨ r) := by
   constructor

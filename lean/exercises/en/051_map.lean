@@ -1,4 +1,4 @@
--- leanlings 051: map
+-- speclings lean 051: map
 --
 -- map applies a function to every element of a list. Its properties say
 -- that mapping behaves well: mapping the identity changes nothing,

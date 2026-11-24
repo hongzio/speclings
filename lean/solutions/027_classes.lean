@@ -1,4 +1,4 @@
--- leanlings 027: type classes (solution)
+-- speclings lean 027: type classes (solution)
 
 def count {α : Type} [BEq α] (xs : List α) (x : α) : Nat := (xs.filter (· == x)).length
 

@@ -1,6 +1,6 @@
 ----------------------------- MODULE 024_exists -----------------------------
 EXTENDS Integers
-\* tlings 024: \E in Next
+\* speclings tla 024: \E in Next
 \*
 \* \E in Next allows one step for each value that makes it TRUE:
 \*

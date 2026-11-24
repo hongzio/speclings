@@ -1,4 +1,4 @@
--- leanlings 059: vectors (solution)
+-- speclings lean 059: vectors (solution)
 
 inductive Vec (α : Type) : Nat → Type where
   | nil : Vec α 0

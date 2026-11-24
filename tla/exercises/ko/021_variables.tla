@@ -1,6 +1,6 @@
 --------------------------- MODULE 021_variables ----------------------------
 EXTENDS Integers
-\* tlings 021: 변수, Init, Next
+\* speclings tla 021: 변수, Init, Next
 \*
 \* 지금까지 모든 이름은 고정된 값이었습니다. 이제부터 스펙은 변하는
 \* 시스템을 기술합니다.
@@ -18,7 +18,7 @@ EXTENDS Integers
 \* 어느 식이 무엇인지는 .cfg 파일이 TLC 에 알려 줍니다. 한번 열어 보세요.
 \*
 \* 이 시계는 0, 1, ..., 11 시를 보여 준 뒤 다시 0 시가 됩니다. Next 를
-\* 쓰세요. 이제부터 tlings 는 TLC 가 찾은 distinct state 수도 확인합니다.
+\* 쓰세요. 이제부터 speclings 는 TLC 가 찾은 distinct state 수도 확인합니다.
 \* 이 시계는 정확히 12 개입니다.
 
 VARIABLE hour

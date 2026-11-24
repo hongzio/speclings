@@ -1,4 +1,4 @@
--- leanlings 065: quiz 6 (solution)
+-- speclings lean 065: quiz 6 (solution)
 
 def bsearch (a : Array Nat) (x : Nat) (lo hi : Nat) (h : hi ≤ a.size) : Option (Fin a.size) :=
   if hlt : lo < hi then

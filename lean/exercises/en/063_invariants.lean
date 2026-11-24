@@ -1,4 +1,4 @@
--- leanlings 063: invariants
+-- speclings lean 063: invariants
 --
 -- A structure can hold a proof as a field. A Range below is an interval
 -- lo .. hi, together with a proof that lo ≤ hi. So no Range is ever

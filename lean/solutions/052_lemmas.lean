@@ -1,4 +1,4 @@
--- leanlings 052: helper lemmas (solution)
+-- speclings lean 052: helper lemmas (solution)
 
 def append {α : Type} : List α → List α → List α
   | [], ys => ys

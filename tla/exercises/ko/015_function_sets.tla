@@ -1,6 +1,6 @@
 ------------------------- MODULE 015_function_sets --------------------------
 EXTENDS Integers, FiniteSets
-\* tlings 015: 함수의 집합
+\* speclings tla 015: 함수의 집합
 \*
 \*   [S -> T]    정의역이 S 이고 값이 T 에 있는 모든 함수의 집합
 \*

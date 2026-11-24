@@ -1,4 +1,4 @@
--- leanlings 049: induction (solution)
+-- speclings lean 049: induction (solution)
 
 def add : Nat → Nat → Nat
   | m, 0 => m

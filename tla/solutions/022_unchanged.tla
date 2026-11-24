@@ -1,6 +1,6 @@
 --------------------------- MODULE 022_unchanged ----------------------------
 EXTENDS Integers
-\* tlings 022: UNCHANGED
+\* speclings tla 022: UNCHANGED
 \*
 \* A step must give every variable a value in the next state. If Next says
 \* nothing about a variable, its next value could be anything, and TLC

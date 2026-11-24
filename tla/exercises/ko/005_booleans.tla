@@ -1,6 +1,6 @@
 ---------------------------- MODULE 005_booleans ----------------------------
 EXTENDS Integers
-\* tlings 005: 불리언
+\* speclings tla 005: 불리언
 \*
 \* TLA+ 에는 TRUE 와 FALSE 두 값(둘을 모은 집합은 BOOLEAN)과 다음이 있습니다.
 \*

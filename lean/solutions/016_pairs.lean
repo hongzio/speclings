@@ -1,4 +1,4 @@
--- leanlings 016: pairs (solution)
+-- speclings lean 016: pairs (solution)
 
 def divMod (a b : Nat) : Nat × Nat := (a / b, a % b)
 

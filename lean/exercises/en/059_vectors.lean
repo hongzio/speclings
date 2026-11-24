@@ -1,4 +1,4 @@
--- leanlings 059: vectors
+-- speclings lean 059: vectors
 --
 -- A type can take a value as an argument. Vec α n is a list of exactly n
 -- elements of type α:

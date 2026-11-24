@@ -1,4 +1,4 @@
--- leanlings 007: Bool (solution)
+-- speclings lean 007: Bool (solution)
 
 def isEven (n : Nat) : Bool := n % 2 == 0
 

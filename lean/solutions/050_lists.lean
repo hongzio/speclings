@@ -1,4 +1,4 @@
--- leanlings 050: induction on lists (solution)
+-- speclings lean 050: induction on lists (solution)
 
 def append {α : Type} : List α → List α → List α
   | [], ys => ys

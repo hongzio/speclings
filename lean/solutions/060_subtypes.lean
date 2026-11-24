@@ -1,4 +1,4 @@
--- leanlings 060: subtypes (solution)
+-- speclings lean 060: subtypes (solution)
 
 def EvenNat := { n : Nat // n % 2 = 0 }
 

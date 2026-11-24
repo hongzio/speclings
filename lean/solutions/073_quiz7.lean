@@ -1,4 +1,4 @@
--- leanlings 073: quiz 7 (solution)
+-- speclings lean 073: quiz 7 (solution)
 
 inductive Tree where
   | leaf

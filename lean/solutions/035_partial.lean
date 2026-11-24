@@ -1,4 +1,4 @@
--- leanlings 035: partial (solution)
+-- speclings lean 035: partial (solution)
 
 partial def collatz (n : Nat) : Nat :=
   if n ≤ 1 then 0 else 1 + collatz (if n % 2 == 0 then n / 2 else 3 * n + 1)

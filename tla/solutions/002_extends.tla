@@ -1,6 +1,6 @@
 ----------------------------- MODULE 002_extends -----------------------------
 EXTENDS Naturals
-\* tlings 002: EXTENDS
+\* speclings tla 002: EXTENDS
 \*
 \* You can write numbers like 1, 2, 3 directly, but operators such as
 \* + - * < are not part of the TLA+ language itself. They are defined in

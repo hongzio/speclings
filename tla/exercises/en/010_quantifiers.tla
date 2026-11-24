@@ -1,6 +1,6 @@
 -------------------------- MODULE 010_quantifiers ---------------------------
 EXTENDS Integers
-\* tlings 010: \A and \E
+\* speclings tla 010: \A and \E
 \*
 \*   \A x \in S : P     P holds for every x in S       ("for all")
 \*   \E x \in S : P     P holds for at least one x     ("there exists")

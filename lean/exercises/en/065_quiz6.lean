@@ -1,4 +1,4 @@
--- leanlings 065: quiz 6
+-- speclings lean 065: quiz 6
 --
 -- Binary search finds a number in a sorted array by halving the part
 -- where it can be. bsearch a x lo hi searches the positions lo .. hi - 1

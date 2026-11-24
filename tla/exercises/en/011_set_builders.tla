@@ -1,6 +1,6 @@
 -------------------------- MODULE 011_set_builders --------------------------
 EXTENDS Integers
-\* tlings 011: building sets
+\* speclings tla 011: building sets
 \*
 \*   {x \in S : P}    filter: the elements x of S for which P holds
 \*                    {x \in 1..6 : x % 2 = 0} = {2, 4, 6}

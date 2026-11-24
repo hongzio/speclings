@@ -1,4 +1,4 @@
--- leanlings 032: arrays
+-- speclings lean 032: arrays
 --
 -- An Array is like a List, but stored in one block of memory, so reading
 -- any position is fast. Arrays are written #[1, 2, 3].

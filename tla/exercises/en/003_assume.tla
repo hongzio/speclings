@@ -1,6 +1,6 @@
 ----------------------------- MODULE 003_assume -----------------------------
 EXTENDS Naturals
-\* tlings 003: ASSUME
+\* speclings tla 003: ASSUME
 \*
 \* ASSUME P declares "we assume P is true". Before exploring any states,
 \* TLC evaluates every ASSUME. If one is false, TLC stops and tells you
@@ -8,7 +8,7 @@ EXTENDS Naturals
 \*
 \*   Error: Assumption line N, col M to ... of module 003_assume is false.
 \*
-\* tlings uses ASSUME like an assert in a unit test. Most exercises in
+\* speclings uses ASSUME like an assert in a unit test. Most exercises in
 \* Part 1 (004 onward) ask you to make every ASSUME true.
 \*
 \* Here = is not assignment. It asks "are these equal?", like == in Go,

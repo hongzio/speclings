@@ -1,6 +1,6 @@
 // Command 039_deadlock is a program that the Go runtime stops with
 // "fatal error: all goroutines are asleep - deadlock!".
-// It accompanies tlings exercise 039.
+// It accompanies exercise 039 of the tla track.
 //
 // The first exchange over the unbuffered channels works. Then main waits for b
 // while the worker waits for a.

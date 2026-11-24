@@ -1,6 +1,6 @@
 --------------------------- MODULE 018_sequences ----------------------------
 EXTENDS Integers, Sequences
-\* tlings 018: 튜플과 시퀀스
+\* speclings tla 018: 튜플과 시퀀스
 \*
 \*   <<1, 2, 3>>        튜플, 시퀀스라고도 함. 인덱스는 1 부터
 \*   s[i]               i 번째 원소

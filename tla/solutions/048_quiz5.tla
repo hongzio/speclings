@@ -1,5 +1,5 @@
 ----------------------------- MODULE 048_quiz5 ------------------------------
-\* tlings 048: quiz
+\* speclings tla 048: quiz
 \*
 \* Two goroutines each need two mutexes, a and b. To avoid a deadlock,
 \* they take the first one, then try the second with TryLock, and if it is

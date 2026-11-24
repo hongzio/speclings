@@ -1,12 +1,12 @@
 ------------------------------- MODULE Hello -------------------------------
-\* tlings 001: modules
+\* speclings tla 001: modules
 \*
-\* Welcome to tlings!
+\* Welcome to the TLA+ track of speclings!
 \*
-\* tlings is a collection of small, broken TLA+ specs. You learn to read
-\* and write TLA+ by fixing them one at a time. Once you have fixed one,
-\* save it and run tlings again to move on to the next. All explanations
-\* are written as comments, like this one.
+\* This track is a collection of small, broken TLA+ specs. You learn to
+\* read and write TLA+ by fixing them one at a time. Once you have fixed
+\* one, save it and run speclings tla again to move on to the next. All
+\* explanations are written as comments, like this one.
 \*
 \*   \* ...        comment to the end of the line
 \*   (* ... *)     comment that may span several lines

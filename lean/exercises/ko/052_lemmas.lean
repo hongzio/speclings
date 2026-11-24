@@ -1,4 +1,4 @@
--- leanlings 052: 보조 정리
+-- speclings lean 052: 보조 정리
 --
 -- 아래 reverse 는 첫 원소를 뒤집은 나머지의 끝에 붙입니다. 두 번
 -- 뒤집으면 원래 리스트가 됩니다. reverse_reverse 를 바로 귀납법으로

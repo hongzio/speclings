@@ -1,5 +1,5 @@
 // Command 052_retry shows how retries charge a payment twice when the server
-// is not idempotent. It accompanies tlings exercise 052.
+// is not idempotent. It accompanies exercise 052 of the tla track.
 //
 // The network is simulated: each request or response is lost with some
 // probability, and the client retries until it gets a response.

@@ -1,4 +1,4 @@
--- leanlings 007: Bool
+-- speclings lean 007: Bool
 --
 -- Bool 에는 true 와 false 두 값이 있습니다. 비교는 Bool 을 계산합니다:
 --

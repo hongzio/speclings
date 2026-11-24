@@ -1,4 +1,4 @@
--- leanlings 070: a compiler (solution)
+-- speclings lean 070: a compiler (solution)
 
 inductive Expr where
   | num (n : Nat)

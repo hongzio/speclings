@@ -1,5 +1,5 @@
 ----------------------------- MODULE 053_quiz6 ------------------------------
-\* tlings 053: quiz
+\* speclings tla 053: quiz
 \*
 \* Two-phase commit: a transaction manager (TM) and several resource
 \* managers (RMs), say services that must all apply a change or all drop

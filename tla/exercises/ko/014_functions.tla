@@ -1,6 +1,6 @@
 --------------------------- MODULE 014_functions ----------------------------
 EXTENDS Integers
-\* tlings 014: 함수
+\* speclings tla 014: 함수
 \*
 \* TLA+ 의 함수는 키가 정확히 정의역(domain)인 Go map 과 비슷합니다.
 \*

@@ -1,6 +1,6 @@
 ---------------------------- MODULE 005_booleans ----------------------------
 EXTENDS Integers
-\* tlings 005: booleans
+\* speclings tla 005: booleans
 \*
 \* TLA+ has the values TRUE and FALSE (BOOLEAN is the set of both) and:
 \*

@@ -1,4 +1,4 @@
--- leanlings 073: quiz 7
+-- speclings lean 073: quiz 7
 --
 -- The last exercise: the binary search tree of 028, proved correct.
 --

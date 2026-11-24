@@ -1,4 +1,4 @@
--- leanlings 004: 목표 (goal)
+-- speclings lean 004: 목표 (goal)
 --
 -- Lean 은 증명 보조기이기도 합니다. theorem 은 사실을 말하고 증명합니다:
 --
@@ -23,7 +23,7 @@
 -- 에디터는 커서 위치의 목표를 보여 줍니다 (lean.nvim 과 VS Code 에서는
 -- infoview 라고 부릅니다). 터미널에서는 증명이 덜 끝났을 때 Lean 이 남은
 -- 목표를 "unsolved goals" 로 보여 줍니다. by 다음의 sorry 하나를 지우고
--- leanlings 를 실행해 보세요.
+-- speclings lean 을 실행해 보세요.
 --
 -- 목표 하나를 여러 개로 바꾸는 전술도 있습니다. constructor 는 A ∧ B
 -- ("A 그리고 B") 를 두 목표 A 와 B 로 바꾸고, 각각을 · 다음에 차례로

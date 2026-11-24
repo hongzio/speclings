@@ -1,6 +1,6 @@
 ---------------------------- MODULE 038_buffered ----------------------------
 EXTENDS Integers, Sequences
-\* tlings 038: 버퍼가 있는 채널
+\* speclings tla 038: 버퍼가 있는 채널
 \*
 \*   ch := make(chan int, 2)
 \*   go func() {                       // producer

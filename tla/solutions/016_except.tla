@@ -1,6 +1,6 @@
 ----------------------------- MODULE 016_except -----------------------------
 EXTENDS Integers
-\* tlings 016: EXCEPT
+\* speclings tla 016: EXCEPT
 \*
 \* Values never change in TLA+. You do not modify a function; you write a
 \* new one that is the same except at some keys:

@@ -1,4 +1,4 @@
--- leanlings 018: 구조체
+-- speclings lean 018: 구조체
 --
 -- structure 는 이름 붙은 값들, 곧 필드들을 하나의 값으로 묶습니다:
 --

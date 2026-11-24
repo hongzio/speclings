@@ -1,4 +1,4 @@
--- leanlings 021: constructors with data (solution)
+-- speclings lean 021: constructors with data (solution)
 
 inductive Shape where
   | square (side : Nat)

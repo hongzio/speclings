@@ -1,6 +1,6 @@
 ----------------------------- MODULE 036_atomic -----------------------------
 EXTENDS Integers, FiniteSets
-\* tlings 036: 원자적 step
+\* speclings tla 036: 원자적 step
 \*
 \* lock 없이 고치는 방법도 있습니다.
 \*

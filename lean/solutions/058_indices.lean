@@ -1,4 +1,4 @@
--- leanlings 058: indices (solution)
+-- speclings lean 058: indices (solution)
 
 def third (xs : Array Nat) (h : 2 < xs.size) : Nat := xs[2]
 

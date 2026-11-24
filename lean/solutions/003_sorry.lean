@@ -1,4 +1,4 @@
--- leanlings 003: sorry (solution)
+-- speclings lean 003: sorry (solution)
 
 def triple (n : Nat) : Nat := 3 * n
 

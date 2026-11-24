@@ -1,6 +1,6 @@
 ---------------------------- MODULE 041_symmetry ----------------------------
 EXTENDS Integers, FiniteSets, TLC
-\* tlings 041: 대칭
+\* speclings tla 041: 대칭
 \*
 \* worker 가 셋이면 035 의 mutex 카운터는 distinct state 가 61 개입니다.
 \* 그중 많은 것이 worker 이름만 바꾼 같은 상황입니다. "w1 이 lock 을 쥐었다"

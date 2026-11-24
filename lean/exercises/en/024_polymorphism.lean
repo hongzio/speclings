@@ -1,4 +1,4 @@
--- leanlings 024: polymorphism
+-- speclings lean 024: polymorphism
 --
 -- Some functions work the same for any type. Swapping a pair does not
 -- care what is in it. A type can be an argument, written in braces:

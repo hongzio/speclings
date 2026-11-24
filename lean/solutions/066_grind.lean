@@ -1,4 +1,4 @@
--- leanlings 066: grind (solution)
+-- speclings lean 066: grind (solution)
 
 def sumTo : Nat → Nat
   | 0 => 0
