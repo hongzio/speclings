@@ -1,121 +1,26 @@
-package main
+package track
 
 import (
 	"context"
 	"fmt"
-	"maps"
 	"os"
 	"path/filepath"
 	"regexp"
 	"slices"
 	"strings"
-	"sync"
 	"time"
+
+	"github.com/hongzio/speclings/internal/lings"
 )
 
-// runVerify checks the following for every exercise. It never looks at the learner's work/.
-//
-//  1. In every language, the original fails in the intended way (Broken).
-//  2. Each translation has the same code as en (ignoring comments and blank lines). A missing translation is only a warning.
-//  3. The solution (solutions/) meets Expect.
-//
-// It returns 1 if anything fails.
-func runVerify(ctx context.Context, root string) int {
-	langs := []string{baseLang}
-	for _, l := range slices.Sorted(maps.Keys(catalogs)) {
-		if l != baseLang {
-			langs = append(langs, l)
-		}
-	}
-
-	type cell struct {
-		mark   string // ✓ ✗ –
-		detail string
-	}
-	rows := make([][]cell, len(exercises)) // languages, then the solution
-	sem := make(chan struct{}, 4)          // each TLC run starts a JVM, so limit concurrency
-	var wg sync.WaitGroup
-	for i, ex := range exercises {
-		rows[i] = make([]cell, len(langs)+1)
-		for j, lang := range langs {
-			wg.Go(func() {
-				sem <- struct{}{}
-				defer func() { <-sem }()
-				mark, detail := verifyOriginal(ctx, root, ex, lang)
-				rows[i][j] = cell{mark, detail}
-			})
-		}
-		wg.Go(func() {
-			sem <- struct{}{}
-			defer func() { <-sem }()
-			mark, detail := verifySolution(ctx, root, ex)
-			rows[i][len(langs)] = cell{mark, detail}
-		})
-	}
-	wg.Wait()
-
-	width := 0
-	for _, ex := range exercises {
-		width = max(width, len(ex.Name))
-	}
-	failed := 0
-	translated := make(map[string]int)
-	for i, ex := range exercises {
-		ok := true
-		var line, details []string
-		for j, c := range rows[i] {
-			label := m.VerifySolution
-			if j < len(langs) {
-				label = langs[j]
-				if c.mark != "–" {
-					translated[label]++
-				}
-			}
-			line = append(line, label+" "+c.mark)
-			if c.mark == "✗" {
-				ok = false
-			}
-			if c.detail != "" {
-				details = append(details, fmt.Sprintf("    %s: %s", label, c.detail))
-			}
-		}
-		mark := green("✓")
-		if !ok {
-			mark, failed = red("✗"), failed+1
-		}
-		fmt.Printf("%s %-*s %s\n", mark, width, ex.Name, strings.Join(line, "  "))
-		for _, d := range details {
-			fmt.Println(dim(d))
-		}
-	}
-	fmt.Println()
-	for _, lang := range langs[1:] {
-		fmt.Printf(m.VerifyCoverage+"\n", lang, translated[lang], len(exercises))
-	}
-	if failed > 0 {
-		fmt.Printf(m.VerifyFailed+"\n", failed, len(exercises))
-		return 1
-	}
-	fmt.Printf(m.VerifyAllOK+"\n", len(exercises))
-	return 0
-}
-
-// verifyOriginal checks that the original in lang fails in the intended way and has the same code as en.
+// verifyOriginal checks that the original in lang fails in the intended way. The engine has
+// already checked that it exists and that its code (and that of the .cfg and helper modules) matches en.
+// root is the track's directory, tla/.
 func verifyOriginal(ctx context.Context, root string, ex Exercise, lang string) (mark, detail string) {
 	dir := filepath.Join(root, "exercises", lang)
-	if !isFile(filepath.Join(dir, ex.Name+".tla")) {
-		return "–", m.VerifyMissing
-	}
-	if lang != baseLang {
-		for _, f := range ex.files() {
-			if diff := codeDiff(filepath.Join(root, "exercises", baseLang, f), filepath.Join(dir, f)); diff != "" {
-				return "✗", fmt.Sprintf(m.VerifyCodeDiffers, f+" "+diff)
-			}
-		}
-	}
 	for _, mod := range ex.Modules {
-		if !isFile(filepath.Join(dir, mod+".tla")) {
-			return "✗", fmt.Sprintf(m.VerifyCodeDiffers, mod+".tla: missing")
+		if !lings.IsFile(filepath.Join(dir, mod+".tla")) {
+			return "✗", fmt.Sprintf(lings.M().VerifyCodeDiffers, mod+".tla: missing")
 		}
 	}
 	src, err := os.ReadFile(filepath.Join(dir, ex.Name+".tla"))
@@ -123,7 +28,7 @@ func verifyOriginal(ctx context.Context, root string, ex Exercise, lang string) 
 		return "✗", err.Error()
 	}
 	if ex.Broken.At != "" && lineOf(string(src), ex.Broken.At) == 0 {
-		return "✗", fmt.Sprintf(m.VerifyNoSnippet, ex.Broken.At)
+		return "✗", fmt.Sprintf(lings.M().VerifyNoSnippet, ex.Broken.At)
 	}
 	timeout := tlcTimeout
 	if ex.Broken.Exit == exitTimeout {
@@ -134,7 +39,7 @@ func verifyOriginal(ctx context.Context, root string, ex Exercise, lang string) 
 		return "✗", err.Error()
 	}
 	if !ex.Broken.match(r, string(src)) {
-		return "✗", fmt.Sprintf(m.VerifyWrongFailure, describe(r))
+		return "✗", fmt.Sprintf(lings.M().VerifyWrongFailure, describe(r))
 	}
 	return "✓", ""
 }
@@ -146,14 +51,14 @@ const verifyTimeout = 10 * time.Second
 // It uses solutions/<Name>.cfg if present, otherwise the en original's .cfg, and the
 // en originals of the helper modules.
 func verifySolution(ctx context.Context, root string, ex Exercise) (mark, detail string) {
-	tmp, err := os.MkdirTemp("", "tlings-sol-")
+	tmp, err := os.MkdirTemp("", "speclings-tla-sol-")
 	if err != nil {
 		return "✗", err.Error()
 	}
 	defer os.RemoveAll(tmp)
 
 	cfg := filepath.Join(root, "solutions", ex.Name+".cfg")
-	if !isFile(cfg) {
+	if !lings.IsFile(cfg) {
 		cfg = filepath.Join(root, "exercises", baseLang, ex.Name+".cfg")
 	}
 	copies := map[string]string{
@@ -164,7 +69,7 @@ func verifySolution(ctx context.Context, root string, ex Exercise) (mark, detail
 		copies[filepath.Join(root, "exercises", baseLang, mod+".tla")] = mod + ".tla"
 	}
 	for src, dst := range copies {
-		if err := copyFile(src, filepath.Join(tmp, dst)); err != nil {
+		if err := lings.CopyFile(src, filepath.Join(tmp, dst)); err != nil {
 			return "✗", err.Error()
 		}
 	}
@@ -244,33 +149,6 @@ var reAssume = regexp.MustCompile(`^ASSUME\b`)
 
 func squeeze(s string) string {
 	return strings.Join(strings.Fields(s), "")
-}
-
-// codeDiff describes the first difference between the code of two files, or returns "" if they match.
-// A missing translated file (e.g. an untranslated .cfg) counts as matching, since the English one is used.
-func codeDiff(base, translated string) string {
-	b, err := os.ReadFile(base)
-	if err != nil {
-		return err.Error()
-	}
-	t, err := os.ReadFile(translated)
-	if err != nil {
-		return ""
-	}
-	bc, tc := codeLines(string(b)), codeLines(string(t))
-	for i := range max(len(bc), len(tc)) {
-		var x, y string
-		if i < len(bc) {
-			x = bc[i]
-		}
-		if i < len(tc) {
-			y = tc[i]
-		}
-		if x != y {
-			return fmt.Sprintf("%q ≠ %q", x, y)
-		}
-	}
-	return ""
 }
 
 // codeLines strips comments from TLA+ source (.tla or .cfg) and returns the non-blank lines.

@@ -1,10 +1,12 @@
-package main
+package track
 
 import (
 	"os"
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/hongzio/speclings/internal/lings"
 )
 
 // testdata/<name>.jsonl is real `lean --json` output (Lean 4.36.0) for testdata/<name>.lean
@@ -127,7 +129,7 @@ func TestManifest(t *testing.T) {
 			t.Errorf("%s: Broken needs a Kind or a Contains", ex.Name)
 		}
 	}
-	if err := checkManifest(filepath.Join("..", "..", "lean")); err != nil {
+	if err := lings.CheckManifest("..", view); err != nil {
 		t.Error(err)
 	}
 }

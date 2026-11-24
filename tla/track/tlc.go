@@ -1,4 +1,4 @@
-package main
+package track
 
 import (
 	"context"
@@ -23,7 +23,7 @@ const (
 	exitParse    = 150
 	exitConfig   = 151
 
-	exitTimeout = -1 // not from TLC: tlings stopped it after tlcTimeout
+	exitTimeout = -1 // not from TLC: speclings stopped it after tlcTimeout
 )
 
 // tlcTimeout bounds each TLC run. Exercises finish in about a second, so a run
@@ -73,7 +73,7 @@ func runTLC(ctx context.Context, dir, name string) (Result, error) {
 func runTLCWithin(ctx context.Context, dir, name string, timeout time.Duration) (Result, error) {
 	ctx, cancel := context.WithTimeout(ctx, timeout)
 	defer cancel()
-	meta, err := os.MkdirTemp("", "tlings-")
+	meta, err := os.MkdirTemp("", "speclings-tla-")
 	if err != nil {
 		return Result{}, err
 	}

@@ -1,7 +1,6 @@
-# Learner workspaces (created by the runners)
-/tla/work/
-/lean/work/
-# Local mise state: GOPATH and the built runners
+# Learner workspace (created by speclings): work/<track>/ and progress in work/.speclings
+/work/
+# Local mise state: GOPATH and the built runner
 /.mise/
 # Lake build output of the Lean checker
 /lean/checker/.lake/

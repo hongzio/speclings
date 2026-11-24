@@ -1,4 +1,4 @@
-package main
+package track
 
 import (
 	"context"
@@ -8,6 +8,8 @@ import (
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/hongzio/speclings/internal/lings"
 )
 
 // testdata/*.out is real TLC 1.8.0 output (local paths replaced).
@@ -114,6 +116,12 @@ func TestBrokenMatch(t *testing.T) {
 		if got := tt.b.match(r, tt.src); got != tt.want {
 			t.Errorf("%s: match = %v, want %v", tt.name, got, tt.want)
 		}
+	}
+}
+
+func TestManifest(t *testing.T) {
+	if err := lings.CheckManifest("..", view); err != nil {
+		t.Error(err)
 	}
 }
 

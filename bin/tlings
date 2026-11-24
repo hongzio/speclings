@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-# tlings runner. Rebuilt on every run (fast thanks to the go build cache), so new exercises never need a reinstall.
-set -euo pipefail
-root="$(cd "$(dirname "$0")/.." && pwd)"
-go -C "$root" build -o "$root/.mise/tlings" ./cmd/tlings
-TLINGS_ROOT="$root/tla" exec "$root/.mise/tlings" "$@"

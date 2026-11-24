@@ -1,21 +1,21 @@
-package main
+package track
 
 import (
 	"fmt"
 	"strings"
 )
 
-// exercises is the list of leanlings exercises (the equivalent of ziglings' build.zig).
-// The order is the learning order, and each Name must start with "%03d_".
+// exercises is the list of exercises of the Lean track (the equivalent of ziglings' build.zig).
+// The order is the learning order, and each Name must start with "%03d_". Paths are relative to lean/:
 //
 //   - exercises/en/<Name>.lean     the broken original. Required: en is the reference language
 //   - exercises/<lang>/<Name>.lean a translation. Only comments differ; the code must match en
 //   - solutions/<Name>.lean        the solution (en)
 //
-// Learners work in work/; leanlings copies each exercise there, in their language, when they reach it.
+// Learners work in work/lean/; speclings copies each exercise there, in their language, when they reach it.
 // Never mention line numbers in explanations or hints: comments differ in length, so line numbers differ by language.
 var exercises = []Exercise{
-	// Part 0: tools. How leanlings and Lean report problems: errors, types, sorry, goals.
+	// Part 0: tools. How speclings and Lean report problems: errors, types, sorry, goals.
 	{
 		Name:   "001_hello",
 		Expect: fix(),

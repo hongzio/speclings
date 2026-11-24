@@ -1,4 +1,4 @@
-package main
+package track
 
 import (
 	"os"
@@ -46,15 +46,24 @@ func TestStripCommentsKeepsLines(t *testing.T) {
 
 // Translations differ only in comments, so their code must be equal.
 func TestCodeLinesIgnoresCommentLanguage(t *testing.T) {
-	root := filepath.Join("..", "..")
+	root := ".." // lean/
+	compared := 0
 	for _, ex := range exercises {
-		ko := filepath.Join(root, "exercises", "ko", ex.file())
-		if !isFile(ko) {
+		koSrc, err := os.ReadFile(filepath.Join(root, "exercises", "ko", ex.file()))
+		if err != nil {
 			continue
 		}
-		if diff := codeDiff(filepath.Join(root, "exercises", baseLang, ex.file()), ko); diff != "" {
-			t.Errorf("%s: %s", ex.Name, diff)
+		enSrc, err := os.ReadFile(filepath.Join(root, "exercises", baseLang, ex.file()))
+		if err != nil {
+			t.Fatal(err)
 		}
+		if !slices.Equal(codeLines(string(enSrc)), codeLines(string(koSrc))) {
+			t.Errorf("%s: the code of the ko translation differs from en", ex.Name)
+		}
+		compared++
+	}
+	if compared == 0 {
+		t.Error("no translation found: is the root right?")
 	}
 	en := "-- The answer\ndef answer : Nat := 42\n"
 	ko := "-- 답\n-- 입니다\ndef answer : Nat := 42\n"
@@ -191,7 +200,7 @@ func TestGuardMsgsDetected(t *testing.T) {
 }
 
 func TestOriginalsReadable(t *testing.T) {
-	root := filepath.Join("..", "..", "lean")
+	root := ".." // lean/
 	for _, ex := range exercises {
 		if _, err := os.Stat(filepath.Join(root, "solutions", ex.file())); err != nil {
 			t.Errorf("%s: %v", ex.Name, err)

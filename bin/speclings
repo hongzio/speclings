@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# speclings runner. Rebuilt on every run (fast thanks to the go build cache), so new exercises
+# never need a reinstall. Tracks build their own tools when needed (e.g. the Lean checker).
+set -euo pipefail
+root="$(cd "$(dirname "$0")/.." && pwd)"
+go -C "$root" build -o "$root/.mise/speclings" ./cmd/speclings
+SPECLINGS_ROOT="$root" exec "$root/.mise/speclings" "$@"

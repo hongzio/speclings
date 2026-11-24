@@ -1,4 +1,4 @@
-package main
+package track
 
 import (
 	"bytes"
@@ -12,9 +12,11 @@ import (
 	"regexp"
 	"strings"
 	"time"
+
+	"github.com/hongzio/speclings/internal/lings"
 )
 
-// moduleName is the module every exercise is compiled as. leanlings copies the file
+// moduleName is the module every exercise is compiled as. speclings copies the file
 // to be checked into a temporary directory as Exercise.lean, so that the learner's
 // file and the reference compile to modules with the same name (the checker
 // compares them declaration by declaration) and nothing is written to work/.
@@ -193,7 +195,7 @@ func checkerPath(root string) string {
 // compare runs the checker on refDir/Exercise.olean and learnerDir/Exercise.olean.
 func compare(ctx context.Context, root, refDir, learnerDir string) ([]RefProblem, error) {
 	bin := checkerPath(root)
-	if !isFile(bin) {
+	if !lings.IsFile(bin) {
 		return nil, fmt.Errorf(m.NoChecker, bin)
 	}
 	ctx, cancel := context.WithTimeout(ctx, leanTimeout)

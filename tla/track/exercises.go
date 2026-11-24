@@ -1,18 +1,18 @@
-package main
+package track
 
 import (
 	"fmt"
 	"strings"
 )
 
-// exercises is the list of tlings exercises (the equivalent of ziglings' build.zig).
-// The order is the learning order, and each Name must start with "%03d_".
+// exercises is the list of exercises of the TLA+ track (the equivalent of ziglings' build.zig).
+// The order is the learning order, and each Name must start with "%03d_". Paths are relative to tla/:
 //
 //   - exercises/en/<Name>.tla, .cfg   the broken original. Required: en is the reference language
 //   - exercises/<lang>/<Name>.*       a translation. Only comments differ; the code must match en
 //   - solutions/<Name>.tla            the solution (en). Add solutions/<Name>.cfg only if the fix is in the .cfg
 //
-// Learners work in work/; tlings copies each exercise there, in their language, when they reach it.
+// Learners work in work/tla/; speclings copies each exercise there, in their language, when they reach it.
 // Never mention line numbers in explanations or hints: comments differ in length, so line numbers differ by language.
 var exercises = []Exercise{
 	{
@@ -516,8 +516,8 @@ type Exercise struct {
 	Broken Broken // how the original (unfixed) exercise should fail; used by -verify only
 	Hint   L
 	// Modules are helper modules (file names without .tla) that the exercise
-	// INSTANCEs or EXTENDs. They are copied to work/ with it. Name them after the
-	// exercise, e.g. 050_AtomicCounter, because work/ is shared by all exercises.
+	// INSTANCEs or EXTENDs. They are copied to work/tla/ with it. Name them after the
+	// exercise, e.g. 050_AtomicCounter, because work/tla/ is shared by all exercises.
 	Modules []string
 }
 

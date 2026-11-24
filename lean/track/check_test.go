@@ -1,4 +1,4 @@
-package main
+package track
 
 import (
 	"context"
@@ -7,10 +7,12 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/hongzio/speclings/internal/lings"
 )
 
 // The tests in this file run real Lean and the real checker. They are skipped
-// unless lean is on PATH (run inside mise) and checker/ has been built (bin/leanlings does that).
+// unless lean is on PATH (run inside mise) and checker/ has been built (speclings lean does that).
 
 const fillOriginal = `-- an exercise to fill in
 def double (n : Nat) : Nat := n + n
@@ -42,12 +44,12 @@ func testRoot(t *testing.T, orig string) string {
 	if _, err := exec.LookPath("lean"); err != nil {
 		t.Skip("lean not on PATH (run inside mise)")
 	}
-	real, err := filepath.Abs(filepath.Join("..", "..", "lean"))
+	real, err := filepath.Abs("..") // lean/
 	if err != nil {
 		t.Fatal(err)
 	}
-	if !isFile(checkerPath(real)) {
-		t.Skip("checker not built (run bin/leanlings once)")
+	if !lings.IsFile(checkerPath(real)) {
+		t.Skip("checker not built (run speclings lean once)")
 	}
 	root := t.TempDir()
 	if err := os.Symlink(filepath.Join(real, "checker"), filepath.Join(root, "checker")); err != nil {

@@ -1,4 +1,4 @@
-package main
+package track
 
 import (
 	"context"
@@ -28,7 +28,7 @@ func (r Report) ok() bool { return r.Problem == "" }
 //
 // The error is for problems of the setup (no lean, a broken exercise), not of the learner's file.
 func checkSource(ctx context.Context, root string, ex Exercise, src []byte) (Report, error) {
-	tmp, err := os.MkdirTemp("", "leanlings-")
+	tmp, err := os.MkdirTemp("", "speclings-lean-")
 	if err != nil {
 		return Report{}, err
 	}
