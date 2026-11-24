@@ -25,7 +25,8 @@ func (r Report) ok() bool { return r.Problem == "" }
 //  3. It uses none of ex.Expect.Forbid.
 //  4. With ex.Expect.Reference: the declarations of the original are still there, with the
 //     same statements, the given definitions unchanged, and only the standard axioms (checker/).
-//  5. With ex.Expect.Output: main prints exactly that.
+//  5. With ex.Expect.Output: main prints exactly that. If it does not finish normally, the
+//     problem includes what it printed.
 //
 // The error is for problems of the setup (no lean, a broken exercise), not of the learner's file.
 func checkSource(ctx context.Context, root string, ex Exercise, src []byte) (Report, error) {
@@ -113,6 +114,12 @@ func checkSource(ctx context.Context, root string, ex Exercise, src []byte) (Rep
 			r.Problem = fmt.Sprintf(m.ProbRunFailed, exit)
 		case out != want:
 			r.Problem = fmt.Sprintf(m.ProbOutput, indent(out), indent(want))
+			return r, nil
+		}
+		// When the program did not finish normally, what it printed (an uncaught
+		// exception, say) tells why.
+		if r.Problem != "" {
+			r.Problem += "\n" + m.Printed + "\n" + indent(out)
 		}
 	}
 	return r, nil

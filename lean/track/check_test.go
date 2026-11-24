@@ -115,6 +115,7 @@ func TestCheckForbidAndOutput(t *testing.T) {
 		{"forbidden", "def main : IO Unit := IO.println \"hi\"\n\ntheorem t : 2 + 2 = 4 := by decide\n", "decide"},
 		{"wrong output", "def main : IO Unit := IO.println \"ho\"\n\ntheorem t : 2 + 2 = 4 := rfl\n", "ho"},
 		{"failing main", "def main : IO Unit := throw (IO.userError \"no\")\n\ntheorem t : 2 + 2 = 4 := rfl\n", "exit code 1"},
+		{"failing main shows why", "def main : IO Unit := throw (IO.userError \"no\")\n\ntheorem t : 2 + 2 = 4 := rfl\n", "uncaught exception: no"},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -167,7 +168,7 @@ func TestCheckDeepRecursion(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r.Problem != m.ProbDeepRecursion || strings.Count(r.Output, "\n") > maxLines+1 {
-		t.Errorf("main: problem %q, output of %d lines", r.Problem, strings.Count(r.Output, "\n"))
+	if !strings.HasPrefix(r.Problem, m.ProbDeepRecursion) || !strings.Contains(r.Problem, "#1 loop") || strings.Count(r.Problem, "\n") > maxLines+5 {
+		t.Errorf("main: problem of %d lines:\n%.2000s", strings.Count(r.Problem, "\n"), r.Problem)
 	}
 }
