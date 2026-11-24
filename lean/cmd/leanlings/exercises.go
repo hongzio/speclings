@@ -346,7 +346,121 @@ var exercises = []Exercise{
 			"ko": `countWords: words.foldl (init := []) fun counts w => if counts.any (·.1 == w) then counts.map (fun (v, c) => if v == w then (v, c + 1) else (v, c)) else counts ++ [(w, 1)]. main: for (word, count) in countWords (text.splitOn " ") do IO.println s!"{word}: {count}".`,
 		},
 	},
+
+	// Part 4: propositions. Proofs as values: →, ∧, ∨, ¬, ↔, ∀, ∃, rewriting, calc and classical logic.
+	// The automatic tactics are not accepted (logic), so that learners take the steps themselves.
+	{
+		Name:   "037_implication",
+		Expect: fill().without(logic...),
+		Broken: blank("theorem self_imp"),
+		Hint: L{
+			"en": "self_imp: fun hp => hp. modus_ponens: hpq hp. imp_trans: intro hp, then exact hqr (hpq hp). const_imp: intro hp _, then exact hp.",
+			"ko": "self_imp: fun hp => hp. modus_ponens: hpq hp. imp_trans: intro hp 다음 exact hqr (hpq hp). const_imp: intro hp _ 다음 exact hp.",
+		},
+	},
+	{
+		Name:   "038_apply",
+		Expect: fill().without(logic...),
+		Broken: blank("theorem chain"),
+		Hint: L{
+			"en": "chain: apply h3, apply h2, apply h1, exact hp. two_premises: apply h leaves the goals p and q; close each with assumption. pick: apply h, then assumption.",
+			"ko": "chain: apply h3, apply h2, apply h1, exact hp. two_premises: apply h 는 목표 p 와 q 를 남기니 각각 assumption 으로 닫으세요. pick: apply h 다음 assumption.",
+		},
+	},
+	{
+		Name:   "039_and",
+		Expect: fill().without(logic...),
+		Broken: blank("theorem and_swap"),
+		Hint: L{
+			"en": "and_swap: intro h, exact ⟨h.2, h.1⟩. and_assoc_mp: intro h, obtain ⟨⟨hp, hq⟩, hr⟩ := h, exact ⟨hp, hq, hr⟩. curry: intro h hp hq, exact h ⟨hp, hq⟩. uncurry: intro h hpq, exact h hpq.1 hpq.2.",
+			"ko": "and_swap: intro h, exact ⟨h.2, h.1⟩. and_assoc_mp: intro h, obtain ⟨⟨hp, hq⟩, hr⟩ := h, exact ⟨hp, hq, hr⟩. curry: intro h hp hq, exact h ⟨hp, hq⟩. uncurry: intro h hpq, exact h hpq.1 hpq.2.",
+		},
+	},
+	{
+		Name:   "040_or",
+		Expect: fill().without(logic...),
+		Broken: blank("theorem or_swap"),
+		Hint: L{
+			"en": "or_swap: intro h, rcases h with hp | hq, then right; exact hp in the first case and left; exact hq in the second. or_elim: the same cases, with hpr and hqr. and_or_distrib: intro ⟨hp, hqr⟩, rcases hqr with hq | hr, then Or.inl ⟨hp, hq⟩ or Or.inr ⟨hp, hr⟩.",
+			"ko": "or_swap: intro h, rcases h with hp | hq 다음, 첫 경우는 right; exact hp, 둘째는 left; exact hq. or_elim: 같은 경우 나누기에 hpr 과 hqr. and_or_distrib: intro ⟨hp, hqr⟩, rcases hqr with hq | hr 다음 Or.inl ⟨hp, hq⟩ 또는 Or.inr ⟨hp, hr⟩.",
+		},
+	},
+	{
+		Name:   "041_not",
+		Expect: fill().without(logic...),
+		Broken: blank("theorem double_neg_intro"),
+		Hint: L{
+			"en": "double_neg_intro: intro hp hnp, exact hnp hp. contrapositive: intro hpq hnq hp, exact hnq (hpq hp). not_and_left: intro hnp ⟨hp, _⟩, exact hnp hp. absurd_example: intro hp hnp, exfalso, exact hnp hp. not_both: intro ⟨hp, hnp⟩, contradiction.",
+			"ko": "double_neg_intro: intro hp hnp, exact hnp hp. contrapositive: intro hpq hnq hp, exact hnq (hpq hp). not_and_left: intro hnp ⟨hp, _⟩, exact hnp hp. absurd_example: intro hp hnp, exfalso, exact hnp hp. not_both: intro ⟨hp, hnp⟩, contradiction.",
+		},
+	},
+	{
+		Name:   "042_iff",
+		Expect: fill().without(logic...),
+		Broken: blank("theorem and_comm_iff"),
+		Hint: L{
+			"en": "constructor, then prove each direction. not_or_iff, left to right: ⟨fun hp => h (Or.inl hp), fun hq => h (Or.inr hq)⟩. Right to left: intro ⟨hnp, hnq⟩ h, then cases on h. iff_use: h.mpr hq.",
+			"ko": "constructor 다음 방향마다 증명하세요. not_or_iff 의 왼쪽에서 오른쪽: ⟨fun hp => h (Or.inl hp), fun hq => h (Or.inr hq)⟩. 오른쪽에서 왼쪽: intro ⟨hnp, hnq⟩ h 다음 h 로 경우 나누기. iff_use: h.mpr hq.",
+		},
+	},
+	{
+		Name:   "043_forall",
+		Expect: fill().without(logic...),
+		Broken: blank("theorem all_imp"),
+		Hint: L{
+			"en": "all_imp: intro x, exact h1 x (h2 x). two_instances: ⟨h 5, h 7⟩. forall_and_split: intro h, exact ⟨fun x => (h x).1, fun x => (h x).2⟩. even_add_two: h 4 even_four.",
+			"ko": "all_imp: intro x, exact h1 x (h2 x). two_instances: ⟨h 5, h 7⟩. forall_and_split: intro h, exact ⟨fun x => (h x).1, fun x => (h x).2⟩. even_add_two: h 4 even_four.",
+		},
+	},
+	{
+		Name:   "044_exists",
+		Expect: fill().without(logic...),
+		Broken: blank("theorem square_49"),
+		Hint: L{
+			"en": "square_49: ⟨7, rfl⟩. exists_map: intro ⟨x, hx⟩, exact ⟨x, h x hx⟩. not_exists_iff: constructor; left to right, intro h x hx, exact h ⟨x, hx⟩; right to left, intro h ⟨x, hx⟩, exact h x hx.",
+			"ko": "square_49: ⟨7, rfl⟩. exists_map: intro ⟨x, hx⟩, exact ⟨x, h x hx⟩. not_exists_iff: constructor 다음, 왼쪽에서 오른쪽은 intro h x hx, exact h ⟨x, hx⟩, 오른쪽에서 왼쪽은 intro h ⟨x, hx⟩, exact h x hx.",
+		},
+	},
+	{
+		Name:   "045_rewrite",
+		Expect: fill().without(logic...),
+		Broken: blank("theorem eq_chain"),
+		Hint: L{
+			"en": "eq_chain: rw [h1, h2]. plus_zero: rw [Nat.add_zero, h]. apply_both: rw [h]. reverse_sum: rw [Nat.add_comm (a + b) c, Nat.add_comm a b, Nat.add_assoc]. undo_succ: rw [← h, Nat.add_sub_cancel].",
+			"ko": "eq_chain: rw [h1, h2]. plus_zero: rw [Nat.add_zero, h]. apply_both: rw [h]. reverse_sum: rw [Nat.add_comm (a + b) c, Nat.add_comm a b, Nat.add_assoc]. undo_succ: rw [← h, Nat.add_sub_cancel].",
+		},
+	},
+	{
+		Name:   "046_calc",
+		Expect: fill().without(logic...),
+		Broken: blank("theorem lt_chain"),
+		Hint: L{
+			"en": "lt_chain: calc a = b := h1, then _ ≤ c := h2 and _ < d := h3. double_double: calc a + a = 2 * b + 2 * b := by rw [h], then _ = (2 + 2) * b := (Nat.add_mul 2 2 b).symm, then _ = 4 * b := rfl.",
+			"ko": "lt_chain: calc a = b := h1 다음 _ ≤ c := h2, _ < d := h3. double_double: calc a + a = 2 * b + 2 * b := by rw [h] 다음 _ = (2 + 2) * b := (Nat.add_mul 2 2 b).symm, 그다음 _ = 4 * b := rfl.",
+		},
+	},
+	{
+		Name:   "047_classical",
+		Expect: fill().without(logic...),
+		Broken: blank("theorem excluded_middle"),
+		Hint: L{
+			"en": "excluded_middle: Classical.em p. double_neg_elim: intro hnn, by_cases hp : p; the second case is absurd hp hnn. In not_and_iff and imp_iff_or, the direction toward ∨ needs by_cases hp : p.",
+			"ko": "excluded_middle: Classical.em p. double_neg_elim: intro hnn, by_cases hp : p. 둘째 경우는 absurd hp hnn. not_and_iff 와 imp_iff_or 에서 ∨ 로 가는 방향에 by_cases hp : p 가 필요합니다.",
+		},
+	},
+	{
+		Name:   "048_quiz4",
+		Expect: fill().without(logic...),
+		Broken: blank("theorem or_and_distrib"),
+		Hint: L{
+			"en": "or_and_distrib, right to left: rcases on p ∨ q; when q holds, rcases on p ∨ r too. exists_forall_swap: intro ⟨x, hx⟩ y, exact ⟨x, hx y⟩. forall_not_exists: h x hx. iff_trans': a pair of functions built from .mp and .mpr.",
+			"ko": "or_and_distrib 의 오른쪽에서 왼쪽: p ∨ q 로 rcases 하고, q 일 때는 p ∨ r 로도 rcases. exists_forall_swap: intro ⟨x, hx⟩ y, exact ⟨x, hx y⟩. forall_not_exists: h x hx. iff_trans': .mp 와 .mpr 로 만든 함수 한 쌍.",
+		},
+	},
 }
+
+// logic is what Part 4 does not accept: the tactics that would take the steps for the learner.
+var logic = []string{"simp", "simp_all", "simpa", "omega", "decide", "grind", "trivial", "exact?", "apply?", "rw?", "native_decide"}
 
 // Exercise is a single exercise.
 type Exercise struct {
