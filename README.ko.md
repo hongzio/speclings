@@ -96,6 +96,8 @@ go test ./...             # (mise run test)
 - `<트랙>/track/exercises.go` 에 추가합니다. `Broken.At` 에는 줄 번호가 아니라 코드 조각을 줍니다. 언어마다 줄 번호가 다르기 때문입니다.
 - 같은 이유로, 설명이나 힌트에 줄 번호를 쓰지 않습니다.
 - 번역하고(`<트랙>/exercises/ko/`), 언어별 힌트를 추가합니다.
+- 문제를 중간에 끼워 넣으려면 뒤의 문제들의 번호를 바꾸고(파일, `exercises.go`, 각 파일 첫 줄의 번호) 예전 이름을
+  기록합니다(`lings.Exercise.Was`). 그러면 speclings 가 학습자의 진도와 `work/` 의 파일을 새 이름으로 옮깁니다.
 
 언어를 추가하려면 `internal/lings/messages.go` 와 모든 트랙의 `track/messages.go` 에 카탈로그를 더하고, `exercises/<언어>/` 디렉터리를 만드세요.
 

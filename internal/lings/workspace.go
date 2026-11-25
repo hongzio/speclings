@@ -69,6 +69,40 @@ func (w *workspace) nextIndex(t Track) int {
 	return 0
 }
 
+// migrate carries the learner's work over to the current names of the exercises of t that
+// were renamed (Exercise.Was): progress saved under a former name moves to the current one,
+// and files in work/<track>/ named after a former name are renamed, unless a file with the
+// current name is already there. It returns the files it renamed, as [from, to] paths.
+func (w *workspace) migrate(t Track) (renamed [][2]string, err error) {
+	progress := false
+	for _, ex := range t.Exercises() {
+		for _, old := range ex.Was {
+			if w.state.Done[t.ID()] == old {
+				w.setDone(t, ex.Name)
+				progress = true
+			}
+			for _, f := range ex.Files {
+				suffix, ok := strings.CutPrefix(f, ex.Name)
+				if !ok {
+					continue
+				}
+				from, to := filepath.Join(w.dir(t), old+suffix), filepath.Join(w.dir(t), f)
+				if !IsFile(from) || IsFile(to) {
+					continue
+				}
+				if err := os.Rename(from, to); err != nil {
+					return renamed, err
+				}
+				renamed = append(renamed, [2]string{from, to})
+			}
+		}
+	}
+	if progress {
+		err = w.save()
+	}
+	return renamed, err
+}
+
 // hasExercises reports whether any exercise of any track has been copied to work/.
 func (w *workspace) hasExercises(tracks []Track) bool {
 	for _, t := range tracks {

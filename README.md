@@ -96,6 +96,8 @@ Rules for every track (each track's README adds its own):
 - Add the exercise to `<track>/track/exercises.go`. Give `Broken.At` a code snippet, not a line number: line numbers differ between languages.
 - Never use line numbers in explanations or hints, for the same reason.
 - Translate it (`<track>/exercises/ko/`) and add the hint for each language.
+- To insert an exercise, renumber the ones after it (files, `exercises.go`, the number in each file's first line) and record their former names
+  (`lings.Exercise.Was`). speclings then moves learners' progress and files in `work/` to the new names.
 
 To add a language, add a catalog to `internal/lings/messages.go` and to every track's `track/messages.go`, and `exercises/<lang>/` directories.
 

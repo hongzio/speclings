@@ -59,6 +59,10 @@ type Exercise struct {
 	// Files are copied to work/<ID>/ together. The first is the one the learner
 	// edits and is named in messages; the others go with it (a .cfg, helper modules).
 	Files []string
+	// Was lists the former names of the exercise, if exercises were renumbered: the
+	// engine carries learners' progress and files over to the current name (migrate).
+	// A former name must not be the name of a current exercise (CheckManifest).
+	Was []string
 }
 
 // Check asks a track to check exercise Index in Dir (work/<ID>/).

@@ -107,6 +107,67 @@ func TestCheckManifest(t *testing.T) {
 	if err := CheckManifest(dir, missing); err == nil || !strings.Contains(err.Error(), "001_x.cfg") {
 		t.Errorf("err = %v", err)
 	}
+
+	// A former name must not be the name of a current exercise, nor of two exercises.
+	renamed := func(was0, was1 string) []Exercise {
+		exs := slices.Clone(tr.exs)
+		exs[0].Was, exs[1].Was = []string{was0}, []string{was1}
+		return exs
+	}
+	if err := CheckManifest(dir, renamed("000_old", "001_b")); err != nil {
+		t.Error(err)
+	}
+	if err := CheckManifest(dir, renamed("000_old", "001_a")); err == nil || !strings.Contains(err.Error(), "current exercise") {
+		t.Errorf("former name of a current exercise: err = %v", err)
+	}
+	if err := CheckManifest(dir, renamed("000_old", "000_old")); err == nil || !strings.Contains(err.Error(), "both") {
+		t.Errorf("former name of two exercises: err = %v", err)
+	}
+}
+
+// migrate moves progress and work files from former names to current ones.
+func TestMigrate(t *testing.T) {
+	root, tr := testRepo(t)
+	tr.exs[0].Was = []string{"002_a"} // 001_a was 002_a, with its .cfg
+	tr.exs[1].Was = []string{"001_b"} // 002_b was 001_b
+	w, err := openWorkspace(root)
+	if err != nil {
+		t.Fatal(err)
+	}
+	work := w.dir(tr)
+	if err := os.MkdirAll(work, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	for f, s := range map[string]string{"002_a.txt": "solved a", "002_a.cfg": "cfg", "001_b.txt": "solved b", "002_b.txt": "fresh b"} {
+		if err := os.WriteFile(filepath.Join(work, f), []byte(s), 0o644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	w.setDone(tr, "001_b")
+
+	renamed, err := w.migrate(tr)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(renamed) != 2 {
+		t.Errorf("renamed %v, want 002_a.txt and 002_a.cfg", renamed)
+	}
+	for f, want := range map[string]string{"001_a.txt": "solved a", "001_a.cfg": "cfg", "002_b.txt": "fresh b", "001_b.txt": "solved b"} {
+		if b, err := os.ReadFile(filepath.Join(work, f)); err != nil || string(b) != want {
+			t.Errorf("%s = %q (%v), want %q", f, b, err, want)
+		}
+	}
+	// An existing file with the current name is never overwritten: 001_b.txt stays.
+	w2, err := openWorkspace(root)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if got := w2.state.Done[tr.ID()]; got != "002_b" {
+		t.Errorf("saved progress = %q, want 002_b", got)
+	}
+	if renamed, err := w2.migrate(tr); err != nil || len(renamed) != 0 {
+		t.Errorf("second migrate: %v %v, want nothing to do", renamed, err)
+	}
 }
 
 func TestWorkspace(t *testing.T) {

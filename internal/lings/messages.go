@@ -21,6 +21,7 @@ type Messages struct {
 	HintHow, HintFor                   string
 	AllDone, WatchWaiting, Fallback    string
 	ProgressReset, Restored, BackedUp  string
+	Renumbered                         string
 	LangSet, LangKeep, UnknownLang     string
 	OutOfRange, UnknownTrack           string
 
@@ -51,6 +52,7 @@ var en = Messages{
 	ProgressReset: "Progress cleared. The next run starts from 001.",
 	Restored:      "%s: restored to its original state.",
 	BackedUp:      "Your previous version is in %s",
+	Renumbered:    "The exercises were renumbered: %s is now %s",
 	LangSet:       "Language: %s",
 	LangKeep:      "Exercises already in work/ keep their language. Use -restore N to get one again.",
 	UnknownLang:   "unknown language %q (available: %s)",
@@ -89,6 +91,7 @@ var ko = Messages{
 	ProgressReset: "진도를 지웠습니다. 다음 실행은 001 부터 검사합니다.",
 	Restored:      "원래 상태로 되돌렸습니다: %s",
 	BackedUp:      "이전 파일: %s",
+	Renumbered:    "문제 번호가 바뀌었습니다: %s → %s",
 	LangSet:       "언어: %s",
 	LangKeep:      "work/ 에 이미 있는 문제는 원래 언어 그대로입니다. 다시 받으려면 -restore N 을 쓰세요.",
 	UnknownLang:   "알 수 없는 언어 %q (가능: %s)",

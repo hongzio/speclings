@@ -26,9 +26,26 @@ func CopyFile(src, dst string) error {
 	return os.Chtimes(dst, info.ModTime(), info.ModTime())
 }
 
-// CheckManifest checks that the exercises of the track in dir are numbered in order
-// and that their files exist in dir/exercises/en.
+// CheckManifest checks that the exercises of the track in dir are numbered in order,
+// that their files exist in dir/exercises/en, and that each former name (Exercise.Was)
+// belongs to one exercise and is not the name of a current one.
 func CheckManifest(dir string, exs []Exercise) error {
+	names := map[string]bool{}
+	for _, ex := range exs {
+		names[ex.Name] = true
+	}
+	formerly := map[string]string{} // former name → current name
+	for _, ex := range exs {
+		for _, old := range ex.Was {
+			if names[old] {
+				return fmt.Errorf("%s: exercise %s was formerly %q, which is the name of a current exercise", filepath.Base(dir), ex.Name, old)
+			}
+			if other, ok := formerly[old]; ok {
+				return fmt.Errorf("%s: exercises %s and %s were both formerly %q", filepath.Base(dir), other, ex.Name, old)
+			}
+			formerly[old] = ex.Name
+		}
+	}
 	for i, ex := range exs {
 		if prefix := fmt.Sprintf("%03d_", i+1); !strings.HasPrefix(ex.Name, prefix) {
 			return fmt.Errorf("%s: exercise #%d is named %q; it must start with %q", filepath.Base(dir), i+1, ex.Name, prefix)

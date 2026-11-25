@@ -51,6 +51,16 @@ func Main(tracks ...Track) int {
 	top.Parse(os.Args[1:])
 	args := top.Args()
 
+	if len(args) == 0 || args[0] != "verify" { // verify never touches work/
+		for _, t := range tracks {
+			renamed, err := w.migrate(t)
+			for _, r := range renamed {
+				fmt.Printf(m.Renumbered+"\n", rel(r[0]), filepath.Base(r[1]))
+			}
+			check(err)
+		}
+	}
+
 	switch {
 	case len(args) == 0:
 		changeLang(w, tracks, *lang)
