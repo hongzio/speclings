@@ -449,7 +449,22 @@ var exercises = []Exercise{
 		},
 	},
 	{
-		Name:   "048_quiz4",
+		Name:   "048_proof_errors",
+		Expect: debug().without(logic...),
+		Broken: Broken{Contains: "Application type mismatch", At: "⟨h.1, h.2⟩"},
+		Also: []Broken{
+			{Contains: "Alternative `inr` has not been provided", At: "cases h with"},
+			{Contains: "could not unify the conclusion", At: "apply hpq"},
+			{Contains: "unsolved goals", At: "theorem both_parts"},
+			{Contains: "Did not find an occurrence of the pattern", At: "rw [h, Nat.add_sub_cancel]"},
+		},
+		Hint: L{
+			"en": "and_swap: the first component must prove q: ⟨h.2, h.1⟩. or_swap: add the case | inr hq => exact Or.inl hq. chain: r comes from hqr, so apply hqr, then apply hpq, then exact hp. both_parts: the goal q is left; add · exact hq. undo_two: a + 2 is not in the goal, but b is: rw [← h, Nat.add_sub_cancel].",
+			"ko": "and_swap: 첫 성분은 q 를 증명해야 합니다: ⟨h.2, h.1⟩. or_swap: | inr hq => exact Or.inl hq 경우를 더하세요. chain: r 은 hqr 에서 나오므로 apply hqr, apply hpq, exact hp. both_parts: 목표 q 가 남았으니 · exact hq 를 더하세요. undo_two: 목표에 a + 2 는 없고 b 는 있습니다: rw [← h, Nat.add_sub_cancel].",
+		},
+	},
+	{
+		Name:   "049_quiz4",
 		Expect: fill().without(logic...),
 		Broken: blank("theorem or_and_distrib"),
 		Hint: L{
@@ -459,10 +474,10 @@ var exercises = []Exercise{
 	},
 
 	// Part 5: induction. Proofs about recursive functions defined in the exercise, so that the
-	// library's theorems about List and Nat do not apply. 049-052 by hand (logic); from 053 on,
-	// simp and omega are accepted (search).
+	// library's theorems about List and Nat do not apply. 050-054 by hand (logic), and 054 finds
+	// the library's theorems about its own functions; from 055 on, simp and omega are accepted (search).
 	{
-		Name:   "049_induction",
+		Name:   "050_induction",
 		Expect: fill().without(logic...),
 		Broken: blank("theorem zero_add'"),
 		Hint: L{
@@ -471,7 +486,7 @@ var exercises = []Exercise{
 		},
 	},
 	{
-		Name:   "050_lists",
+		Name:   "051_lists",
 		Expect: fill().without(logic...),
 		Broken: blank("theorem append_nil"),
 		Hint: L{
@@ -480,7 +495,7 @@ var exercises = []Exercise{
 		},
 	},
 	{
-		Name:   "051_map",
+		Name:   "052_map",
 		Expect: fill().without(logic...),
 		Broken: blank("theorem map_id'"),
 		Hint: L{
@@ -489,7 +504,7 @@ var exercises = []Exercise{
 		},
 	},
 	{
-		Name:   "052_lemmas",
+		Name:   "053_lemmas",
 		Expect: fill().without(logic...),
 		Broken: blank("theorem reverse_append"),
 		Hint: L{
@@ -498,7 +513,16 @@ var exercises = []Exercise{
 		},
 	},
 	{
-		Name:   "053_simp_omega",
+		Name:   "054_finding_lemmas",
+		Expect: fill().without(logic...),
+		Broken: blank("theorem len_append"),
+		Hint: L{
+			"en": "Write exact? as each proof, run speclings lean, and use what follows Try this. For len_rev_append exact? finds nothing: rw? suggests List.length_reverse, then List.length_append, and exact? then finds Nat.add_comm. In all: List.length_append, List.reverse_reverse xs, List.length_map f, Nat.le_of_lt h, Nat.sub_add_cancel h, and rw [List.length_reverse, List.length_append, Nat.add_comm].",
+			"ko": "각 증명에 exact? 를 쓰고 speclings lean 을 실행한 다음, Try this 뒤에 나온 것을 쓰세요. len_rev_append 는 exact? 가 못 찾습니다. rw? 가 List.length_reverse, 그다음 List.length_append 를 제안하고, 그러면 exact? 가 Nat.add_comm 을 찾습니다. 모두: List.length_append, List.reverse_reverse xs, List.length_map f, Nat.le_of_lt h, Nat.sub_add_cancel h, 그리고 rw [List.length_reverse, List.length_append, Nat.add_comm].",
+		},
+	},
+	{
+		Name:   "055_simp_omega",
 		Expect: fill().without(search...),
 		Broken: blank("theorem shuffle"),
 		Hint: L{
@@ -507,7 +531,7 @@ var exercises = []Exercise{
 		},
 	},
 	{
-		Name:   "054_generalizing",
+		Name:   "056_generalizing",
 		Expect: fill().without(search...),
 		Broken: blank("theorem sumAcc_eq"),
 		Hint: L{
@@ -516,7 +540,7 @@ var exercises = []Exercise{
 		},
 	},
 	{
-		Name:   "055_trees",
+		Name:   "057_trees",
 		Expect: fill().without(search...),
 		Broken: blank("theorem mirror_mirror"),
 		Hint: L{
@@ -525,7 +549,7 @@ var exercises = []Exercise{
 		},
 	},
 	{
-		Name:   "056_fun_induction",
+		Name:   "058_fun_induction",
 		Expect: fill().without(search...),
 		Broken: blank("theorem evens_le"),
 		Hint: L{
@@ -534,7 +558,22 @@ var exercises = []Exercise{
 		},
 	},
 	{
-		Name:   "057_quiz5",
+		Name:   "059_induction_errors",
+		Expect: debug().without(search...),
+		Broken: Broken{Contains: "omega could not prove the goal", At: "| cons x xs ih => simp [lenAcc, ih]; omega"},
+		Also: []Broken{
+			{Severity: sevWarning, Contains: "This simp argument is unused", At: "| cons x xs ih => simp [lenAcc, ih]; omega"},
+			{Contains: "made no progress", At: "theorem lenAcc_zero"},
+			{Contains: "Failed to rewrite using equation theorems for `double`", At: "rw [double]"},
+			{Contains: "No usable constraints found", At: "theorem even_add_two"},
+		},
+		Hint: L{
+			"en": "lenAcc_eq: induction xs generalizing acc. lenAcc_zero: simp [lenAcc_eq]. double_pos: cases n with | zero => omega | succ k => rw [double]; omega. even_add_two: unfold IsEven at *, then omega.",
+			"ko": "lenAcc_eq: induction xs generalizing acc. lenAcc_zero: simp [lenAcc_eq]. double_pos: cases n with | zero => omega | succ k => rw [double]; omega. even_add_two: unfold IsEven at * 다음 omega.",
+		},
+	},
+	{
+		Name:   "060_quiz5",
 		Expect: fill().without(search...),
 		Broken: blank("theorem eval_addS"),
 		Hint: L{
@@ -546,7 +585,7 @@ var exercises = []Exercise{
 	// Part 6: dependent types. Proofs inside programs: index proofs, Fin, length-indexed vectors,
 	// subtypes, termination proofs, invariants and Decidable instances.
 	{
-		Name:   "058_indices",
+		Name:   "061_indices",
 		Expect: fix().without(search...),
 		Broken: Broken{Contains: "failed to prove index is valid", At: "def third"},
 		Hint: L{
@@ -555,7 +594,7 @@ var exercises = []Exercise{
 		},
 	},
 	{
-		Name:   "059_vectors",
+		Name:   "062_vectors",
 		Expect: fix().without(search...),
 		Broken: Broken{Contains: "Type mismatch", At: "| nil, ys => ys"},
 		Hint: L{
@@ -564,7 +603,7 @@ var exercises = []Exercise{
 		},
 	},
 	{
-		Name:   "060_subtypes",
+		Name:   "063_subtypes",
 		Expect: fill().without(search...),
 		Broken: blank("def ten"),
 		Hint: L{
@@ -573,7 +612,7 @@ var exercises = []Exercise{
 		},
 	},
 	{
-		Name:   "061_proof_args",
+		Name:   "064_proof_args",
 		Expect: fill().without(search...),
 		Broken: blank("def firstAndLast"),
 		Hint: L{
@@ -582,7 +621,7 @@ var exercises = []Exercise{
 		},
 	},
 	{
-		Name:   "062_termination",
+		Name:   "065_termination",
 		Expect: fix().without(search...),
 		Broken: Broken{Contains: "fail to show termination", At: "def euclid"},
 		Hint: L{
@@ -591,7 +630,7 @@ var exercises = []Exercise{
 		},
 	},
 	{
-		Name:   "063_invariants",
+		Name:   "066_invariants",
 		Expect: fill().without(search...),
 		Broken: blank("def make"),
 		Hint: L{
@@ -600,7 +639,7 @@ var exercises = []Exercise{
 		},
 	},
 	{
-		Name:   "064_decidable",
+		Name:   "067_decidable",
 		Expect: fill().without(search...),
 		Broken: blank("instance (n : Nat) : Decidable (Even n)"),
 		Hint: L{
@@ -609,7 +648,7 @@ var exercises = []Exercise{
 		},
 	},
 	{
-		Name:   "065_quiz6",
+		Name:   "068_quiz6",
 		Expect: fill().without(search...),
 		Broken: blank("def bsearch"),
 		Hint: L{
@@ -621,7 +660,7 @@ var exercises = []Exercise{
 	// Part 7: verified programs. Specifications and proofs of sorting, binary search, a compiler
 	// and state machines, with grind. Only the search tactics stay forbidden (suggest).
 	{
-		Name:   "066_grind",
+		Name:   "069_grind",
 		Expect: fill().without(suggest...),
 		Broken: blank("theorem gauss"),
 		Hint: L{
@@ -630,7 +669,7 @@ var exercises = []Exercise{
 		},
 	},
 	{
-		Name:   "067_sorted",
+		Name:   "070_sorted",
 		Expect: fill().without(suggest...),
 		Broken: blank("theorem sorted_123"),
 		Hint: L{
@@ -639,7 +678,7 @@ var exercises = []Exercise{
 		},
 	},
 	{
-		Name:   "068_isort",
+		Name:   "071_isort",
 		Expect: fill().without(suggest...),
 		Broken: blank("theorem isort_sorted"),
 		Hint: L{
@@ -648,7 +687,16 @@ var exercises = []Exercise{
 		},
 	},
 	{
-		Name:   "069_bsearch",
+		Name:   "072_specifications",
+		Expect: fill().without(suggest...),
+		Broken: blank("def IsMax"),
+		Hint: L{
+			"en": "IsMax xs m := m ∈ xs ∧ ∀ x ∈ xs, x ≤ m. Tests: unfold IsMax; decide, and max_nil: simp [IsMax]. maxOf_isMax: prove x ≤ maxOf x xs, maxOf x xs ∈ x :: xs and ∀ y ∈ x :: xs, y ≤ maxOf x xs, each by induction xs generalizing x <;> grind [maxOf] (the last also with the first), then pair the last two. IsDedup xs ys := ys.Nodup ∧ (∀ y ∈ ys, y ∈ xs) ∧ (∀ x ∈ xs, x ∈ ys). Tests: unfold IsDedup; decide.",
+			"ko": "IsMax xs m := m ∈ xs ∧ ∀ x ∈ xs, x ≤ m. 시험: unfold IsMax; decide, 그리고 max_nil: simp [IsMax]. maxOf_isMax: x ≤ maxOf x xs, maxOf x xs ∈ x :: xs, ∀ y ∈ x :: xs, y ≤ maxOf x xs 를 각각 induction xs generalizing x <;> grind [maxOf] 로 증명하고 (마지막 것은 첫 것도 함께), 뒤의 둘을 짝지으세요. IsDedup xs ys := ys.Nodup ∧ (∀ y ∈ ys, y ∈ xs) ∧ (∀ x ∈ xs, x ∈ ys). 시험: unfold IsDedup; decide.",
+		},
+	},
+	{
+		Name:   "073_bsearch",
 		Expect: fill().without(suggest...),
 		Broken: blank("theorem bsearch_sound"),
 		Hint: L{
@@ -657,7 +705,7 @@ var exercises = []Exercise{
 		},
 	},
 	{
-		Name:   "070_compiler",
+		Name:   "074_compiler",
 		Expect: fill().without(suggest...),
 		Broken: blank("theorem exec_compile"),
 		Hint: L{
@@ -666,7 +714,7 @@ var exercises = []Exercise{
 		},
 	},
 	{
-		Name:   "071_invariants",
+		Name:   "075_invariants",
 		Expect: fill().without(suggest...),
 		Broken: blank("theorem bounded"),
 		Hint: L{
@@ -675,7 +723,7 @@ var exercises = []Exercise{
 		},
 	},
 	{
-		Name:   "072_strengthening",
+		Name:   "076_strengthening",
 		Expect: fill().without(suggest...),
 		Broken: blank("def LockInv"),
 		Hint: L{
@@ -684,7 +732,21 @@ var exercises = []Exercise{
 		},
 	},
 	{
-		Name:   "073_quiz7",
+		Name:   "077_grind_errors",
+		Expect: debug().without(suggest...),
+		Broken: Broken{Contains: "`grind` failed", At: "induction xs <;> grind [append]"},
+		Also: []Broken{
+			{Contains: "`grind` failed", At: "grind [ins]"},
+			{Severity: sevWarning, Kind: kindSorry, At: "theorem sum_append"},
+			{Contains: "`grind` failed", At: "induction xs <;> grind [sum]"},
+		},
+		Hint: L{
+			"en": "len_append: grind [append, len]. ins_length: induction xs <;> grind [ins]. sum_append: induction xs <;> grind [sum]. sum_reverse: induction xs <;> grind [sum, sum_append].",
+			"ko": "len_append: grind [append, len]. ins_length: induction xs <;> grind [ins]. sum_append: induction xs <;> grind [sum]. sum_reverse: induction xs <;> grind [sum, sum_append].",
+		},
+	},
+	{
+		Name:   "078_quiz7",
 		Expect: fill().without(suggest...),
 		Broken: blank("theorem all_insert"),
 		Hint: L{
@@ -692,6 +754,38 @@ var exercises = []Exercise{
 			"ko": "all_insert: induction t <;> grind [insert, All]. insert_bst: induction t <;> grind [insert, BST, All, all_insert]. contains_insert: induction t <;> grind [insert, contains].",
 		},
 	},
+}
+
+// renamed maps the former names of exercises to their current names: exercises were
+// renumbered when 048, 054, 059, 072 and 077 were added. speclings moves learners'
+// progress and files in work/lean/ to the current names (lings.Exercise.Was).
+var renamed = map[string]string{
+	"048_quiz4":         "049_quiz4",
+	"049_induction":     "050_induction",
+	"050_lists":         "051_lists",
+	"051_map":           "052_map",
+	"052_lemmas":        "053_lemmas",
+	"053_simp_omega":    "055_simp_omega",
+	"054_generalizing":  "056_generalizing",
+	"055_trees":         "057_trees",
+	"056_fun_induction": "058_fun_induction",
+	"057_quiz5":         "060_quiz5",
+	"058_indices":       "061_indices",
+	"059_vectors":       "062_vectors",
+	"060_subtypes":      "063_subtypes",
+	"061_proof_args":    "064_proof_args",
+	"062_termination":   "065_termination",
+	"063_invariants":    "066_invariants",
+	"064_decidable":     "067_decidable",
+	"065_quiz6":         "068_quiz6",
+	"066_grind":         "069_grind",
+	"067_sorted":        "070_sorted",
+	"068_isort":         "071_isort",
+	"069_bsearch":       "073_bsearch",
+	"070_compiler":      "074_compiler",
+	"071_invariants":    "075_invariants",
+	"072_strengthening": "076_strengthening",
+	"073_quiz7":         "078_quiz7",
 }
 
 // logic is what Part 4 does not accept: the tactics that would take the steps for the learner.

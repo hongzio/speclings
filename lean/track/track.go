@@ -33,9 +33,13 @@ func (*Track) Exercises() []lings.Exercise { return view }
 
 // view is exercises as the engine sees them.
 var view = func() []lings.Exercise {
+	was := map[string][]string{}
+	for old, cur := range renamed {
+		was[cur] = append(was[cur], old)
+	}
 	v := make([]lings.Exercise, len(exercises))
 	for i, ex := range exercises {
-		v[i] = lings.Exercise{Name: ex.Name, Hint: ex.Hint, Files: []string{ex.file()}}
+		v[i] = lings.Exercise{Name: ex.Name, Hint: ex.Hint, Files: []string{ex.file()}, Was: was[ex.Name]}
 	}
 	return v
 }()

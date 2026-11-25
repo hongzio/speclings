@@ -189,3 +189,16 @@ func TestCrashOf(t *testing.T) {
 		t.Errorf("no crash: %q", got)
 	}
 }
+
+// Every former name maps to a current exercise: a typo would silently drop a learner's progress.
+func TestRenamed(t *testing.T) {
+	names := map[string]bool{}
+	for _, ex := range exercises {
+		names[ex.Name] = true
+	}
+	for old, cur := range renamed {
+		if !names[cur] {
+			t.Errorf("renamed[%q] = %q, which is not an exercise", old, cur)
+		}
+	}
+}
