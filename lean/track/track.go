@@ -39,7 +39,7 @@ var view = func() []lings.Exercise {
 	}
 	v := make([]lings.Exercise, len(exercises))
 	for i, ex := range exercises {
-		v[i] = lings.Exercise{Name: ex.Name, Hint: ex.Hint, Files: []string{ex.file()}, Was: was[ex.Name]}
+		v[i] = lings.Exercise{Name: ex.Name, Hint: ex.Hint, Nudges: ex.Nudges, Files: []string{ex.file()}, Was: was[ex.Name]}
 	}
 	return v
 }()

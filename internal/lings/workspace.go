@@ -20,8 +20,9 @@ type workspace struct {
 
 // state is saved in work/.speclings.
 type state struct {
-	Lang string            `json:"lang"`
-	Done map[string]string `json:"done,omitempty"` // per track: the last exercise passed
+	Lang  string                    `json:"lang"`
+	Done  map[string]string         `json:"done,omitempty"`  // per track: the last exercise passed
+	Hints map[string]map[string]int `json:"hints,omitempty"` // per track and exercise: how many hints -hint showed
 }
 
 func openWorkspace(root string) (*workspace, error) {
@@ -42,6 +43,9 @@ func openWorkspace(root string) (*workspace, error) {
 	if w.state.Done == nil {
 		w.state.Done = map[string]string{}
 	}
+	if w.state.Hints == nil {
+		w.state.Hints = map[string]map[string]int{}
+	}
 	return w, nil
 }
 
@@ -50,6 +54,22 @@ func (w *workspace) dir(t Track) string        { return filepath.Join(w.base(), 
 func (w *workspace) statePath() string         { return filepath.Join(w.base(), ".speclings") }
 func (w *workspace) trackDir(t Track) string   { return filepath.Join(w.root, t.ID()) }
 func (w *workspace) setDone(t Track, n string) { w.state.Done[t.ID()] = n }
+
+// hintsSeen returns how many hints of the exercise named n -hint has shown.
+func (w *workspace) hintsSeen(t Track, n string) int { return w.state.Hints[t.ID()][n] }
+
+func (w *workspace) setHintsSeen(t Track, n string, seen int) {
+	if w.state.Hints[t.ID()] == nil {
+		w.state.Hints[t.ID()] = map[string]int{}
+	}
+	w.state.Hints[t.ID()][n] = seen
+}
+
+// reset clears the progress of t and the hints seen.
+func (w *workspace) reset(t Track) {
+	delete(w.state.Done, t.ID())
+	delete(w.state.Hints, t.ID())
+}
 
 func (w *workspace) save() error {
 	if err := os.MkdirAll(w.base(), 0o755); err != nil {
@@ -70,15 +90,20 @@ func (w *workspace) nextIndex(t Track) int {
 }
 
 // migrate carries the learner's work over to the current names of the exercises of t that
-// were renamed (Exercise.Was): progress saved under a former name moves to the current one,
-// and files in work/<track>/ named after a former name are renamed, unless a file with the
-// current name is already there. It returns the files it renamed, as [from, to] paths.
+// were renamed (Exercise.Was): progress and hints seen saved under a former name move to the
+// current one, and files in work/<track>/ named after a former name are renamed, unless a file
+// with the current name is already there. It returns the files it renamed, as [from, to] paths.
 func (w *workspace) migrate(t Track) (renamed [][2]string, err error) {
 	progress := false
 	for _, ex := range t.Exercises() {
 		for _, old := range ex.Was {
 			if w.state.Done[t.ID()] == old {
 				w.setDone(t, ex.Name)
+				progress = true
+			}
+			if seen, ok := w.state.Hints[t.ID()][old]; ok {
+				delete(w.state.Hints[t.ID()], old)
+				w.setHintsSeen(t, ex.Name, max(seen, w.hintsSeen(t, ex.Name)))
 				progress = true
 			}
 			for _, f := range ex.Files {

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"slices"
 	"strings"
 	"testing"
 
@@ -199,6 +200,20 @@ func TestRenamed(t *testing.T) {
 	for old, cur := range renamed {
 		if !names[cur] {
 			t.Errorf("renamed[%q] = %q, which is not an exercise", old, cur)
+		}
+	}
+}
+
+// Every hint is written in every language: a missing translation would show English in the
+// middle of Korean hints.
+func TestHintsTranslated(t *testing.T) {
+	for _, ex := range exercises {
+		for i, h := range append(slices.Clone(ex.Nudges), ex.Hint) {
+			for _, lang := range lings.Languages() {
+				if strings.TrimSpace(h[lang]) == "" {
+					t.Errorf("%s: hint %d/%d has no %s", ex.Name, i+1, len(ex.Nudges)+1, lang)
+				}
+			}
 		}
 	}
 }

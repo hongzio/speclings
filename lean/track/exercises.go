@@ -804,7 +804,8 @@ type Exercise struct {
 	Expect Expect   // what a fixed exercise must satisfy
 	Broken Broken   // how the original (unfixed) exercise should fail; used by -verify only
 	Also   []Broken // further failures the original must have, e.g. one per proof to debug
-	Hint   L
+	Hint   L        // the last and fullest hint
+	Nudges []L      // hints before Hint, from the vaguest (lings.Exercise)
 }
 
 func (ex Exercise) file() string { return ex.Name + ".lean" }

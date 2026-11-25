@@ -514,7 +514,8 @@ type Exercise struct {
 	Name   string
 	Expect Expect // what TLC should report once the exercise is fixed
 	Broken Broken // how the original (unfixed) exercise should fail; used by -verify only
-	Hint   L
+	Hint   L      // the last and fullest hint
+	Nudges []L    // hints before Hint, from the vaguest (lings.Exercise)
 	// Modules are helper modules (file names without .tla) that the exercise
 	// INSTANCEs or EXTENDs. They are copied to work/tla/ with it. Name them after the
 	// exercise, e.g. 050_AtomicCounter, because work/tla/ is shared by all exercises.

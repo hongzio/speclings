@@ -23,7 +23,7 @@ import (
 //	speclings <track> -s 3         check in order starting from exercise 3
 //	speclings <track> -watch       check again whenever a file in work/<track>/ changes
 //	speclings <track> -restore 3   restore exercise 3 to its original state (the old files are kept as .bak)
-//	speclings <track> -hint        show the hint for the current exercise (-hint -n 3: for exercise 3)
+//	speclings <track> -hint        show a hint for the current exercise (-hint -n 3: for exercise 3); again for the next one
 //	speclings <track> -v           also show the tool's output when a check passes
 //	speclings <track> -reset       clear the track's progress
 //	speclings verify [track ...]   (authors) check every original, translation and solution
@@ -91,8 +91,8 @@ func runTrack(ctx context.Context, w *workspace, tracks []Track, t Track, defaul
 	s := fs.Int("s", 0, "check in order starting from exercise `N`")
 	watch := fs.Bool("watch", false, "check again whenever a file in work/"+t.ID()+"/ changes")
 	restore := fs.Int("restore", 0, "restore exercise `N` to its original state (your files are kept as .bak)")
-	hint := fs.Bool("hint", false, "show the hint for the current exercise, or for exercise N with -n")
-	reset := fs.Bool("reset", false, "clear the track's progress and start again from 001")
+	hint := fs.Bool("hint", false, "show a hint for the current exercise, or for exercise N with -n; again for the next one")
+	reset := fs.Bool("reset", false, "clear the track's progress and hints seen, and start again from 001")
 	verbose := fs.Bool("v", false, "show the tool's output, warnings included, even when a check passes")
 	fs.Parse(args)
 	if fs.NArg() > 0 {
@@ -118,10 +118,10 @@ func runTrack(ctx context.Context, w *workspace, tracks []Track, t Track, defaul
 			fmt.Println(m.AllDone)
 			return 0
 		}
-		fmt.Printf(m.HintFor+"\n%s\n", exs[i].Name, exs[i].Hint.In(w.state.Lang))
+		check(w.showHint(os.Stdout, t, exs[i], hintCommand(t, i, w.nextIndex(t))))
 		return 0
 	case *reset:
-		delete(w.state.Done, t.ID())
+		w.reset(t)
 		check(w.save())
 		fmt.Println(m.ProgressReset)
 		return 0

@@ -57,11 +57,8 @@ func (tu *tutor) checkOne(ctx context.Context, i int) bool {
 	cont := func(s string) string { return strings.ReplaceAll(s, "\n", "\n"+m.Cont) }
 	fmt.Printf("  %s%s\n", m.Result, cont(r.Problem))
 	fmt.Printf("  %s%s\n", m.Expected, r.Expected)
-	hintCmd := "speclings " + tu.t.ID() + " -hint"
-	if i != tu.w.nextIndex(tu.t) {
-		hintCmd += fmt.Sprintf(" -n %d", i+1)
-	}
-	fmt.Printf("  %s"+m.HintHow+"\n", m.Hint, hintCmd)
+	hintCmd := hintCommand(tu.t, i, tu.w.nextIndex(tu.t))
+	fmt.Printf("  %s"+m.HintHow+"%s\n", m.Hint, hintCmd, tu.w.hintStatus(tu.t, ex))
 	fmt.Printf("  %s%s\n", m.File, rel(filepath.Join(dir, ex.Files[0])))
 	return false
 }

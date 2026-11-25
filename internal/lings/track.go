@@ -55,7 +55,10 @@ type Env struct {
 // Exercise is what the engine needs to know about an exercise; the track keeps the rest.
 type Exercise struct {
 	Name string
-	Hint L
+	// Hint is the last and fullest hint, often the answer. Nudges come before it, from the
+	// vaguest: each run of -hint shows one more (showHint).
+	Hint   L
+	Nudges []L
 	// Files are copied to work/<ID>/ together. The first is the one the learner
 	// edits and is named in messages; the others go with it (a .cfg, helper modules).
 	Files []string

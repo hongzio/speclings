@@ -18,7 +18,8 @@ type Messages struct {
 	// learner flow
 	Checking, NeedsFix                 string
 	Result, Expected, Hint, File, Cont string // Cont: indentation for continuation lines of multi-line values
-	HintHow, HintFor                   string
+	HintHow, HintFor, HintMore         string
+	HintSeen                           string
 	AllDone, WatchWaiting, Fallback    string
 	ProgressReset, Restored, BackedUp  string
 	Renumbered                         string
@@ -43,6 +44,8 @@ var en = Messages{
 	Hint:     "hint:     ",
 	HintHow:  "run %s",
 	HintFor:  "Hint for %s:",
+	HintMore: "Run %s again for the next hint.",
+	HintSeen: " (%d of %d hints seen)",
 	File:     "file:     ",
 	Cont:     "            ",
 
@@ -82,6 +85,8 @@ var ko = Messages{
 	Hint:     "힌트: ",
 	HintHow:  "%s 로 볼 수 있습니다",
 	HintFor:  "%s 힌트:",
+	HintMore: "다음 힌트를 보려면 다시 실행하세요: %s",
+	HintSeen: " (힌트 %d/%d 봄)",
 	File:     "파일: ",
 	Cont:     "        ",
 

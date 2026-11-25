@@ -53,14 +53,14 @@ The originals in `<track>/exercises/` stay untouched.
 | `speclings <track> -n 3` | Check exercise 3 only (progress is not updated) |
 | `speclings <track> -s 3` | Check in order starting from exercise 3 |
 | `speclings <track> -restore 3` | Restore exercise 3 to its original state (your files are kept as `.bak`) |
-| `speclings <track> -hint` | Show a hint for the current exercise (`-hint -n 3`: for exercise 3) |
+| `speclings <track> -hint` | Show a hint for the current exercise (`-hint -n 3`: for exercise 3). Run it again for the next, more detailed one |
 | `speclings <track> -v` | Also show the tool's output, warnings included, when a check passes |
 | `speclings <track> -reset` | Clear the track's progress |
 | `speclings -lang ko` | Switch language, for every track. Exercises already in `work/` keep their language |
 
 On failure, speclings shows the tool's output **unaltered**, followed by the result and the expected result.
 Learning to read it is part of every track.
-Hints stay hidden until you ask for one with `-hint`.
+Hints stay hidden until you ask for one with `-hint`. Many exercises have several, from a nudge to the answer: each `-hint` shows one more.
 Each track's README says what it checks and what it shows when a check passes.
 
 ## Layout
@@ -96,6 +96,8 @@ Rules for every track (each track's README adds its own):
 - Add the exercise to `<track>/track/exercises.go`. Give `Broken.At` a code snippet, not a line number: line numbers differ between languages.
 - Never use line numbers in explanations or hints, for the same reason.
 - Translate it (`<track>/exercises/ko/`) and add the hint for each language.
+- `Hint` is the last and fullest hint, often the answer. Hints that come before it go in `Nudges`, from the vaguest:
+  first which idea or tool to use, then the key step. Leave names of library theorems to `Hint` when the learner can find them.
 - To insert an exercise, renumber the ones after it (files, `exercises.go`, the number in each file's first line) and record their former names
   (`lings.Exercise.Was`). speclings then moves learners' progress and files in `work/` to the new names.
 

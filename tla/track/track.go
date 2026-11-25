@@ -34,7 +34,7 @@ func (*Track) Exercises() []lings.Exercise { return view }
 var view = func() []lings.Exercise {
 	v := make([]lings.Exercise, len(exercises))
 	for i, ex := range exercises {
-		v[i] = lings.Exercise{Name: ex.Name, Hint: ex.Hint, Files: ex.files()}
+		v[i] = lings.Exercise{Name: ex.Name, Hint: ex.Hint, Nudges: ex.Nudges, Files: ex.files()}
 	}
 	return v
 }()

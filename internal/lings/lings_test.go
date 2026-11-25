@@ -144,6 +144,7 @@ func TestMigrate(t *testing.T) {
 		}
 	}
 	w.setDone(tr, "001_b")
+	w.setHintsSeen(tr, "001_b", 2)
 
 	renamed, err := w.migrate(tr)
 	if err != nil {
@@ -164,6 +165,9 @@ func TestMigrate(t *testing.T) {
 	}
 	if got := w2.state.Done[tr.ID()]; got != "002_b" {
 		t.Errorf("saved progress = %q, want 002_b", got)
+	}
+	if got := w2.state.Hints[tr.ID()]; got["002_b"] != 2 || len(got) != 1 {
+		t.Errorf("saved hints seen = %v, want 002_b: 2", got)
 	}
 	if renamed, err := w2.migrate(tr); err != nil || len(renamed) != 0 {
 		t.Errorf("second migrate: %v %v, want nothing to do", renamed, err)
@@ -297,5 +301,69 @@ func TestVerifyOriginal(t *testing.T) {
 func TestLanguages(t *testing.T) {
 	if !slices.Contains(Languages(), BaseLang) {
 		t.Errorf("Languages() = %v lacks %s", Languages(), BaseLang)
+	}
+}
+
+// -hint shows one more hint each time, up to the last, and remembers how many it showed.
+func TestShowHint(t *testing.T) {
+	root, tr := testRepo(t)
+	tr.exs[0].Nudges = []L{{"en": "look", "ko": "보세요"}, {"en": "closer"}}
+	tr.exs[0].Hint = L{"en": "answer"}
+	tr.exs[1].Hint = L{"en": "only"}
+	w, err := openWorkspace(root)
+	if err != nil {
+		t.Fatal(err)
+	}
+	show := func(w *workspace, ex Exercise) string {
+		t.Helper()
+		var b strings.Builder
+		if err := w.showHint(&b, tr, ex, "speclings fake -hint"); err != nil {
+			t.Fatal(err)
+		}
+		return b.String()
+	}
+	if got := w.hintStatus(tr, tr.exs[0]); !strings.Contains(got, "0 of 3") {
+		t.Errorf("hintStatus before any hint = %q", got)
+	}
+	steps := []struct{ has, hasNot []string }{
+		{[]string{"(1/3) look", "again"}, []string{"closer", "answer"}},
+		{[]string{"(1/3) look", "(2/3) closer", "again"}, []string{"answer"}},
+		{[]string{"(1/3) look", "(2/3) closer", "(3/3) answer"}, []string{"again"}},
+		{[]string{"(3/3) answer"}, []string{"again"}}, // the last stays
+	}
+	for i, step := range steps {
+		got := show(w, tr.exs[0])
+		for _, s := range step.has {
+			if !strings.Contains(got, s) {
+				t.Errorf("run %d: %q lacks %q", i+1, got, s)
+			}
+		}
+		for _, s := range step.hasNot {
+			if strings.Contains(got, s) {
+				t.Errorf("run %d: %q has %q", i+1, got, s)
+			}
+		}
+	}
+
+	// A single hint is shown as it is, and nothing is recorded.
+	if got := show(w, tr.exs[1]); got != "Hint for 002_b:\nonly\n" || w.hintStatus(tr, tr.exs[1]) != "" {
+		t.Errorf("single hint: %q", got)
+	}
+
+	// The count survives a reopen, in the learner's language; -reset clears it.
+	w2, err := openWorkspace(root)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if w2.hintsSeen(tr, "001_a") != 3 || w2.hintsSeen(tr, "002_b") != 0 {
+		t.Errorf("reopened: %v", w2.state.Hints)
+	}
+	w2.state.Lang = "ko"
+	if got := show(w2, tr.exs[0]); !strings.Contains(got, "(1/3) 보세요") || !strings.Contains(got, "(2/3) closer") {
+		t.Errorf("ko: %q", got)
+	}
+	w2.reset(tr)
+	if w2.hintsSeen(tr, "001_a") != 0 {
+		t.Errorf("after reset: %v", w2.state.Hints)
 	}
 }
