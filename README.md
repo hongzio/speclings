@@ -10,7 +10,7 @@ Each track teaches one tool, in the style of [ziglings](https://codeberg.org/zig
 | Track | What you learn | Exercises |
 |---|---|---|
 | [`tla`](tla/README.md) | TLA+ and the TLC model checker: describe a system as a state machine and check every behavior of a small model of it | 53 |
-| [`lean`](lean/README.md) | Lean 4: functional programs, and proofs about them that the computer checks | 73 |
+| [`lean`](lean/README.md) | Lean 4: functional programs, and proofs about them that the computer checks | 78 |
 
 More tracks are planned: property-based testing, Quint, and model-based testing with ITF traces.
 The tracks are independent of each other, so start with the one you need.

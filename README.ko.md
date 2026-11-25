@@ -10,7 +10,7 @@
 | 트랙 | 배우는 것 | 문제 수 |
 |---|---|---|
 | [`tla`](tla/README.ko.md) | TLA+ 와 TLC 모델 검사기: 시스템을 상태 기계로 기술하고, 작은 모델의 모든 behavior 를 검사한다 | 53 |
-| [`lean`](lean/README.ko.md) | Lean 4: 함수형 프로그램과, 그에 대해 컴퓨터가 검사하는 증명 | 73 |
+| [`lean`](lean/README.ko.md) | Lean 4: 함수형 프로그램과, 그에 대해 컴퓨터가 검사하는 증명 | 78 |
 
 속성 기반 테스트(property-based testing), Quint, ITF 트레이스를 쓰는 모델 기반 테스트(model-based testing) 트랙을 추가할 예정입니다.
 트랙끼리는 서로 독립적이니 필요한 것부터 시작하세요.

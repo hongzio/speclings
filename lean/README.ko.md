@@ -4,7 +4,7 @@
 
 작게 "고장 난" Lean 파일을 하나씩 고치면서 프로그래밍 언어이자 증명 보조기인 Lean 4 를 배웁니다.
 
-모두 73문제이고, 여덟 Part 로 나뉩니다: Part 0: 도구, Part 1: 값과 함수, Part 2: 데이터 정의, Part 3: 프로그램, Part 4: 명제와 증명, Part 5: 귀납법, Part 6: 종속 타입, Part 7: 검증된 프로그램.
+모두 78문제이고, 여덟 Part 로 나뉩니다: Part 0: 도구, Part 1: 값과 함수, Part 2: 데이터 정의, Part 3: 프로그램, Part 4: 명제와 증명, Part 5: 귀납법, Part 6: 종속 타입, Part 7: 검증된 프로그램.
 
 `speclings lean` 으로 실행합니다. 설치와 명령은 [메인 README](../README.ko.md) 에 있습니다.
 검사하기 전에 speclings 가 `checker/` 의 검사기를 빌드합니다 (캐시됨. 맨 처음 빌드만 몇 초 걸림).
@@ -71,3 +71,6 @@ Lean 을 올리려면 `mise.toml` 과 `lean-toolchain`(둘 다 저장소 루트)
 - [Natural Number Game](https://adam.math.hhu.de/#/g/leanprover-community/nng4): 브라우저에서 게임으로 하는 증명.
 - [Mathematics in Lean](https://leanprover-community.github.io/mathematics_in_lean/): Mathlib 으로 하는 수학.
 - [The Hitchhiker's Guide to Logical Verification](https://lean-forward.github.io/hitchhikers-guide/2024/): 의미론과 프로그램 검증.
+- [Software Foundations in Lean](https://github.com/plclub/sf-in-lean): Software Foundations 교재의 Lean 판. *Hoare Logic* 권은 명령형 프로그램이 올바르다는 것을 증명합니다.
+- [Lean 튜토리얼](https://lean-lang.org/doc/tutorials/4.36.0/): `vcgen` 으로 하는 명령형 프로그램 검증(Lean 4.36 에서는 아직 실험적), 그리고 `grind` 로 만드는 자료 구조.
+- [Veil](https://github.com/verse-lab/veil): Lean 으로 하는 상태 전이 시스템과 분산 프로토콜. 자동으로 검사하거나 손으로 증명합니다. tla 트랙과 가깝습니다.

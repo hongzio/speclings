@@ -4,7 +4,7 @@
 
 Learn Lean 4, the programming language and proof assistant, by fixing small, broken Lean files one at a time.
 
-There are 73 exercises, in eight parts: Part 0: tools, Part 1: values and functions, Part 2: data, Part 3: programs, Part 4: propositions and proofs, Part 5: induction, Part 6: dependent types, Part 7: verified programs.
+There are 78 exercises, in eight parts: Part 0: tools, Part 1: values and functions, Part 2: data, Part 3: programs, Part 4: propositions and proofs, Part 5: induction, Part 6: dependent types, Part 7: verified programs.
 
 Run it with `speclings lean`. Setup and commands are in the [main README](../README.md).
 Before checking, speclings builds the checker in `checker/` (cached; the very first build takes a few seconds).
@@ -71,3 +71,6 @@ To upgrade Lean, change the version in `mise.toml` and `lean-toolchain` (both at
 - [Natural Number Game](https://adam.math.hhu.de/#/g/leanprover-community/nng4): proofs as a game, in the browser.
 - [Mathematics in Lean](https://leanprover-community.github.io/mathematics_in_lean/): mathematics with Mathlib.
 - [The Hitchhiker's Guide to Logical Verification](https://lean-forward.github.io/hitchhikers-guide/2024/): semantics and program verification.
+- [Software Foundations in Lean](https://github.com/plclub/sf-in-lean): the Software Foundations textbooks in Lean. Its *Hoare Logic* volume proves imperative programs correct.
+- [Lean tutorials](https://lean-lang.org/doc/tutorials/4.36.0/): verifying imperative programs with `vcgen` (still experimental in Lean 4.36), and a data structure built with `grind`.
+- [Veil](https://github.com/verse-lab/veil): transition systems and distributed protocols in Lean, checked automatically or proved by hand. Close to the tla track.
