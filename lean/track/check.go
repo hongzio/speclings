@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"slices"
 	"strings"
 )
 
@@ -76,6 +77,9 @@ func checkSource(ctx context.Context, root string, ex Exercise, src []byte) (Rep
 	}
 	if used := forbidden(string(src), ex.Expect.Forbid); len(used) > 0 {
 		r.Problem = fmt.Sprintf(m.ProbForbid, strings.Join(used, ", "))
+		if slices.ContainsFunc(used, func(w string) bool { return strings.HasSuffix(w, "?") }) {
+			r.Problem += "\n" + m.ProbSearch // exact? and the like: Lean printed what they found
+		}
 		return r, nil
 	}
 

@@ -195,6 +195,29 @@ func TestCheckDebug(t *testing.T) {
 	}
 }
 
+// A search tactic left in the file is rejected, with what it found and how to use it.
+func TestCheckSearchTactic(t *testing.T) {
+	root := testRoot(t, "theorem t (a b : Nat) (h : a < b) : a ≤ b := by\n  sorry\n")
+	ex := Exercise{Name: "X", Expect: fill().without("exact?", "omega")}
+	r, err := checkSource(context.Background(), root, ex, []byte("theorem t (a b : Nat) (h : a < b) : a ≤ b := by\n  exact?\n"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !strings.Contains(r.Problem, "exact?") || !strings.Contains(r.Problem, m.ProbSearch) {
+		t.Errorf("problem %q", r.Problem)
+	}
+	if shown := render(r.Msgs, "X.lean", nil); !strings.Contains(shown, "Try this") {
+		t.Errorf("the suggestion is not shown:\n%s", shown)
+	}
+	r, err = checkSource(context.Background(), root, ex, []byte("theorem t (a b : Nat) (h : a < b) : a ≤ b := by\n  omega\n"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !strings.Contains(r.Problem, "omega") || strings.Contains(r.Problem, m.ProbSearch) {
+		t.Errorf("omega is forbidden, but not a search tactic: %q", r.Problem)
+	}
+}
+
 // An original that does not compile apart from its sorrys cannot be a reference: that is a setup error.
 func TestCheckBrokenReference(t *testing.T) {
 	root := testRoot(t, "def f : Nat := \"x\"\n")

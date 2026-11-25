@@ -16,6 +16,7 @@ type messages struct {
 	ProbDeepRecursion, ProbCrash         string
 	MoreFrames, MoreLines                string
 	ProbGuard, ProbForbid, ProbReference string
+	ProbSearch                           string
 	ProbOutput, ProbRunFailed            string
 	ProbRunTimeout                       string
 	RefMissing, RefKind, RefStatement    string
@@ -49,6 +50,7 @@ var en = messages{
 	MoreLines:      "… %d more lines",
 	ProbGuard:      "Lean is happy, but a #guard of the original is missing or changed.\nKeep every original #guard; adding your own is fine:\n%s",
 	ProbForbid:     "Lean is happy, but this exercise asks you to do without %s",
+	ProbSearch:     "A search tactic only finds a proof: replace it with what it found (Try this: ... above).",
 	ProbReference:  "Lean is happy, but the file no longer matches the exercise:\n%s",
 	ProbOutput:     "the program printed\n%s\nbut should print\n%s",
 	ProbRunFailed:  "the program stopped with exit code %d",
@@ -93,6 +95,7 @@ var ko = messages{
 	MoreLines:      "… %d 줄 생략",
 	ProbGuard:      "Lean 은 통과했지만 원본의 #guard 가 없어졌거나 바뀌었습니다.\n원본 #guard 는 모두 남겨 두세요 (새 #guard 를 더하는 건 괜찮습니다):\n%s",
 	ProbForbid:     "Lean 은 통과했지만 이 문제는 다음 없이 풀어야 합니다: %s",
+	ProbSearch:     "검색 전술은 증명을 찾아 줄 뿐입니다. 찾아낸 것(위의 Try this: ...)으로 바꾸세요.",
 	ProbReference:  "Lean 은 통과했지만 파일이 문제와 달라졌습니다:\n%s",
 	ProbOutput:     "프로그램 출력:\n%s\n기대한 출력:\n%s",
 	ProbRunFailed:  "프로그램이 실패로 끝났습니다 (exit code %d)",
