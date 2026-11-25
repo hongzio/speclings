@@ -707,8 +707,9 @@ var suggest = []string{"exact?", "apply?", "rw?"}
 // Exercise is a single exercise.
 type Exercise struct {
 	Name   string
-	Expect Expect // what a fixed exercise must satisfy
-	Broken Broken // how the original (unfixed) exercise should fail; used by -verify only
+	Expect Expect   // what a fixed exercise must satisfy
+	Broken Broken   // how the original (unfixed) exercise should fail; used by -verify only
+	Also   []Broken // further failures the original must have, e.g. one per proof to debug
 	Hint   L
 }
 
@@ -723,8 +724,12 @@ type Expect struct {
 	// An original that is broken on purpose (a syntax or type error to fix) cannot be the
 	// reference; such an exercise must have a #guard that an empty file fails.
 	Reference bool
-	Output    string   // if set, what main must print (lean --run)
-	Forbid    []string // tactics or names the solution must not use, e.g. omega in an exercise on induction
+	// Recover: the original has mistakes on purpose and still is the reference (debug()).
+	// Lean compiles no file with errors, so the checker elaborates the original itself, with
+	// Lean's error recovery: a proof that fails still declares its theorem, with its statement.
+	Recover bool
+	Output  string   // if set, what main must print (lean --run)
+	Forbid  []string // tactics or names the solution must not use, e.g. omega in an exercise on induction
 }
 
 // fix is the expectation for an exercise with a mistake to fix.
@@ -732,6 +737,10 @@ func fix() Expect { return Expect{} }
 
 // fill is the expectation for an exercise with sorrys to fill in.
 func fill() Expect { return Expect{Reference: true} }
+
+// debug is the expectation for an exercise with proofs to debug: mistakes on purpose, as with
+// fix(), but the definitions and statements of the original stay, as with fill().
+func debug() Expect { return Expect{Reference: true, Recover: true} }
 
 func (e Expect) prints(out string) Expect { e.Output = out; return e }
 
@@ -761,6 +770,24 @@ type Broken struct {
 	// At is a code snippet on the line the message points to; a snippet, because line
 	// numbers differ by language. Lean reports sorry at the name of the declaration.
 	At string
+}
+
+// String describes b for -verify, e.g. error "Type mismatch" at "def f".
+func (b Broken) String() string {
+	s := b.Severity
+	if s == "" {
+		s = sevError
+	}
+	if b.Kind != "" {
+		s += " " + b.Kind
+	}
+	if b.Contains != "" {
+		s += fmt.Sprintf(" %q", b.Contains)
+	}
+	if b.At != "" {
+		s += fmt.Sprintf(" at %q", b.At)
+	}
+	return s
 }
 
 // blank is the Broken for an exercise whose first sorry is in the declaration on the line containing at.

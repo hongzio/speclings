@@ -6,3 +6,6 @@ defaultTargets = ["speclings-check"]
 [[lean_exe]]
 name = "speclings-check"
 root = "Main"
+
+# Elaborating a reference (--source) runs Lean's own macros and elaborators, found by name at run time.
+supportInterpreter = true

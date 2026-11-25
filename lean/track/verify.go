@@ -37,8 +37,11 @@ func verifyOriginal(ctx context.Context, root string, ex Exercise, lang string) 
 	if lang == baseLang && reGuardMsgs.MatchString(stripComments(string(src), true)) {
 		return "✗", m.VerifyGuardMsgs
 	}
-	if ex.Broken.At != "" && lineOf(string(src), ex.Broken.At) == 0 {
-		return "✗", fmt.Sprintf(lings.M().VerifyNoSnippet, ex.Broken.At)
+	broken := append([]Broken{ex.Broken}, ex.Also...)
+	for _, b := range broken {
+		if b.At != "" && lineOf(string(src), b.At) == 0 {
+			return "✗", fmt.Sprintf(lings.M().VerifyNoSnippet, b.At)
+		}
 	}
 	r, err := checkSource(ctx, root, ex, src)
 	switch {
@@ -48,6 +51,11 @@ func verifyOriginal(ctx context.Context, root string, ex Exercise, lang string) 
 		return "✗", m.VerifyOriginalPasses
 	case !ex.Broken.match(r.Msgs, string(src)):
 		return "✗", fmt.Sprintf(lings.M().VerifyWrongFailure, firstProblem(r.Msgs))
+	}
+	for _, b := range ex.Also {
+		if !b.match(r.Msgs, string(src)) {
+			return "✗", fmt.Sprintf(m.VerifyMissingFailure, b)
+		}
 	}
 	return "✓", ""
 }

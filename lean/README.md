@@ -29,7 +29,7 @@ Every exercise passes when:
 1. Lean reports no errors and no `sorry`.
 2. Every `#guard` of the original is still in your file. Whitespace may differ, and you may add your own.
 
-Exercises with `sorry`s to fill in (expected: "with the given definitions and statements unchanged") also require:
+Exercises with `sorry`s to fill in, and exercises with proofs to debug (expected: "with the given definitions and statements unchanged"), also require:
 
 3. Every definition and theorem of the original is still there, with the same statement.
    Definitions without `sorry` were given to you and must stay as they are.
@@ -52,6 +52,10 @@ On top of the [rules for every track](../README.md#for-authors):
 
 - Use `fill()` when the original compiles apart from its `sorry`s and `#` commands: then it is the reference the learner's file is compared with.
   Use `fix()` for an original with a mistake on purpose (a syntax or type error). Such an exercise needs a `#guard` that uses its definitions, or an empty file would pass.
+  Use `debug()` for an original whose proofs have mistakes on purpose: its definitions and statements are still the reference.
+  Lean writes no `.olean` for a file with errors, so the checker elaborates the original itself (`--source`), with Lean's error recovery,
+  which keeps the statement of a theorem whose proof fails. Give the first intended failure in `Broken` and the others in `Also`:
+  `verify` checks each of them.
 - Lean reports a `sorry` at the name of its declaration, so `Broken.At` is the declaration: `blank("def triple")`.
 - Write each `#` command (`#guard`, `#eval`, `#check`, ...) on one line. They are removed from the reference, line by line.
 - Do not use `#guard_msgs`: its expected output is a comment, which translations would change.

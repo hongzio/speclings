@@ -27,6 +27,7 @@ type messages struct {
 	// -verify
 	VerifyOriginalPasses, VerifyEmptyPasses string
 	VerifyGuardMsgs, VerifyVersions         string
+	VerifyMissingFailure                    string
 }
 
 var en = messages{
@@ -70,6 +71,7 @@ var en = messages{
 	VerifyEmptyPasses:    "an empty file passes the check: use fill(), or add a #guard that uses the exercise's definitions",
 	VerifyGuardMsgs:      "uses #guard_msgs, whose expected output is a comment and would be translated; use #guard",
 	VerifyVersions:       "Lean versions disagree: lean %s, lean-toolchain %s, mise.toml %s",
+	VerifyMissingFailure: "lacks an intended failure: %s",
 }
 
 var ko = messages{
@@ -113,6 +115,7 @@ var ko = messages{
 	VerifyEmptyPasses:    "빈 파일이 검사를 통과함: fill() 을 쓰거나, 문제의 정의를 쓰는 #guard 를 더하세요",
 	VerifyGuardMsgs:      "#guard_msgs 는 기대 출력이 주석이라 번역될 수 있으니 #guard 를 쓰세요",
 	VerifyVersions:       "Lean 버전이 다름: lean %s, lean-toolchain %s, mise.toml %s",
+	VerifyMissingFailure: "의도한 실패가 없음: %s",
 }
 
 const baseLang = lings.BaseLang

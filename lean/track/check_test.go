@@ -133,6 +133,68 @@ func TestCheckForbidAndOutput(t *testing.T) {
 	}
 }
 
+const debugOriginal = `-- an exercise to debug
+def double (n : Nat) : Nat := n + n
+
+theorem double_eq (n : Nat) : double n = 2 * n := by
+  rw [double]
+
+theorem swap (p q : Prop) (h : p ∧ q) : q ∧ p := by
+  exact ⟨h.1, h.2⟩
+`
+
+const debugSolution = `def double (n : Nat) : Nat := n + n
+
+theorem double_eq (n : Nat) : double n = 2 * n := by
+  rw [double]; omega
+
+theorem swap (p q : Prop) (h : p ∧ q) : q ∧ p := by
+  exact ⟨h.2, h.1⟩
+`
+
+// A debug() original has errors on purpose, and its declarations are still the reference.
+func TestCheckDebug(t *testing.T) {
+	root := testRoot(t, debugOriginal)
+	ex := Exercise{Name: "X", Expect: debug()}
+	tests := []struct {
+		name, src, want string // want: a phrase of the problem; "" to pass
+	}{
+		{"solution", debugSolution, ""},
+		{"other proof", strings.Replace(debugSolution, "rw [double]; omega", "unfold double; omega", 1), ""},
+		{"original", debugOriginal, "error(s)"},
+		{"sorry", strings.Replace(debugSolution, "exact ⟨h.2, h.1⟩", "sorry", 1), m.ProbSorry},
+		{"statement changed", strings.Replace(debugSolution, "q ∧ p := by\n  exact ⟨h.2, h.1⟩", "q := by\n  exact h.2", 1), "statement of swap"},
+		{"given def changed", strings.Replace(debugSolution, ":= n + n", ":= n * 2", 1), "definition double"},
+		{"theorem removed", debugSolution[:strings.Index(debugSolution, "theorem swap")], "swap was removed"},
+		{"empty", "", "double was removed"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			r, err := checkSource(context.Background(), root, ex, []byte(tt.src))
+			if err != nil {
+				t.Fatal(err)
+			}
+			switch {
+			case tt.want == "" && !r.ok():
+				t.Errorf("rejected: %s\n%s", r.Problem, render(r.Msgs, "X.lean", nil))
+			case tt.want != "" && !strings.Contains(r.Problem, tt.want):
+				t.Errorf("problem %q, want one containing %q", r.Problem, tt.want)
+			}
+		})
+	}
+
+	// -verify checks every intended failure of the original, not only the first.
+	ex.Broken = Broken{Contains: "unsolved goals", At: "theorem double_eq"}
+	ex.Also = []Broken{{Contains: "Application type mismatch", At: "exact ⟨h.1, h.2⟩"}}
+	if mark, detail := verifyOriginal(context.Background(), root, ex, baseLang); mark != "✓" {
+		t.Errorf("verifyOriginal: %s %s", mark, detail)
+	}
+	ex.Also = append(ex.Also, Broken{Contains: "omega could not prove the goal", At: "rw [double]"})
+	if mark, detail := verifyOriginal(context.Background(), root, ex, baseLang); mark != "✗" || !strings.Contains(detail, "omega could not") {
+		t.Errorf("verifyOriginal with a failure that does not happen: %s %s", mark, detail)
+	}
+}
+
 // An original that does not compile apart from its sorrys cannot be a reference: that is a setup error.
 func TestCheckBrokenReference(t *testing.T) {
 	root := testRoot(t, "def f : Nat := \"x\"\n")

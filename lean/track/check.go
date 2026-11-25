@@ -25,6 +25,7 @@ func (r Report) ok() bool { return r.Problem == "" }
 //  3. It uses none of ex.Expect.Forbid.
 //  4. With ex.Expect.Reference: the declarations of the original are still there, with the
 //     same statements, the given definitions unchanged, and only the standard axioms (checker/).
+//     With ex.Expect.Recover, the checker elaborates the original itself (it has errors).
 //  5. With ex.Expect.Output: main prints exactly that. If it does not finish normally, the
 //     problem includes what it printed.
 //
@@ -83,14 +84,16 @@ func checkSource(ctx context.Context, root string, ex Exercise, src []byte) (Rep
 		if err := writeExercise(ref, []byte(referenceSource(orig))); err != nil {
 			return r, err
 		}
-		rc, err := compile(ctx, ref)
-		if err != nil {
-			return r, err
+		if !ex.Expect.Recover {
+			rc, err := compile(ctx, ref)
+			if err != nil {
+				return r, err
+			}
+			if rc.TimedOut || rc.count(sevError) > 0 {
+				return r, fmt.Errorf(m.RefBroken, ex.Name, firstProblem(rc.Msgs))
+			}
 		}
-		if rc.TimedOut || rc.count(sevError) > 0 {
-			return r, fmt.Errorf(m.RefBroken, ex.Name, firstProblem(rc.Msgs))
-		}
-		problems, err := compare(ctx, root, ref, learner)
+		problems, err := compare(ctx, root, ref, learner, ex.Expect.Recover)
 		if err != nil {
 			return r, err
 		}

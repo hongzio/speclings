@@ -9,9 +9,15 @@ Compares a learner's compiled exercise with the reference: the original exercise
 the same name, in different directories.
 
     speclings-check <refDir> <learnerDir> <Module>
+    speclings-check --source <refFile> <learnerDir> <Module>
 
-For every declaration of the reference module, except internal ones and the
-auxiliary declarations of theorems and of definitions that contain `sorry`:
+With `--source`, the reference is a source file that has errors on purpose (a proof to
+debug). Lean writes no `.olean` for it, so the checker elaborates it itself, with Lean's
+error recovery: a proof that fails still declares its theorem, with its statement.
+
+For every declaration of the reference module, except internal ones, the
+auxiliary declarations of theorems and of definitions that contain `sorry`, and the
+ones Lean generates on demand (equation lemmas such as `f.eq_1`):
 
 * it must still exist, and be the same kind of declaration (a theorem stays a theorem);
 * its type (the statement) must be the same;
@@ -67,17 +73,31 @@ def runCore (env : Environment) (x : CoreM α) : IO α := do
   let (a, _) ← x.toIO ctx { env }
   return a
 
-def check (refDir learnerDir : System.FilePath) (mod : Name) : IO (Array Problem) := do
-  let (refData, _) ← readModuleData (refDir / s!"{mod}.olean")
+/-- The declarations of the module compiled to `refDir/<mod>.olean`. -/
+def readReference (refDir : System.FilePath) (mod : Name) : IO (Array ConstantInfo) := do
+  let (data, _) ← readModuleData (refDir / s!"{mod}.olean")
+  return data.constants
+
+/-- The declarations of `file`, elaborated as module `mod` with Lean's error recovery.
+Its messages are ignored: the errors are on purpose. -/
+def elabReference (file : System.FilePath) (mod : Name) : IO (Array ConstantInfo) := do
+  let inputCtx := Parser.mkInputContext (← IO.FS.readFile file) file.toString
+  let (header, parserState, messages) ← Parser.parseHeader inputCtx
+  -- Declare each theorem before going on, so that the environment has them all at the end.
+  let opts := Elab.async.set {} false
+  let (env, messages) ← Elab.processHeader header opts messages inputCtx (mainModule := mod)
+  let s ← Elab.IO.processCommands inputCtx parserState (Elab.Command.mkState env messages opts)
+  return s.commandState.env.constants.map₂.foldl (init := #[]) fun cs _ c => cs.push c
+
+def check (refConsts : Array ConstantInfo) (mod : Name) : IO (Array Problem) := do
   let ref : NameMap ConstantInfo :=
-    refData.constants.foldl (fun m c => m.insert c.name c) {}
-  initSearchPath (← findSysroot) [learnerDir]
+    refConsts.foldl (fun m c => m.insert c.name c) {}
   let env ← importModules #[{ module := mod }] {}
-  let allowed := standardAxioms ++ (refData.constants.filter (·.isAxiom)).toList.map (·.name)
+  let allowed := standardAxioms ++ (refConsts.filter (·.isAxiom)).toList.map (·.name)
   let mut problems := #[]
-  for cR in refData.constants do
+  for cR in refConsts do
     let n := cR.name
-    if (n.isInternal && !isPrivateName n) || isAuxOfLearnerPart ref n then
+    if (n.isInternal && !isPrivateName n) || isAuxOfLearnerPart ref n || isReservedName env n then
       continue
     let some cL := env.find? n
       | problems := problems.push { problem := "missing", decl := n }; continue
@@ -106,10 +126,19 @@ def check (refDir learnerDir : System.FilePath) (mod : Name) : IO (Array Problem
   return if shown.isEmpty then problems else shown
 
 def main (args : List String) : IO UInt32 := do
-  let [refDir, learnerDir, mod] := args
-    | IO.eprintln "usage: speclings-check <refDir> <learnerDir> <Module>"; return 2
+  let (source, ref, learnerDir, mod) ← match args with
+    | ["--source", refFile, learnerDir, mod] => pure (true, refFile, learnerDir, mod)
+    | [refDir, learnerDir, mod] => pure (false, refDir, learnerDir, mod)
+    | _ =>
+      IO.eprintln "usage: speclings-check [--source <refFile> | <refDir>] <learnerDir> <Module>"
+      return 2
   try
-    let problems ← check refDir learnerDir mod.toName
+    initSearchPath (← findSysroot) [learnerDir]
+    -- Elaborating needs what Lean's modules set up when imported (parsers, attributes).
+    if source then unsafe enableInitializersExecution
+    let mod := mod.toName
+    let refConsts ← if source then elabReference ref mod else readReference ref mod
+    let problems ← check refConsts mod
     for p in problems do
       IO.println (toJson p).compress
     return if problems.isEmpty then 0 else 1

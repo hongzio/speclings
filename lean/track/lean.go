@@ -265,14 +265,20 @@ func checkerPath(root string) string {
 }
 
 // compare runs the checker on refDir/Exercise.olean and learnerDir/Exercise.olean.
-func compare(ctx context.Context, root, refDir, learnerDir string) ([]RefProblem, error) {
+// With source, the reference is refDir/Exercise.lean, which has errors on purpose:
+// the checker elaborates it with Lean's error recovery.
+func compare(ctx context.Context, root, refDir, learnerDir string, source bool) ([]RefProblem, error) {
 	bin := checkerPath(root)
 	if !lings.IsFile(bin) {
 		return nil, fmt.Errorf(m.NoChecker, bin)
 	}
 	ctx, cancel := context.WithTimeout(ctx, leanTimeout)
 	defer cancel()
-	cmd := exec.CommandContext(ctx, bin, refDir, learnerDir, moduleName)
+	args := []string{refDir, learnerDir, moduleName}
+	if source {
+		args = []string{"--source", filepath.Join(refDir, moduleName+".lean"), learnerDir, moduleName}
+	}
+	cmd := exec.CommandContext(ctx, bin, args...)
 	var stdout, stderr bytes.Buffer
 	cmd.Stdout, cmd.Stderr = &stdout, &stderr
 	err := cmd.Run()
